@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.Model", "DistanceBtwCities.Model\DistanceBtwCities.Model.csproj", "{4F5CCE3E-CF63-4058-950B-074F64D80332}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.WebApi", "DistanceBtwCities.WebApi\DistanceBtwCities.WebApi.csproj", "{82A964BD-781D-4C2C-B11E-CE3492FA5CD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.DataContract", "DistanceBtwCities.DataContract\DistanceBtwCities.DataContract.csproj", "{63BD09F3-A40F-49D9-B6B2-D295842E62BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.DatabaseApi", "DistanceBtwCities.DatabaseApi\DistanceBtwCities.DatabaseApi.csproj", "{64D8EAE1-0442-45C4-8D4F-624A9495A009}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DistanceBtwCities.Database", "DistanceBtwCities.Database\DistanceBtwCities.Database.sqlproj", "{2B747E60-797A-4C21-99D8-18A62C03D0AC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F5CCE3E-CF63-4058-950B-074F64D80332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F5CCE3E-CF63-4058-950B-074F64D80332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F5CCE3E-CF63-4058-950B-074F64D80332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F5CCE3E-CF63-4058-950B-074F64D80332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A964BD-781D-4C2C-B11E-CE3492FA5CD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A964BD-781D-4C2C-B11E-CE3492FA5CD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A964BD-781D-4C2C-B11E-CE3492FA5CD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A964BD-781D-4C2C-B11E-CE3492FA5CD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BD09F3-A40F-49D9-B6B2-D295842E62BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BD09F3-A40F-49D9-B6B2-D295842E62BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BD09F3-A40F-49D9-B6B2-D295842E62BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BD09F3-A40F-49D9-B6B2-D295842E62BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64D8EAE1-0442-45C4-8D4F-624A9495A009}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64D8EAE1-0442-45C4-8D4F-624A9495A009}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64D8EAE1-0442-45C4-8D4F-624A9495A009}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64D8EAE1-0442-45C4-8D4F-624A9495A009}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B747E60-797A-4C21-99D8-18A62C03D0AC}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
