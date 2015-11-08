@@ -1,0 +1,99 @@
+﻿@import url(http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic,cyrillic-ext,latin,latin-ext);
+
+body {
+    padding: 10px 10px 10px 10px;
+    margin: 0px 0px 0px 0px;
+    font-family: 'PT Sans' , sans-serif;
+    font-size: 11pt;
+    background-color: #ffffff;
+}
+
+button, input {
+    font-family: inherit;
+    font-size: 10pt;
+}
+
+/* BEGIN: Видимость контейнеров */
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.cell {
+    display: table-cell;
+}
+/* END: Видимость контейнеров */
+
+.c-page-city-select-block {
+    display: block;
+    position: absolute; 
+    background-color: #ffffff;    
+    border: 1px solid #808080;
+    cursor: pointer;
+}
+
+.c-page-city-select-item {
+    padding: 4px 6px 2px 6px;
+}
+
+.c-page-city-select-item-selected {    
+    background-color: #336699;
+    color: #ffffff;
+}
+
+.c-page-loading-container {
+    width: 1200px; /* Ширина макета */
+    margin: 0 auto; /* Выравниваем макет по центру */
+    height: 100px;
+}
+
+    .c-page-loading-container > div {
+        position: relative;
+        left: 576px;
+        top: 26px;
+        font-size: 48pt;
+        color: #e0e0e0;
+    }
+
+.c-page-main-container {
+    width: 1200px; /* Ширина макета */
+    margin: 0 auto; /* Выравниваем макет по центру */
+}
+
+.c-page-search-form {
+    background-color: #afeeee;
+    border-left: 1px solid #00ced1;
+    border-right: 1px solid #00ced1;
+    border-bottom: 1px solid #00ced1;
+    border-top: 1px solid #00ced1;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    font-size: 10pt; 
+    padding: 6px;
+}
+
+.c-page-search-form-row {
+    display: block;
+}
+
+.c-page-search-form-row-item {
+    display: inline-block;
+    padding-right: 8px;
+}
+
+.c-page-button-caption {
+    display: inline-block;
+    padding-left: 4pt;
+    padding-right: 4pt;
+}
+
+.c-page-search-form-text {
+    width: 300pt;
+}

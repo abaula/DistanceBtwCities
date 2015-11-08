@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Редактор расстояний</title>
+    <link rel="stylesheet" href="/styles/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/resources/font-awesome-4.3.0/css/font-awesome.min.css" />
+    <script src="/scripts/jquery-2.1.4.js"></script>
+    <script src="/scripts/ServerAjaxData.js"></script>
+    <script src="/scripts/CitySelector.js"></script>
+    <script src="/scripts/DistanceEditor.js"></script>
+</head>
+<body>
+
+<!-- индикатор загрузки содержимого страницы -->
+<div id="i-page-loading-container" class="c-page-loading-container hidden">
+    <div class="fa fa-spinner fa-spin"></div>
+</div>
+<!-- /индикатор загрузки содержимого страницы -->
+
+<!-- содержимое страницы -->
+<div id="i-page-main-container" class="c-page-main-container">
+    <div id="i-page-search-form" class="c-page-search-form">
+        <div class="c-page-search-form-row">
+            <div class="c-page-search-form-row-item">Город:</div>
+            <div class="c-page-search-form-row-item">
+                <input id="i-page-search-form-city-txt" class="c-page-search-form-text" type="text"/>
+            </div>
+            <div class="c-page-search-form-row-item">
+                <button id="i-page-search-form-btn">
+                    <div class="fa fa-search"></div>
+                    <div class="c-page-button-caption">Найти</div>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /содержимое страницы -->
+
+</body>
+</html>
