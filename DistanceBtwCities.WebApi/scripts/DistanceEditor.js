@@ -5,7 +5,6 @@ var DistanceEditor;
 (function (DistanceEditor) {
     var DistanceEditorController = (function () {
         function DistanceEditorController() {
-            this.citySearchTxtBound = false;
         }
         DistanceEditorController.prototype.onSearchButtonClick = function (event) {
         };
@@ -28,16 +27,13 @@ var DistanceEditor;
         };
         DistanceEditorController.prototype.onCitySearchTxtFocus = function (event) {
             DistanceEditor.__currDistanceEditor.clearSearchCityData();
-            if (DistanceEditor.__currDistanceEditor.citySearchTxtBound)
-                return;
-            DistanceEditor.__currDistanceEditor.citySearchTxtBound = true;
-            // подключаем контрол выбора города
-            CitySelector.__currentCitySelector.init($("#i-page-search-form-city-txt"), DistanceEditor.__currDistanceEditor);
         };
         DistanceEditorController.prototype.onDocumentReady = function () {
             /////////////////////////////////////
             // цепляем обработчики событий
             $("#i-page-search-form-city-txt").focus(DistanceEditor.__currDistanceEditor.onCitySearchTxtFocus);
+            // подключаем контрол выбора города
+            CitySelector.__currentCitySelector.init($("#i-page-search-form-city-txt"), DistanceEditor.__currDistanceEditor);
             // навигация по разделам профайла
             //$("#i-ctrl-profile-navigation-block > div").click(__currentComp.onProfileNavigationMenuItemClick);
             //$("#i-ctrl-profile-update-btn").click(__currentComp.onUpdateButtonClick);

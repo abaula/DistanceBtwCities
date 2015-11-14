@@ -6,11 +6,7 @@ module DistanceEditor
 {
     export class DistanceEditorController implements CitySelector.ICitySelector
     {
-        citySearchTxtBound: boolean = false;
         selectedSearchCity: ServerData.AjaxCityInfo;
-
-
-
 
         onSearchButtonClick(event: JQueryEventObject): void 
         {
@@ -41,22 +37,12 @@ module DistanceEditor
 
         onCitySelectedAbort(): void 
         {
-            __currDistanceEditor.applySearchCityData();
+           __currDistanceEditor.applySearchCityData();
         }
 
         onCitySearchTxtFocus(event: JQueryEventObject): void
         {
-
             __currDistanceEditor.clearSearchCityData();
-
-
-            if (__currDistanceEditor.citySearchTxtBound)
-                return;
-
-            __currDistanceEditor.citySearchTxtBound = true;
-
-            // подключаем контрол выбора города
-            CitySelector.__currentCitySelector.init($("#i-page-search-form-city-txt"), __currDistanceEditor);
         }
 
         onDocumentReady(): void
@@ -64,6 +50,9 @@ module DistanceEditor
             /////////////////////////////////////
             // цепляем обработчики событий
             $("#i-page-search-form-city-txt").focus(__currDistanceEditor.onCitySearchTxtFocus);
+
+            // подключаем контрол выбора города
+            CitySelector.__currentCitySelector.init($("#i-page-search-form-city-txt"), __currDistanceEditor);
 
             // навигация по разделам профайла
             //$("#i-ctrl-profile-navigation-block > div").click(__currentComp.onProfileNavigationMenuItemClick);
