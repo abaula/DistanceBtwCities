@@ -19,14 +19,20 @@
 
 <!-- содержимое страницы -->
 <div id="i-page-main-container" class="c-page-main-container">
-    <div id="i-page-search-form" class="c-page-search-form">
+    <div id="i-page-search-form-tabs" class="">
+        <div id="i-page-search-form-tab-search-text" class="c-page-search-form-tab">Текстовый поиск</div>
+        <div id="i-page-search-form-tab-search-city" class="c-page-search-form-tab c-page-search-form-tab-selected">Поиск по городам</div>
+    </div>
+
+
+    <div id="i-page-search-form-search-city" class="c-page-search-form">
         <div class="c-page-search-form-row">
             <div class="c-page-search-form-row-item">Город:</div>
             <div class="c-page-search-form-row-item">
-                <input id="i-page-search-form-city-txt" class="c-page-search-form-text" type="text"/>
+                <input id="i-page-search-form-search-city-txt" class="c-page-search-form-text" type="text"/>
             </div>
             <div class="c-page-search-form-row-item">
-                <button id="i-page-search-form-btn">
+                <button id="i-page-search-form-search-city-btn">
                     <div class="fa fa-search"></div>
                     <div class="c-page-button-caption">Найти</div>
                 </button>
@@ -34,6 +40,23 @@
         </div>
     </div>
 
+    <div id="i-page-search-form-search-text" class="c-page-search-form hidden">
+        <div class="c-page-search-form-row">
+            <div class="c-page-search-form-row-item">Название города:</div>
+            <div class="c-page-search-form-row-item">
+                <input id="i-page-search-form-search-text-txt" class="c-page-search-form-text" type="text" />
+            </div>
+            <div class="c-page-search-form-row-item">
+                Дистанция не указана: <input id="i-page-search-form-search-empty-distance-chk" type="checkbox" />
+            </div>
+            <div class="c-page-search-form-row-item">
+                <button id="i-page-search-form-search-text-btn">
+                    <div class="fa fa-search"></div>
+                    <div class="c-page-button-caption">Найти</div>
+                </button>
+            </div>
+        </div>
+    </div>
 
 
 

@@ -10,7 +10,6 @@ module DistanceEditor
 
         onSearchButtonClick(event: JQueryEventObject): void 
         {
-            
         }
 
         applySearchCityData(): void 
@@ -21,12 +20,12 @@ module DistanceEditor
             if (null != city)
                 fullName = city.Fullname;
 
-            $("#i-page-search-form-city-txt").val(fullName);
+            $("#i-page-search-form-search-city-txt").val(fullName);
         }
 
         clearSearchCityData(): void 
         {
-            $("#i-page-search-form-city-txt").val('');
+            $("#i-page-search-form-search-city-txt").val('');
         }
 
         onCitySelected(city: ServerData.AjaxCityInfo): void 
@@ -45,18 +44,50 @@ module DistanceEditor
             __currDistanceEditor.clearSearchCityData();
         }
 
+        onFormTabClick(event: JQueryEventObject): void
+        {
+            var ctrl: JQuery = $(event.delegateTarget);
+
+            // если вкладка уже активна, то ничего не делаем
+            if (ctrl.hasClass("c-page-search-form-tab-selected"))
+                return;
+
+            // меняем активную вкладку
+            var id: string = ctrl.attr("id");
+
+            if ("i-page-search-form-tab-search-text" == id)
+            {
+                $("#i-page-search-form-tab-search-text").addClass("c-page-search-form-tab-selected");
+                $("#i-page-search-form-tab-search-city").removeClass("c-page-search-form-tab-selected");
+
+                $("#i-page-search-form-search-city").addClass("hidden");
+                $("#i-page-search-form-search-text").removeClass("hidden");
+
+            }
+            else if ("i-page-search-form-tab-search-city" == id)
+            {
+                $("#i-page-search-form-tab-search-city").addClass("c-page-search-form-tab-selected");
+                $("#i-page-search-form-tab-search-text").removeClass("c-page-search-form-tab-selected");
+
+                $("#i-page-search-form-search-text").addClass("hidden");
+                $("#i-page-search-form-search-city").removeClass("hidden");
+            }
+
+            //event.delegateTarget.
+        }
+
+
         onDocumentReady(): void
         {
             /////////////////////////////////////
             // цепляем обработчики событий
-            $("#i-page-search-form-city-txt").focus(__currDistanceEditor.onCitySearchTxtFocus);
+            $("#i-page-search-form-search-city-txt").focus(__currDistanceEditor.onCitySearchTxtFocus);
 
             // подключаем контрол выбора города
-            CitySelector.__currentCitySelector.init($("#i-page-search-form-city-txt"), __currDistanceEditor);
+            CitySelector.__currentCitySelector.init($("#i-page-search-form-search-city-txt"), __currDistanceEditor);
 
-            // навигация по разделам профайла
-            //$("#i-ctrl-profile-navigation-block > div").click(__currentComp.onProfileNavigationMenuItemClick);
-            //$("#i-ctrl-profile-update-btn").click(__currentComp.onUpdateButtonClick);
+            // навигация по закладкам
+            $("#i-page-search-form-tab-search-text, #i-page-search-form-tab-search-city").click(__currDistanceEditor.onFormTabClick);
         }
     }  
     

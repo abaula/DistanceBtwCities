@@ -73,8 +73,6 @@ button, input {
     border-right: 1px solid #00ced1;
     border-bottom: 1px solid #00ced1;
     border-top: 1px solid #00ced1;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
     font-size: 10pt; 
     padding: 6px;
 }
@@ -97,3 +95,23 @@ button, input {
 .c-page-search-form-text {
     width: 300pt;
 }
+
+.c-page-search-form-tab {
+    display: inline-block;
+    border-left: 1px solid #00ced1;
+    border-right: 1px solid #00ced1;
+    border-top: 1px solid #00ced1;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    font-size: 10pt;         
+    padding: 4px;
+    cursor: pointer;
+}
+
+.c-page-search-form-tab-selected {    
+    background-color: #afeeee;
+    cursor: default;
+}
+
+
+
