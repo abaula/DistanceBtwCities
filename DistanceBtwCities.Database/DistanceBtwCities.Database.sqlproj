@@ -63,6 +63,8 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="Stored Procedures\" />
+    <Folder Include="Security" />
+    <Folder Include="SchemaCompare" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\geoCities.sql" />
@@ -70,5 +72,9 @@
     <Build Include="Stored Procedures\api_SearchCity.sql" />
     <Build Include="Stored Procedures\api_GetDistancePageForQuery.sql" />
     <Build Include="Stored Procedures\api_GetDistancePageForCity.sql" />
+    <Build Include="Security\DefaultAppPool.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SchemaCompare\DefaultSqlSchemaCompare.scmp" />
   </ItemGroup>
 </Project>

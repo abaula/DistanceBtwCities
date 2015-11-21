@@ -10,7 +10,7 @@ namespace DistanceBtwCities.WebApi.Controllers
     public class RouteSearchController : ApiController
     {
         [HttpGet]
-        [Route("{query:maxlength(255)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        [Route("query/{query:maxlength(255)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
         public async Task<RoutesInfoPackage> SearchRouteForQuery(string query, int maxDistance, int offset, int rows)
         {
             var searchRouteTask = _getSearchRouteTask();
@@ -21,7 +21,19 @@ namespace DistanceBtwCities.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("{cityId:long:min(1)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        [Route("query/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        public async Task<RoutesInfoPackage> SearchRouteForEmptyQuery(int maxDistance, int offset, int rows)
+        {
+            var searchRouteTask = _getSearchRouteTask();
+
+            await searchRouteTask.SearchRouteForQuery(string.Empty, maxDistance, offset, rows);
+
+            return searchRouteTask.Package;
+        }
+
+
+        [HttpGet]
+        [Route("city/{cityId:long:min(1)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
         public async Task<RoutesInfoPackage> SearchRouteForCity(long cityId, int maxDistance, int offset, int rows)
         {
             var searchRouteTask = _getSearchRouteTask();

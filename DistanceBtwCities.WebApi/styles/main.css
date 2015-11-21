@@ -48,19 +48,20 @@ button, input {
     color: #ffffff;
 }
 
-.c-page-loading-container {
-    width: 1200px; /* Ширина макета */
-    margin: 0 auto; /* Выравниваем макет по центру */
-    height: 100px;
+
+.c-page-form-overlay-container {
+    display: none; 
+    overflow: hidden;
+    position: absolute; 
+    background: #ffffff;
+    opacity: 0.5;
 }
 
-    .c-page-loading-container > div {
-        position: relative;
-        left: 576px;
-        top: 26px;
-        font-size: 48pt;
-        color: #e0e0e0;
-    }
+.c-page-form-overlay-container > div {
+    position:absolute;
+    font-size: 48pt;
+    color: #e0e0e0;
+}
 
 .c-page-main-container {
     width: 1200px; /* Ширина макета */
@@ -114,4 +115,91 @@ button, input {
 }
 
 
+.c-page-main-table {
+    border-collapse: collapse;
+    /*border: 1px solid #000000;*/
+    font-size: 8pt;
+    width: 100%;
+    margin-top: 10px;
+}
 
+.c-page-main-table > TBODY {
+    background-color: #ffffff;
+}
+
+.c-page-main-table > TFOOT {
+    font-weight:600;
+}
+
+.c-page-main-table > THEAD {
+    /*background-color: #e0e0e0;*/
+    background-color:#c5f8bf;    
+}
+
+.c-page-main-table TH {
+    padding: 2px;
+    /*box-shadow: inset 1px 1px 4px #c0c0c0;*/
+    box-shadow: inset 1px 1px 4px #91dc85;
+    border: 1px solid #c0c0c0;
+    color: green;
+}
+
+.c-page-main-table TD {
+    padding: 4px;
+    border: 1px solid #c0c0c0;
+}
+
+.c-page-main-table-col-num {
+    width: 20pt;
+}
+
+.c-page-main-table-col-city1 {
+    
+}
+
+.c-page-main-table-col-city2 {
+    
+}
+
+
+.c-page-main-table-col-distance {
+    width: 60pt;
+}
+
+.c-page-main-table-col-save-changes {
+    width: 20pt;
+}
+
+
+.c-page-navpage-panel {
+    margin-top: 10px;
+}
+
+.c-page-navpage-container {
+    display: inline-block;
+}
+
+.c-page-navpage-panel-link {
+    display: inline-block;
+    cursor: pointer;
+    padding-top: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 8px;
+    font-size: 10pt;
+}
+
+.c-page-navpage-panel-link-disabled {
+    color: #a0a0a0;
+    cursor: default;
+}
+
+.c-page-navpage-panel-link-current {
+    font-weight: bold;
+    cursor: default;
+    background-color: #f0f0f0;
+}
+
+#i-page-navpage-pagelink-template {
+    display: none;
+}

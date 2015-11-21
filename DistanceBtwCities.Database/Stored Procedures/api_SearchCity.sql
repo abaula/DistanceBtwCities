@@ -18,5 +18,6 @@ BEGIN
 		fullname
 	FROM dbo.geoCities
 	WHERE name LIKE @query + '%'
+		AND Suffix = 'Город'
 END
 
