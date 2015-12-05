@@ -39,6 +39,12 @@ button, input {
     cursor: pointer;
 }
 
+
+.c-page-city-select-txt-empty {
+    color: #ff0000;
+}
+
+
 .c-page-city-select-item {
     padding: 4px 6px 2px 6px;
 }
@@ -69,12 +75,8 @@ button, input {
 }
 
 .c-page-search-form {
-    background-color: #afeeee;
-    border-left: 1px solid #00ced1;
-    border-right: 1px solid #00ced1;
-    border-bottom: 1px solid #00ced1;
-    border-top: 1px solid #00ced1;
-    font-size: 10pt; 
+    
+    background-color: #f0f0f0;
     padding: 6px;
 }
 
@@ -85,12 +87,14 @@ button, input {
 .c-page-search-form-row-item {
     display: inline-block;
     padding-right: 8px;
+    font-size: 9pt; 
 }
 
 .c-page-button-caption {
     display: inline-block;
     padding-left: 4pt;
     padding-right: 4pt;
+    font-size: 9pt; 
 }
 
 .c-page-search-form-text {
@@ -99,25 +103,33 @@ button, input {
 
 .c-page-search-form-tab {
     display: inline-block;
-    border-left: 1px solid #00ced1;
-    border-right: 1px solid #00ced1;
-    border-top: 1px solid #00ced1;
-    border-top-right-radius: 8px;
-    border-top-left-radius: 8px;
-    font-size: 10pt;         
+    font-size: 11pt;         
     padding: 4px;
     cursor: pointer;
 }
 
-.c-page-search-form-tab-selected {    
-    background-color: #afeeee;
+.c-page-search-form-tab-selected {
+    background-color: #f0f0f0;
     cursor: default;
 }
 
+.c-page-search-parameters {
+    font-size: 8pt;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.c-page-search-parameters > label {
+    margin-right: 8px;
+}
+
+.c-page-search-parameters-header {
+    background-color: #f0f0f0;
+    padding: 4px;
+}
 
 .c-page-main-table {
     border-collapse: collapse;
-    /*border: 1px solid #000000;*/
     font-size: 8pt;
     width: 100%;
     margin-top: 10px;
@@ -128,25 +140,23 @@ button, input {
 }
 
 .c-page-main-table > TFOOT {
-    font-weight:600;
+    font-weight:500;
 }
 
 .c-page-main-table > THEAD {
-    /*background-color: #e0e0e0;*/
-    background-color:#c5f8bf;    
+    background-color: #f0f0f0;
 }
 
 .c-page-main-table TH {
     padding: 2px;
-    /*box-shadow: inset 1px 1px 4px #c0c0c0;*/
-    box-shadow: inset 1px 1px 4px #91dc85;
     border: 1px solid #c0c0c0;
-    color: green;
+    font-weight: 500;
+    font-style: italic;
 }
 
 .c-page-main-table TD {
     padding: 4px;
-    border: 1px solid #c0c0c0;
+    border: 1px solid #f0f0f0;
 }
 
 .c-page-main-table-col-num {
@@ -166,10 +176,15 @@ button, input {
     width: 60pt;
 }
 
-.c-page-main-table-col-save-changes {
+.c-page-main-table-col-edit {
     width: 20pt;
+    align-content: center;
+    font-size: 11pt;
 }
 
+.c-page-main-table-col-edit > i {
+    cursor: pointer;
+}
 
 .c-page-navpage-panel {
     margin-top: 10px;
@@ -202,4 +217,70 @@ button, input {
 
 #i-page-navpage-pagelink-template {
     display: none;
+}
+
+.c-page-distance-edit-form {
+    display: none;
+    border: 2px solid #336699;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 99999;
+    background-color: #ffffff;
+    font-size: 10pt;
+}
+
+.c-page-edit-form-overlay-mask {
+    display: none;
+    background-color: #336699;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    z-index: 999;
+}
+
+.c-page-distance-edit-form-header {
+    padding: 8px;
+    background-color: #f0f0f0;
+}
+
+.c-page-distance-edit-form-edit {
+    padding: 8px;
+}
+
+.c-page-distance-edit-form-edit-txt {
+    width: 30pt;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.c-page-distance-edit-form-edit-txt-error {
+    background-color: #ff0000;
+}
+
+.c-page-distance-edit-form-buttons {
+    padding: 8px;
+    float: right;
+}
+
+.c-page-distance-edit-form-city-info {
+    padding: 8px;    
+}
+
+.c-page-distance-edit-form-distance-info {
+    padding: 8px;
+}
+
+.c-page-distance-edit-form-distance-info > label {
+    margin-right: 4px;
+}
+
+.c-page-distance-edit-form-error {
+    font-size: 10pt;
+    font-style: italic;
+    color: #ff0000;
+    padding: 8px;
 }

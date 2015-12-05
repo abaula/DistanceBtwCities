@@ -7,6 +7,7 @@ module CitySelector
     {
         onCitySelected(city: ServerData.AjaxCityInfo): void;
         onCitySelectedAbort(): void;
+        onCityEmpty(): void;
     }
 
     export class CitySelector
@@ -238,7 +239,11 @@ module CitySelector
                 return;
 
             if (null == data || 1 > data.length)
+            {
+                // сообщаем, что не найдено ни одного города
+                __currentCitySelector.component.onCityEmpty();
                 return;
+            }
 
             __currentCitySelector.listBlockHtml = $('<div class="c-page-city-select-block"></div>');
 

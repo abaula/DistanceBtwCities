@@ -160,5 +160,32 @@ namespace DistanceBtwCities.DatabaseApi
 
             return package;
         }
+
+        public int UpdateRouteDistance(long routeId, int distance)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "dbo.api_UpdateRouteDistance";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    var param = new SqlParameter("routeId", SqlDbType.BigInt);
+                    param.Value = routeId;
+                    cmd.Parameters.Add(param);
+
+                    param = new SqlParameter("distance", SqlDbType.Int);
+                    param.Value = distance;
+                    cmd.Parameters.Add(param);
+
+                    var rowsAffected = cmd.ExecuteNonQuery();
+
+                    return rowsAffected;
+                }
+            }
+        }
     }
 }

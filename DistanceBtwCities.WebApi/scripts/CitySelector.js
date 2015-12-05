@@ -158,8 +158,11 @@ var CitySelector;
             // если контрол уже потерял фокус, то ничего не отображаем
             if (false == _CitySelector.__currentCitySelector.control.is(":focus"))
                 return;
-            if (null == data || 1 > data.length)
+            if (null == data || 1 > data.length) {
+                // сообщаем, что не найдено ни одного города
+                _CitySelector.__currentCitySelector.component.onCityEmpty();
                 return;
+            }
             _CitySelector.__currentCitySelector.listBlockHtml = $('<div class="c-page-city-select-block"></div>');
             for (var i = 0; i < data.length; i++) {
                 var city = data[i];

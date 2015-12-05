@@ -30,5 +30,10 @@ namespace DistanceBtwCities.Model
         {
             return new SearchRouteTask(_connectionString);
         }
+
+        public IRouteEditTask CreateRouteEditTask()
+        {
+            return new RouteEditTask(_connectionString);
+        }
     }
 }

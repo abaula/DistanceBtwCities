@@ -73,6 +73,7 @@
     <Build Include="Stored Procedures\api_GetDistancePageForQuery.sql" />
     <Build Include="Stored Procedures\api_GetDistancePageForCity.sql" />
     <Build Include="Security\DefaultAppPool.sql" />
+    <Build Include="Stored Procedures\api_UpdateRouteDistance.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SchemaCompare\DefaultSqlSchemaCompare.scmp" />

@@ -96,6 +96,7 @@
     <Compile Include="Configuration\CacheSettingsElement.cs" />
     <Compile Include="Configuration\CacheSettingsElementCollection.cs" />
     <Compile Include="Configuration\CacheSettingsSection.cs" />
+    <Compile Include="Controllers\RouteEditController.cs" />
     <Compile Include="Controllers\RouteSearchController.cs" />
     <Compile Include="Handlers\MessageHandlerForCaching.cs" />
     <Compile Include="Controllers\CitySearchController.cs" />

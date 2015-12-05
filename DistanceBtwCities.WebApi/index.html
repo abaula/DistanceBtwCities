@@ -17,10 +17,9 @@
     <div id="i-page-main-container" class="c-page-main-container">
 
         <div id="i-page-search-form-tabs" class="">
-            <div id="i-page-search-form-tab-search-text" class="c-page-search-form-tab">Текстовый поиск</div>
             <div id="i-page-search-form-tab-search-city" class="c-page-search-form-tab c-page-search-form-tab-selected">Поиск по городам</div>
+            <div id="i-page-search-form-tab-search-text" class="c-page-search-form-tab">Текстовый поиск</div>
         </div>
-
 
         <div id="i-page-search-form-search-city" class="c-page-search-form">
             <div class="c-page-search-form-row">
@@ -30,8 +29,8 @@
                 </div>
                 <div class="c-page-search-form-row-item">
                     <button id="i-page-search-form-search-city-btn" disabled="disabled">
-                        <div class="fa fa-search"></div>
                         <div class="c-page-button-caption">Найти</div>
+                        <div class="fa fa-search"></div>
                     </button>
                 </div>
             </div>
@@ -41,51 +40,69 @@
             <div class="c-page-search-form-row">
                 <div class="c-page-search-form-row-item">Название города:</div>
                 <div class="c-page-search-form-row-item">
-                    <input id="i-page-search-form-search-text-txt" class="c-page-search-form-text" type="text" />
+                    <input id="i-page-search-form-search-text-txt" class="c-page-search-form-text " type="text" />
                 </div>
                 <div class="c-page-search-form-row-item">
                     <label>Дистанция не указана:</label><input id="i-page-search-form-search-empty-distance-chk" type="checkbox" />
                 </div>
                 <div class="c-page-search-form-row-item">
                     <button id="i-page-search-form-search-text-btn">
-                        <div class="fa fa-search"></div>
                         <div class="c-page-button-caption">Найти</div>
+                        <div class="fa fa-search"></div>
                     </button>
                 </div>
             </div>
         </div>
 
+        <div id="i-page-search-parameters" class="c-page-search-parameters hidden">
+            <label class="c-page-search-parameters-header">Параметры поиска:</label>
+            <div class="inline-block">
+                <div id="i-page-search-parameters-city" class="hidden">
+                    <label>Город:</label>
+                    <label>"</label>
+                    <label id="i-page-search-parameters-city-value"></label>
+                    <label>"</label>
+                </div>
+                <div id="i-page-search-parameters-text" class="hidden">
+                    <label>Текст:</label>
+                    <label>"</label>
+                    <label id="i-page-search-parameters-text-value"></label>
+                    <label>"</label>
+                    <label id="i-page-search-parameters-text-empty" class="hidden">(дистанция не указана)</label>
+                </div>
+            </div>
+        </div>
+
+
         <div>
             <table id="i-page-main-table" class="c-page-main-table">
                 <thead>
-                    <tr>
-                        <th class="c-page-main-table-col-num">...</th>
-                        <th class="c-page-main-table-col-city">Город 1</th>
-                        <th class="c-page-main-table-col-city">Город 2</th>
-                        <th class="c-page-main-table-col-distance">Дистанция, км.</th>
-                        <th class="c-page-main-table-col-save-changes">...</th>
-                    </tr>
-                    <tr id="i-page-main-table-row-no-data-template" class="hidden">
-                        <td colspan="5">Нет данных</td>
-                    </tr>
-                    <tr id="i-page-main-table-row-template" data-route-id="" class="hidden">
-                        <td class="c-page-main-table-col-num"></td>
-                        <td class="c-page-main-table-col-city1"></td>
-                        <td class="c-page-main-table-col-city2"></td>
-                        <td class="c-page-main-table-col-distance"></td>
-                        <td class="c-page-main-table-col-save-changes"></td>
-                    </tr>
+                <tr>
+                    <th class="c-page-main-table-col-num"></th>
+                    <th class="c-page-main-table-col-city">Город 1</th>
+                    <th class="c-page-main-table-col-city">Город 2</th>
+                    <th class="c-page-main-table-col-distance">Дистанция, км.</th>
+                    <th class="c-page-main-table-col-save-changes"></th>
+                </tr>
+                <tr id="i-page-main-table-row-no-data-template" class="hidden">
+                    <td colspan="5">Нет данных</td>
+                </tr>
+                <tr id="i-page-main-table-row-template" data-route-id="" class="hidden">
+                    <td class="c-page-main-table-col-num"></td>
+                    <td class="c-page-main-table-col-city1"></td>
+                    <td class="c-page-main-table-col-city2"></td>
+                    <td class="c-page-main-table-col-distance"></td>
+                    <td class="c-page-main-table-col-edit"><i class="fa fa-pencil-square-o"></i></td>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td colspan="5">Нет данных</td>
-                    </tr>
+                <tr>
+                    <td colspan="5">Нет данных</td>
+                </tr>
                 </tbody>
-                <tfoot>
-        
-                </tfoot>
             </table>
         </div>
+
         <!-- Панель навигации по страницам -->
         <div class="c-page-navpage-panel">
             <div id="i-page-navpage-first" class="c-page-navpage-panel-link c-page-navpage-panel-link-disabled" data-page-num=""><i class="fa fa-chevron-circle-left"></i></div>
@@ -107,6 +124,44 @@
     </div>
     <!-- /содержимое страницы -->
 
+
+    <!-- подложка формы -->
+    <div id="i-page-edit-form-overlay-mask" class="c-page-edit-form-overlay-mask">
+    </div>
+    <!-- / подложка формы -->
+
+    <!-- форма редактирования дистанции -->
+    <div id="i-page-distance-edit-form" data-route-id="" class="c-page-distance-edit-form">
+        <div class="c-page-distance-edit-form-header">Редактирование дистанции</div>
+        <div id="i-page-distance-edit-form-city-info-1" class="c-page-distance-edit-form-city-info"></div>
+        <div id="i-page-distance-edit-form-city-info-2" class="c-page-distance-edit-form-city-info"></div>
+        <div class="c-page-distance-edit-form-distance-info">
+            <label>Дистанция:</label>
+            <label id="i-page-distance-edit-form-current-distance"></label>км.
+        </div>
+        <div class="c-page-distance-edit-form-edit">
+            <label>Новая дистанция:</label>
+            <input id="i-page-distance-edit-form-new-distance" class="c-page-distance-edit-form-edit-txt" type="text"/>
+            <label>км.</label>
+        </div>
+        <div id="i-page-distance-edit-form-error" class="c-page-distance-edit-form-error hidden">
+            <label>При сохранении значения произошла ошибка:</label>
+            <p id="i-page-distance-edit-form-error-message"></p>
+            <label>Попробуйте повторить попытку позже.</label>
+        </div>
+        <div class="c-page-distance-edit-form-buttons">
+            <button id="i-page-distance-edit-form-save-btn" disabled="disabled">Сохранить</button>
+            <button id="i-page-distance-edit-form-cancel-btn">Отмена</button>
+        </div>
+
+        <!-- индикатор загрузки содержимого формы -->
+        <div id="i-distance-edit-form-loading-container" class="c-page-form-overlay-container">
+            <div class="fa fa-spinner fa-spin"></div>
+        </div>
+        <!-- /индикатор загрузки содержимого страницы -->
+
+    </div>
+    <!-- /форма редактирования дистанции -->
 
 </body>
 </html>

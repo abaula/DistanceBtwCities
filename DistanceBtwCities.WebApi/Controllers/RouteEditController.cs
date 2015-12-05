@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Http;
+using DistanceBtwCities.DataContract;
+using DistanceBtwCities.Model;
+using DistanceBtwCities.Model.Contract;
+
+namespace DistanceBtwCities.WebApi.Controllers
+{
+    [RoutePrefix("api/editroute")]
+    public class RouteEditController : ApiController
+    {
+        [HttpPut]
+        [Route("distance")]
+        public async Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo)
+        {
+            var routeEditTask = _getRouteEditTask();
+
+            var result = await routeEditTask.UpdateRouteDistance(routeInfo);
+
+            return result;
+        }
+
+        IRouteEditTask _getRouteEditTask()
+        {
+            var factory = ModelFactory.CreateInstance(Properties.Settings.Default.DbConnectionString);
+            var routeEditTask = factory.CreateRouteEditTask();
+
+            return routeEditTask;
+        }
+    }
+}
