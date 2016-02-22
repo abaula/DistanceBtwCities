@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 
 namespace DistanceBtwCities.WebApi.Configuration
 {
-    [ConfigurationCollection(typeof(CacheSettingsElement), AddItemName = "cacheSettingsElement")]
+    [ConfigurationCollection(typeof (CacheSettingsElement), AddItemName = "cacheSettingsElement")]
     public class CacheSettingsElementCollection : ConfigurationElementCollection
     {
         protected override ConfigurationElement CreateNewElement()
@@ -17,10 +13,10 @@ namespace DistanceBtwCities.WebApi.Configuration
         protected override object GetElementKey(ConfigurationElement element)
         {
             var cacheSettingsElement = element as CacheSettingsElement;
-            
+
             if (cacheSettingsElement != null)
                 return cacheSettingsElement.Pattern;
-            
+
             return null;
         }
     }

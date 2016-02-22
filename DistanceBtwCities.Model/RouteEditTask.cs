@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DistanceBtwCities.DatabaseApi;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
 {
-    class RouteEditTask : IRouteEditTask
+    internal class RouteEditTask : IRouteEditTask
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         public RouteEditTask(string connectionString)
         {
@@ -26,7 +22,7 @@ namespace DistanceBtwCities.Model
                 dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);
 
                 // Возвращаем новый экземпляр объекта
-                return new RouteInfo { Id = routeInfo.Id, Distance = routeInfo.Distance };
+                return new RouteInfo {Id = routeInfo.Id, Distance = routeInfo.Distance};
             });
         }
     }

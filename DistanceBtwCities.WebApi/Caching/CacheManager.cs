@@ -6,10 +6,10 @@ using System.Runtime.Caching;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
-    class CacheManager
+    internal class CacheManager
     {
         private static CacheManager _instance;
-        private CacheSettingsManager _cacheSettingsManager;
+        private readonly CacheSettingsManager _cacheSettingsManager;
 
         private CacheManager(CacheSettingsManager cacheSettingsManager)
         {
@@ -18,14 +18,14 @@ namespace DistanceBtwCities.WebApi.Caching
 
         public static CacheManager GetInstance()
         {
-            if(_instance == null)
+            if (_instance == null)
                 _instance = new CacheManager(CacheSettingsManager.GetInstance());
 
             return _instance;
         }
 
         /// <summary>
-        /// Ищем кэшированные данные для входящего запроса.
+        ///     Ищем кэшированные данные для входящего запроса.
         /// </summary>
         /// <param name="request">Входящий запрос.</param>
         /// <returns>Объект кэширования или null.</returns>
@@ -35,7 +35,7 @@ namespace DistanceBtwCities.WebApi.Caching
             var key = _getCacheKeyFromRequest(request);
 
             var cache = MemoryCache.Default;
-            var cacheData = (CacheDataItem)cache.Get(key);
+            var cacheData = (CacheDataItem) cache.Get(key);
 
             if (cacheData != null)
             {
@@ -48,7 +48,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        /// Проверяем тэг IfNoneMatch с Etag кэшированных данных
+        ///     Проверяем тэг IfNoneMatch с Etag кэшированных данных
         /// </summary>
         /// <param name="request">Запрос</param>
         /// <param name="cacheData">Кэшированные данные</param>
@@ -60,7 +60,7 @@ namespace DistanceBtwCities.WebApi.Caching
                 foreach (var tagHeader in request.Headers.IfNoneMatch)
                 {
                     if (string.Compare(tagHeader.Tag, cacheData.ETag, StringComparison.InvariantCulture) == 0)
-                        return true;   
+                        return true;
                 }
             }
 
@@ -68,7 +68,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        /// Добавляем заголовки для кэширования на строрне клиента
+        ///     Добавляем заголовки для кэширования на строрне клиента
         /// </summary>
         /// <param name="response">Ответ</param>
         /// <param name="cachedData">Кэшированные данные</param>
@@ -87,8 +87,8 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        /// Проверяет нужно ли кэшировать ответ для запроса. 
-        /// Если заданы настройки кэширования для запроса, то содержимое ответа сохраняется в кэше.
+        ///     Проверяет нужно ли кэшировать ответ для запроса.
+        ///     Если заданы настройки кэширования для запроса, то содержимое ответа сохраняется в кэше.
         /// </summary>
         /// <param name="response">Ответ</param>
         /// <returns>Если ответ был сохранён в кэше, то возвращаем объект кэшированных данных, иначе null</returns>
@@ -100,7 +100,7 @@ namespace DistanceBtwCities.WebApi.Caching
             {
                 // создаём ETag
                 cachedDataItem.ETag = string.Format("\"{0}\"", Guid.NewGuid().ToString("N"));
-                
+
                 // устанавливаем дату создания кэшированного объекта
                 cachedDataItem.CreatedAt = DateTime.Now;
 
@@ -124,7 +124,7 @@ namespace DistanceBtwCities.WebApi.Caching
             return cachedDataItem;
         }
 
-        CacheDataItem _createCacheItemForRequest(HttpRequestMessage request)
+        private CacheDataItem _createCacheItemForRequest(HttpRequestMessage request)
         {
             // пробуем получить настройки кэширования для запроса.
             var cacheSettings = _cacheSettingsManager.GetCacheSettingsForRequest(request.RequestUri);
@@ -132,7 +132,7 @@ namespace DistanceBtwCities.WebApi.Caching
             if (cacheSettings != null)
             {
                 // настройки кэширования получены, создаём объект кэширования и возвращаем.
-                var cacheData = new CacheDataItem { Settings = cacheSettings };
+                var cacheData = new CacheDataItem {Settings = cacheSettings};
 
                 return cacheData;
             }
@@ -141,10 +141,9 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
 
-        string _getCacheKeyFromRequest(HttpRequestMessage request)
+        private string _getCacheKeyFromRequest(HttpRequestMessage request)
         {
             return request.RequestUri.AbsolutePath;
         }
-
     }
 }

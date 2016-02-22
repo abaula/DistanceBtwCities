@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using DistanceBtwCities.WebApi.Handlers;
 
 namespace DistanceBtwCities.WebApi
@@ -15,11 +12,8 @@ namespace DistanceBtwCities.WebApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional}
+                );
 
             // добавляем общие обработчики сообщений для всех HttpRoute
             config.MessageHandlers.Add(new MessageHandlerForCaching());

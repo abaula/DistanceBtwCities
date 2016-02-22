@@ -3,6 +3,7 @@ using System.Web.Http;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model;
 using DistanceBtwCities.Model.Contract;
+using DistanceBtwCities.WebApi.Properties;
 
 namespace DistanceBtwCities.WebApi.Controllers
 {
@@ -10,7 +11,7 @@ namespace DistanceBtwCities.WebApi.Controllers
     public class RouteSearchController : ApiController
     {
         [HttpGet]
-        [Route("query/{query:maxlength(255)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        [Route("query/{query:maxlength(255)}/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
         public async Task<RoutesInfoPackage> SearchRouteForQuery(string query, int maxDistance, int offset, int rows)
         {
             var searchRouteTask = _getSearchRouteTask();
@@ -21,7 +22,7 @@ namespace DistanceBtwCities.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("query/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        [Route("query/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
         public async Task<RoutesInfoPackage> SearchRouteForEmptyQuery(int maxDistance, int offset, int rows)
         {
             var searchRouteTask = _getSearchRouteTask();
@@ -33,7 +34,7 @@ namespace DistanceBtwCities.WebApi.Controllers
 
 
         [HttpGet]
-        [Route("city/{cityId:long:min(1)}/{maxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
+        [Route("city/{cityId:long:min(1)}/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
         public async Task<RoutesInfoPackage> SearchRouteForCity(long cityId, int maxDistance, int offset, int rows)
         {
             var searchRouteTask = _getSearchRouteTask();
@@ -43,9 +44,9 @@ namespace DistanceBtwCities.WebApi.Controllers
             return searchRouteTask.Package;
         }
 
-        ISearchRouteTask _getSearchRouteTask()
+        private ISearchRouteTask _getSearchRouteTask()
         {
-            var factory = ModelFactory.CreateInstance(Properties.Settings.Default.DbConnectionString);
+            var factory = ModelFactory.CreateInstance(Settings.Default.DbConnectionString);
             var searchRouteTask = factory.CreateSearchRouteTask();
 
             return searchRouteTask;

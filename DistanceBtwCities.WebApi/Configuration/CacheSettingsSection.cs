@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Web;
+﻿using System.Configuration;
 
 namespace DistanceBtwCities.WebApi.Configuration
 {
-    public class CacheSettingsSection : ConfigurationSection 
+    public class CacheSettingsSection : ConfigurationSection
     {
         [ConfigurationProperty("cacheSettings", IsRequired = true)]
         public CacheSettingsElementCollection CacheSettings
         {
-            get
-            {
-                return base["cacheSettings"] as CacheSettingsElementCollection;
-            }
+            get { return base["cacheSettings"] as CacheSettingsElementCollection; }
         }
     }
 }

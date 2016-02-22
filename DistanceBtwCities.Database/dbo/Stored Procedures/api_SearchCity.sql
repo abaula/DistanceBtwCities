@@ -1,5 +1,5 @@
 ﻿                 
-CREATE PROCEDURE dbo.api_SearchCity
+CREATE PROCEDURE [dbo].[api_SearchCity]
 	@query NVARCHAR(255)
 AS
 BEGIN
@@ -18,6 +18,7 @@ BEGIN
 		fullname
 	FROM dbo.geoCities
 	WHERE name LIKE @query + '%'
-		AND Suffix = 'Город'
+		-- ищем только среди городов
+		AND suffix = 'Город'
 END
 

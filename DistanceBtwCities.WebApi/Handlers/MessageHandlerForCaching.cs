@@ -8,8 +8,8 @@ namespace DistanceBtwCities.WebApi.Handlers
 {
     public class MessageHandlerForCaching : DelegatingHandler
     {
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             // 1. пробуем найти данные в кэше
             if (request.Method == HttpMethod.Get)
@@ -26,18 +26,18 @@ namespace DistanceBtwCities.WebApi.Handlers
 
             // 3. при необходимости помещаем данные в кэш и настраиваем заголовки ответа
             if (request.Method == HttpMethod.Get)
-                _trySaveResponseInCache(responseMessage);   
+                _trySaveResponseInCache(responseMessage);
 
 
             return responseMessage;
         }
 
-        HttpResponseMessage _tryGetResponseFromCache(HttpRequestMessage request)
+        private HttpResponseMessage _tryGetResponseFromCache(HttpRequestMessage request)
         {
             // пробуем получить данные из кэша 
             var cacheManager = CacheManager.GetInstance();
             var cachedData = cacheManager.GetCacheDataForRequest(request);
-            
+
             // если данные есть в кэше, то возвращаем результат из кэша.
             if (cachedData != null)
             {
@@ -57,7 +57,8 @@ namespace DistanceBtwCities.WebApi.Handlers
                     // ... создаём ответ
                     response = request.CreateResponse(HttpStatusCode.OK, cachedData.Data);
                     // ... меняем содержимое ответа полученное из кэша, на явно указанный тип, чтобы использовать сгенетированные VS конвертеры
-                    var newContent = new ObjectContent(cachedData.DataType, cachedData.Data, ((ObjectContent)response.Content).Formatter);
+                    var newContent = new ObjectContent(cachedData.DataType, cachedData.Data,
+                        ((ObjectContent) response.Content).Formatter);
                     response.Content = newContent;
                 }
 
@@ -71,7 +72,7 @@ namespace DistanceBtwCities.WebApi.Handlers
             return null;
         }
 
-        void _trySaveResponseInCache(HttpResponseMessage response)
+        private void _trySaveResponseInCache(HttpResponseMessage response)
         {
             var cacheManager = CacheManager.GetInstance();
 

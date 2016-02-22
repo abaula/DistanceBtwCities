@@ -7,24 +7,22 @@
     <Name>DistanceBtwCities.Database</Name>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
-    <ProjectGuid>{2b747e60-797a-4c21-99d8-18a62c03d0ac}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <ProjectGuid>{600da28b-34dc-45e9-bed1-7152c87a9b54}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql120DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
     <RootNamespace>DistanceBtwCities.Database</RootNamespace>
     <AssemblyName>DistanceBtwCities.Database</AssemblyName>
     <ModelCollation>1049,CI</ModelCollation>
-    <DefaultFileStructure>BySchemaType</DefaultFileStructure>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
-    <GenerateCreateScript>False</GenerateCreateScript>
-    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
     <DefaultCollation>Cyrillic_General_CI_AS</DefaultCollation>
     <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
@@ -51,31 +49,26 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <!-- VS10 without SP1 will not have VisualStudioVersion set, so do that here -->
   <PropertyGroup>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
-    <!-- Default to the v10.0 targets path if the targets file for the current VS version is not found -->
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
-    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">10.0</VisualStudioVersion>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Tables" />
-    <Folder Include="Stored Procedures\" />
-    <Folder Include="Security" />
-    <Folder Include="SchemaCompare" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Tables\geoCities.sql" />
-    <Build Include="Tables\geoRoute.sql" />
-    <Build Include="Stored Procedures\api_SearchCity.sql" />
-    <Build Include="Stored Procedures\api_GetDistancePageForQuery.sql" />
-    <Build Include="Stored Procedures\api_GetDistancePageForCity.sql" />
-    <Build Include="Security\DefaultAppPool.sql" />
-    <Build Include="Stored Procedures\api_UpdateRouteDistance.sql" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="SchemaCompare\DefaultSqlSchemaCompare.scmp" />
+    <Build Include="dbo\Tables\geoCities.sql" />
+    <Build Include="dbo\Tables\geoRoute.sql" />
+    <Build Include="dbo\Stored Procedures\api_SearchCity.sql" />
+    <Build Include="dbo\Stored Procedures\api_GetDistancePageForQuery.sql" />
+    <Build Include="dbo\Stored Procedures\api_GetDistancePageForCity.sql" />
+    <Build Include="dbo\Stored Procedures\api_UpdateRouteDistance.sql" />
   </ItemGroup>
 </Project>

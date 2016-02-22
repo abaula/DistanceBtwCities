@@ -1,11 +1,11 @@
 ﻿@import url(http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic,cyrillic-ext,latin,latin-ext);
 
 body {
-    padding: 10px 10px 10px 10px;
-    margin: 0px 0px 0px 0px;
-    font-family: 'PT Sans' , sans-serif;
-    font-size: 11pt;
     background-color: #ffffff;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 11pt;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 10px 10px 10px;
 }
 
 button, input {
@@ -14,64 +14,54 @@ button, input {
 }
 
 /* BEGIN: Видимость контейнеров */
-.hidden {
-    display: none;
-}
 
-.block {
-    display: block;
-}
+.hidden { display: none; }
 
-.inline-block {
-    display: inline-block;
-}
+.block { display: block; }
 
-.cell {
-    display: table-cell;
-}
+.inline-block { display: inline-block; }
+
+.cell { display: table-cell; }
+
 /* END: Видимость контейнеров */
 
 .c-page-city-select-block {
-    display: block;
-    position: absolute; 
-    background-color: #ffffff;    
+    background-color: #ffffff;
     border: 1px solid #808080;
     cursor: pointer;
+    display: block;
+    position: absolute;
 }
 
 
-.c-page-city-select-txt-empty {
-    color: #ff0000;
-}
+.c-page-city-select-txt-empty { color: #ff0000; }
 
 
-.c-page-city-select-item {
-    padding: 4px 6px 2px 6px;
-}
+.c-page-city-select-item { padding: 4px 6px 2px 6px; }
 
-.c-page-city-select-item-selected {    
+.c-page-city-select-item-selected {
     background-color: #336699;
     color: #ffffff;
 }
 
 
 .c-page-form-overlay-container {
-    display: none; 
-    overflow: hidden;
-    position: absolute; 
     background: #ffffff;
+    display: none;
     opacity: 0.5;
+    overflow: hidden;
+    position: absolute;
 }
 
 .c-page-form-overlay-container > div {
-    position:absolute;
-    font-size: 48pt;
     color: #e0e0e0;
+    font-size: 48pt;
+    position: absolute;
 }
 
 .c-page-main-container {
-    width: 1200px; /* Ширина макета */
     margin: 0 auto; /* Выравниваем макет по центру */
+    width: 1200px; /* Ширина макета */
 }
 
 .c-page-search-form {
@@ -80,32 +70,28 @@ button, input {
     padding: 6px;
 }
 
-.c-page-search-form-row {
-    display: block;
-}
+.c-page-search-form-row { display: block; }
 
 .c-page-search-form-row-item {
     display: inline-block;
+    font-size: 9pt;
     padding-right: 8px;
-    font-size: 9pt; 
 }
 
 .c-page-button-caption {
     display: inline-block;
+    font-size: 9pt;
     padding-left: 4pt;
     padding-right: 4pt;
-    font-size: 9pt; 
 }
 
-.c-page-search-form-text {
-    width: 300pt;
-}
+.c-page-search-form-text { width: 300pt; }
 
 .c-page-search-form-tab {
-    display: inline-block;
-    font-size: 11pt;         
-    padding: 4px;
     cursor: pointer;
+    display: inline-block;
+    font-size: 11pt;
+    padding: 4px;
 }
 
 .c-page-search-form-tab-selected {
@@ -115,13 +101,11 @@ button, input {
 
 .c-page-search-parameters {
     font-size: 8pt;
-    width: 100%;
     margin-top: 10px;
+    width: 100%;
 }
 
-.c-page-search-parameters > label {
-    margin-right: 8px;
-}
+.c-page-search-parameters > label { margin-right: 8px; }
 
 .c-page-search-parameters-header {
     background-color: #f0f0f0;
@@ -131,77 +115,57 @@ button, input {
 .c-page-main-table {
     border-collapse: collapse;
     font-size: 8pt;
-    width: 100%;
     margin-top: 10px;
+    width: 100%;
 }
 
-.c-page-main-table > TBODY {
-    background-color: #ffffff;
-}
+.c-page-main-table > TBODY { background-color: #ffffff; }
 
-.c-page-main-table > TFOOT {
-    font-weight:500;
-}
+.c-page-main-table > TFOOT { font-weight: 500; }
 
-.c-page-main-table > THEAD {
-    background-color: #f0f0f0;
-}
+.c-page-main-table > THEAD { background-color: #f0f0f0; }
 
 .c-page-main-table TH {
-    padding: 2px;
     border: 1px solid #c0c0c0;
-    font-weight: 500;
     font-style: italic;
+    font-weight: 500;
+    padding: 2px;
 }
 
 .c-page-main-table TD {
-    padding: 4px;
     border: 1px solid #f0f0f0;
+    padding: 4px;
 }
 
-.c-page-main-table-col-num {
-    width: 20pt;
-}
+.c-page-main-table-col-num { width: 20pt; }
 
-.c-page-main-table-col-city1 {
-    
-}
+.c-page-main-table-col-city1 { }
 
-.c-page-main-table-col-city2 {
-    
-}
+.c-page-main-table-col-city2 { }
 
 
-.c-page-main-table-col-distance {
-    width: 60pt;
-}
+.c-page-main-table-col-distance { width: 60pt; }
 
 .c-page-main-table-col-edit {
-    width: 20pt;
     align-content: center;
     font-size: 11pt;
+    width: 20pt;
 }
 
-.c-page-main-table-col-edit > i {
-    cursor: pointer;
-}
+.c-page-main-table-col-edit > i { cursor: pointer; }
 
-.c-page-navpage-panel {
-    margin-top: 10px;
-}
+.c-page-navpage-panel { margin-top: 10px; }
 
-.c-page-navpage-container {
-    display: inline-block;
-}
+.c-page-navpage-container { display: inline-block; }
 
 .c-page-navpage-panel-link {
-    display: inline-block;
     cursor: pointer;
-    padding-top: 8px;
+    display: inline-block;
+    font-size: 10pt;
+    padding-bottom: 8px;
     padding-left: 8px;
     padding-right: 8px;
-    padding-bottom: 8px;
-    font-size: 10pt;
+    padding-top: 8px;
 }
 
 .c-page-navpage-panel-link-disabled {
@@ -210,77 +174,65 @@ button, input {
 }
 
 .c-page-navpage-panel-link-current {
-    font-weight: bold;
-    cursor: default;
     background-color: #f0f0f0;
+    cursor: default;
+    font-weight: bold;
 }
 
-#i-page-navpage-pagelink-template {
-    display: none;
-}
+#i-page-navpage-pagelink-template { display: none; }
 
 .c-page-distance-edit-form {
-    display: none;
+    background-color: #ffffff;
     border: 2px solid #336699;
+    display: none;
+    font-size: 10pt;
+    left: 50%;
     position: fixed;
     top: 50%;
-    left: 50%;
     z-index: 99999;
-    background-color: #ffffff;
-    font-size: 10pt;
 }
 
 .c-page-edit-form-overlay-mask {
-    display: none;
     background-color: #336699;
-    position: fixed;
+    display: none;
+    height: 100%;
     left: 0;
+    opacity: 0.5;
+    position: fixed;
     top: 0;
     width: 100%;
-    height: 100%;
-    opacity: 0.5;
     z-index: 999;
 }
 
 .c-page-distance-edit-form-header {
-    padding: 8px;
     background-color: #f0f0f0;
+    padding: 8px;
 }
 
-.c-page-distance-edit-form-edit {
-    padding: 8px;
-}
+.c-page-distance-edit-form-edit { padding: 8px; }
 
 .c-page-distance-edit-form-edit-txt {
-    width: 30pt;
     margin-left: 8px;
     margin-right: 8px;
+    width: 30pt;
 }
 
-.c-page-distance-edit-form-edit-txt-error {
-    background-color: #ff0000;
-}
+.c-page-distance-edit-form-edit-txt-error { background-color: #ff0000; }
 
 .c-page-distance-edit-form-buttons {
-    padding: 8px;
     float: right;
-}
-
-.c-page-distance-edit-form-city-info {
-    padding: 8px;    
-}
-
-.c-page-distance-edit-form-distance-info {
     padding: 8px;
 }
 
-.c-page-distance-edit-form-distance-info > label {
-    margin-right: 4px;
-}
+.c-page-distance-edit-form-city-info { padding: 8px; }
+
+.c-page-distance-edit-form-distance-info { padding: 8px; }
+
+.c-page-distance-edit-form-distance-info > label { margin-right: 4px; }
 
 .c-page-distance-edit-form-error {
+    color: #ff0000;
     font-size: 10pt;
     font-style: italic;
-    color: #ff0000;
     padding: 8px;
 }

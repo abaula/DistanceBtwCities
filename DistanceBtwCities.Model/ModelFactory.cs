@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DistanceBtwCities.Model.Contract;
+﻿using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
 {
     public class ModelFactory
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         private ModelFactory(string connectionString)
         {

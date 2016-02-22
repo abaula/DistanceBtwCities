@@ -18,7 +18,7 @@ BEGIN
 		INNER JOIN dbo.geoCities C2
 			ON C2.id = R.cityId2
 	WHERE R.distance <= @maxDistance
-		AND (C1.name LIKE ISNULL(@query,'') + '%' OR C2.name LIKE ISNULL(@query,'') + '%')
+		AND (C1.name LIKE @query + '%' OR C2.name LIKE @query + '%')
 
 	-- 2. Возврашаем страницу записей
 	SELECT
@@ -70,7 +70,7 @@ BEGIN
 						INNER JOIN dbo.geoCities C1
 							ON C1.id = R1.cityId1
 					WHERE R1.distance <= @maxDistance
-						AND C1.name LIKE ISNULL(@query,'') + '%'
+						AND C1.name LIKE @query + '%'
 				) A
 				FULL OUTER JOIN
 				(
@@ -83,7 +83,7 @@ BEGIN
 						INNER JOIN dbo.geoCities C2
 							ON C2.id = R2.cityId2
 					WHERE R2.distance <= @maxDistance
-						AND C2.name LIKE ISNULL(@query,'') + '%'
+						AND C2.name LIKE @query + '%'
 				) B	
 					ON B.id = A.id
 			) R

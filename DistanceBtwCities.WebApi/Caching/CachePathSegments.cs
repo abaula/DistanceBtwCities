@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Text;
-using System.Web;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
     public class CachePathSegments
     {
-        public string RelativeUri { get; set; }
-        public List<string> Segments { get; private set; }
-
         public CachePathSegments(string relativeUri)
         {
             RelativeUri = relativeUri;
@@ -18,7 +12,10 @@ namespace DistanceBtwCities.WebApi.Caching
             _createSegments();
         }
 
-        void _createSegments()
+        public string RelativeUri { get; set; }
+        public List<string> Segments { get; }
+
+        private void _createSegments()
         {
             var charArray = RelativeUri.ToCharArray();
             var sb = new StringBuilder();
@@ -36,6 +33,5 @@ namespace DistanceBtwCities.WebApi.Caching
 
             Segments.Add(sb.ToString());
         }
-
     }
 }

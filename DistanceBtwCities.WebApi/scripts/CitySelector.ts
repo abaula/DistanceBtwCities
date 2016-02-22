@@ -1,7 +1,6 @@
-﻿///<reference path="typings\jquery\jquery.d.ts"/>
-///<reference path="ServerAjaxData.ts"/>
-
-module CitySelector 
+﻿/// <reference path="typings\jquery\jquery.d.ts" />
+/// <reference path="ServerAjaxData.ts" />
+module CitySelector
 {
     export interface ICitySelector
     {
@@ -12,131 +11,127 @@ module CitySelector
 
     export class CitySelector
     {
-        control: JQuery = null;
-        component: ICitySelector = null;
-        timer: number = 0;
-        searchValue: string = null;
-        busy: boolean = false;
-        timeoutMs: number = 1000;
-        currentRequest: JQueryXHR = null;
-        listBlockHtml: JQuery = null;
-        listData: ServerData.AjaxCityInfo[] = null;
+        Control: JQuery = null;
+        Component: ICitySelector = null;
+        Timer = 0;
+        SearchValue: string = null;
+        Busy = false;
+        TimeoutMs = 1000;
+        CurrentRequest: JQueryXHR = null;
+        ListBlockHtml: JQuery = null;
+        ListData: ServerData.AjaxCityInfo[] = null;
 
         init(control: JQuery, component: ICitySelector): void
         {
-            __currentCitySelector.clear();
-            __currentCitySelector.component = component;
-            __currentCitySelector.control = control;
-            __currentCitySelector.control.bind("cut paste", __currentCitySelector.onTextChange);
-            __currentCitySelector.control.bind("keydown", __currentCitySelector.onKeyDown);
-            __currentCitySelector.control.bind("blur", __currentCitySelector.onLostFocus);
+            this.clear();
+            this.Component = component;
+            this.Control = control;
+            this.Control.bind("cut paste", this.OnTextChange);
+            this.Control.bind("keydown", this.OnKeyDown);
+            this.Control.bind("blur", this.OnLostFocus);
         }
 
         clear(): void
         {
-            __currentCitySelector.clearListBlock();
+            this.clearListBlock();
 
-            if (0 < __currentCitySelector.timer)
-                clearTimeout(__currentCitySelector.timer);
+            if (0 < this.Timer)
+                clearTimeout(this.Timer);
 
-            if (null != __currentCitySelector.control)
+            if (null != this.Control)
             {
-                __currentCitySelector.control.unbind("cut paste", __currentCitySelector.onTextChange);
-                __currentCitySelector.control.unbind("keydown", __currentCitySelector.onKeyDown);
-                __currentCitySelector.control.unbind("blur", __currentCitySelector.onLostFocus);
+                this.Control.unbind("cut paste", this.OnTextChange);
+                this.Control.unbind("keydown", this.OnKeyDown);
+                this.Control.unbind("blur", this.OnLostFocus);
             }
 
             // сбрасываем отправленные на сервер запросы
-            if (null != __currentCitySelector.currentRequest)
-                __currentCitySelector.currentRequest.abort();
+            if (null != this.CurrentRequest)
+                this.CurrentRequest.abort();
 
-            __currentCitySelector.currentRequest = null;
-            __currentCitySelector.busy = false;
-            __currentCitySelector.listData = null;
-            __currentCitySelector.component = null;
+            this.CurrentRequest = null;
+            this.Busy = false;
+            this.ListData = null;
+            this.Component = null;
         }
 
         clearListBlock(): void
         {
-            if (null != __currentCitySelector.listBlockHtml)
+            if (null != this.ListBlockHtml)
             {
-                $("div", __currentCitySelector.listBlockHtml).unbind("click mouseenter mouseleave");
-                __currentCitySelector.listBlockHtml.remove();
-                __currentCitySelector.listBlockHtml = null;
+                $("div", this.ListBlockHtml).unbind("click mouseenter mouseleave");
+                this.ListBlockHtml.remove();
+                this.ListBlockHtml = null;
             }
         }
 
-        onMouseEnter(event: JQueryEventObject): void
+        OnMouseEnter = (event: JQueryEventObject): void =>
         {
-            $("div.c-page-city-select-item", __currentCitySelector.listBlockHtml).removeClass("c-page-city-select-item-selected");
+            $("div.c-page-city-select-item", this.ListBlockHtml).removeClass("c-page-city-select-item-selected");
             $(event.delegateTarget).addClass("c-page-city-select-item-selected");
-        }
+        };
 
-        onMouseLeave(event: JQueryEventObject): void
+        OnMouseLeave = (event: JQueryEventObject): void =>
         {
-            $("div.c-page-city-select-item", __currentCitySelector.listBlockHtml).removeClass("c-page-city-select-item-selected");
-        }
+            $("div.c-page-city-select-item", this.ListBlockHtml).removeClass("c-page-city-select-item-selected");
+        };
 
-        onKeyDown(event: JQueryEventObject): void
+        OnKeyDown = (event: JQueryEventObject): void =>
         {
-            if (null != __currentCitySelector.listBlockHtml)
+            if (null != this.ListBlockHtml)
             {
-                if (40 == event.keyCode)
+                if (40 === event.keyCode)
                 // arrow down
                 {
-                    __currentCitySelector.onArrowDown();
+                    this.OnArrowDown();
                     return;
-                }
-                else if (38 == event.keyCode)
+                } else if (38 === event.keyCode)
                 // arrow up
                 {
-                    __currentCitySelector.onArrowUp();
+                    this.OnArrowUp();
                     return;
-                }
-                else if (13 == event.keyCode)
+                } else if (13 === event.keyCode)
                 // enter
                 {
-                    __currentCitySelector.onEnter();
+                    this.OnEnter();
                     return;
-                }
-                else if (27 == event.keyCode)
+                } else if (27 === event.keyCode)
                 // escape
                 {
-                    __currentCitySelector.onEscape();
+                    this.OnEscape();
                     return;
                 }
             }
 
-            __currentCitySelector.onTextChange(event);
-        }
+            this.OnTextChange(event);
+        };
 
-        onArrowDown(): void
+        OnArrowDown = (): void =>
         {
-            var selectedItem: JQuery = __currentCitySelector.getSelectedItem();
+            var selectedItem = this.getSelectedItem();
 
             if (0 < selectedItem.length)
             {
-                var nextItem: JQuery = selectedItem.next();
+                var nextItem = selectedItem.next();
 
                 if (0 < nextItem.length)
                 {
                     selectedItem.removeClass("c-page-city-select-item-selected");
                     nextItem.addClass("c-page-city-select-item-selected");
                 }
-            }
-            else
+            } else
             {
-                $("div.c-page-city-select-item", __currentCitySelector.listBlockHtml).first().addClass("c-page-city-select-item-selected");
+                $("div.c-page-city-select-item", this.ListBlockHtml).first().addClass("c-page-city-select-item-selected");
             }
-        }
+        };
 
-        onArrowUp(): void
+        OnArrowUp = (): void =>
         {
-            var selectedItem: JQuery = __currentCitySelector.getSelectedItem();
+            var selectedItem = this.getSelectedItem();
 
             if (0 < selectedItem.length)
             {
-                var prevItem: JQuery = selectedItem.prev();
+                var prevItem = selectedItem.prev();
 
                 if (0 < prevItem.length)
                 {
@@ -144,156 +139,154 @@ module CitySelector
                     prevItem.addClass("c-page-city-select-item-selected");
                 }
             }
-        }
+        };
 
-        onEnter(): void
+        OnEnter = (): void =>
         {
-            var selectedItem: JQuery = __currentCitySelector.getSelectedItem();
+            var selectedItem = this.getSelectedItem();
 
             if (0 < selectedItem.length)
             {
-                var id: number = parseInt(selectedItem.attr("data-id"));
-                __currentCitySelector.onItemClicked(id);
+                var id = parseInt(selectedItem.attr("data-id"));
+                this.OnItemClicked(id);
             }
-        }
+        };
 
-        onEscape(): void
+        OnEscape = (): void =>
         {
-            __currentCitySelector.clearListBlock();
-        }
-
+            this.clearListBlock();
+        };
 
         getSelectedItem(): JQuery
         {
-            return $("div.c-page-city-select-item-selected", __currentCitySelector.listBlockHtml);
+            return $("div.c-page-city-select-item-selected", this.ListBlockHtml);
         }
 
-        onTextChange(event: JQueryEventObject): void
+        OnTextChange = (event: JQueryEventObject): void =>
         {
-            if (0 < __currentCitySelector.timer)
-                clearTimeout(__currentCitySelector.timer);
+            if (0 < this.Timer)
+                clearTimeout(this.Timer);
 
-            if (true == __currentCitySelector.busy)
+            if (this.Busy)
                 return;
 
-            __currentCitySelector.timer = setTimeout(__currentCitySelector.onTimeout, __currentCitySelector.timeoutMs);
-        }
+            this.Timer = setTimeout(this.OnTimeout, this.TimeoutMs);
+        };
 
-        onTimeout(): void
+        OnTimeout = (): void =>
         {
-            var value: string = __currentCitySelector.control.val().trim();
+            var value: string = this.Control.val().trim();
 
-            if (value == __currentCitySelector.searchValue)
+            if (value === this.SearchValue)
                 return;
 
-            __currentCitySelector.searchValue = value;
+            this.SearchValue = value;
 
             if (3 > value.length)
             {
-                __currentCitySelector.clearListBlock();
+                this.clearListBlock();
                 return;
             }
 
-            //window.console.log(__currentCitySelector.searchValue);
+            //window.console.log(this.SearchValue);
             // выставляем флаг блокировки поиска и отправляем поисковый запрос на сервер
-            __currentCitySelector.busy = true;
-            __currentCitySelector.getData(value);
-        }
-
+            this.Busy = true;
+            this.getData(value);
+        };
 
         getData(query: string): void
         {
-            __currentCitySelector.currentRequest = $.ajax({
+            this.CurrentRequest = $.ajax({
                 type: "GET",
-                url: "/api/searchcity/" + query,
-                success: __currentCitySelector.onAjaxGetOrgDataSuccess,
-                error: __currentCitySelector.onAjaxGetOrgDataError
+                url: `/api/searchcity/${query}`,
+                success: this.OnAjaxGetOrgDataSuccess,
+                error: this.OnAjaxGetOrgDataError
             });
         }
 
-        onAjaxGetOrgDataError(jqXHR: JQueryXHR, status: string, message: string): void
+        OnAjaxGetOrgDataError = (jqXhr: JQueryXHR, status: string, message: string): void =>
         {
-            __currentCitySelector.busy = false;
-            __currentCitySelector.currentRequest = null;
+            this.Busy = false;
+            this.CurrentRequest = null;
             //window.console.log("_onAjaxError");
-        }
+        };
 
-        onAjaxGetOrgDataSuccess(data: ServerData.AjaxCityInfo[], status: string, jqXHR: JQueryXHR): void
+        OnAjaxGetOrgDataSuccess = (data: ServerData.AjaxCityInfo[], status: string, jqXhr: JQueryXHR): void =>
         {
-            __currentCitySelector.busy = false;
-            __currentCitySelector.currentRequest = null;
+            this.Busy = false;
+            this.CurrentRequest = null;
             //window.console.log("_onAjaxGetAccountDataSuccess");
 
-            __currentCitySelector.listData = data;
+            this.ListData = data;
             // данные получены рисуем выпадающий список выбора
-            __currentCitySelector.drawList();
-        }
+            this.drawList();
+        };
 
         drawList(): void
         {
-            __currentCitySelector.clearListBlock();
-            var data: ServerData.AjaxCityInfo[] = __currentCitySelector.listData;
+            this.clearListBlock();
+            var data = this.ListData;
 
             // если контрол уже потерял фокус, то ничего не отображаем
-            if (false == __currentCitySelector.control.is(":focus"))
+            if (false === this.Control.is(":focus"))
                 return;
 
             if (null == data || 1 > data.length)
             {
                 // сообщаем, что не найдено ни одного города
-                __currentCitySelector.component.onCityEmpty();
+                this.Component.onCityEmpty();
                 return;
             }
 
-            __currentCitySelector.listBlockHtml = $('<div class="c-page-city-select-block"></div>');
+            this.ListBlockHtml = $('<div class="c-page-city-select-block"></div>');
 
-            for (var i: number = 0; i < data.length; i++)
+            for (var i = 0; i < data.length; i++)
             {
-                var city: ServerData.AjaxCityInfo = data[i];
-                var item: JQuery = $('<div class="c-page-city-select-item"></div>');
+                var city = data[i];
+                var item = $('<div class="c-page-city-select-item"></div>');
                 item.text(city.Fullname);
                 item.attr("data-id", city.Id);
-                item.bind("click", __currentCitySelector.onItemClick);
-                item.bind("mouseenter", __currentCitySelector.onMouseEnter);
-                item.bind("mouseleave", __currentCitySelector.onMouseLeave);
-                __currentCitySelector.listBlockHtml.append(item);
+                item.bind("click", this.OnItemClick);
+                item.bind("mouseenter", this.OnMouseEnter);
+                item.bind("mouseleave", this.OnMouseLeave);
+                this.ListBlockHtml.append(item);
             }
 
             // вычисляем положение списка на экране
-            var top: number = __currentCitySelector.control.offset().top;
-            top += __currentCitySelector.control.height();
-            var left: number = __currentCitySelector.control.offset().left;
+            var top = this.Control.offset().top;
+            top += this.Control.height();
+            var left = this.Control.offset().left;
 
-            __currentCitySelector.listBlockHtml.appendTo($("body"));
-            __currentCitySelector.listBlockHtml.css({ top: top, left: left });
+            this.ListBlockHtml.appendTo($("body"));
+            this.ListBlockHtml.css({ top: top, left: left });
         }
 
-        onItemClick(event: JQueryEventObject): void
+        OnItemClick = (event: JQueryEventObject): void =>
         {
-            __currentCitySelector.searchValue = null;
-            var elem: JQuery = $(event.delegateTarget);
-            //window.console.log("__currentCitySelector.onItemClick(" + elem.attr("data-id") + ")");
-            __currentCitySelector.onItemClicked(parseInt(elem.attr("data-id")));
-        }
+            this.SearchValue = null;
+            var elem = $(event.delegateTarget);
+            //window.console.log("this.OnItemClick(" + elem.attr("data-id") + ")");
+            this.OnItemClicked(parseInt(elem.attr("data-id")));
+        };
 
-        onItemClicked(id: number): void
+        OnItemClicked = (id: number): void =>
         {
-            var city = __currentCitySelector.getCityById(id);
-            __currentCitySelector.component.onCitySelected(city);
-            __currentCitySelector.clearListBlock();
-        }
+            var city = this.getCityById(id);
+            this.Component.onCitySelected(city);
+            this.clearListBlock();
+        };
 
         getCityById(id: number): ServerData.AjaxCityInfo
         {
             var city: ServerData.AjaxCityInfo = null;
 
-            if (null != __currentCitySelector.listData)
+            if (null != this.ListData)
             {
-                for (var i: number = 0; i < __currentCitySelector.listData.length; i++)
+                for (var i = 0; i < this.ListData.length; i++)
                 {
-                    var c: ServerData.AjaxCityInfo = __currentCitySelector.listData[i];
+                    var c = this.ListData[i];
 
-                    if (id == c.Id)
+                    if (id === c.Id)
                     {
                         city = c;
                         break;
@@ -304,20 +297,20 @@ module CitySelector
             return city;
         }
 
-        onLostFocus(event: JQueryEventObject): void
+        OnLostFocus = (event: JQueryEventObject): void =>
         {
-            if (null != __currentCitySelector.listBlockHtml)
+            if (null != this.ListBlockHtml)
             {
-                if ($(__currentCitySelector.listBlockHtml).is(':hover'))
-                    setTimeout(__currentCitySelector.clearListBlock, 500);
+                if ($(this.ListBlockHtml).is(":hover"))
+                    setTimeout(this.clearListBlock, 500);
                 else
-                    __currentCitySelector.clearListBlock();
+                    this.clearListBlock();
             }
 
-            __currentCitySelector.searchValue = null;
-            __currentCitySelector.component.onCitySelectedAbort();
-        }
+            this.SearchValue = null;
+            this.Component.onCitySelectedAbort();
+        };
     }
-    
-    export var __currentCitySelector = new CitySelector();
-} 
+
+    export var currentCitySelector = new CitySelector();
+}

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using DistanceBtwCities.DatabaseApi;
 using DistanceBtwCities.DataContract;
@@ -11,11 +6,9 @@ using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
 {
-    class SearchCityTask : ISearchCityTask
+    internal class SearchCityTask : ISearchCityTask
     {
-        private string _connectionString;
-
-        public List<CityInfo> Cities { get; private set; }
+        private readonly string _connectionString;
 
         public SearchCityTask(string connectionString)
         {
@@ -23,12 +16,11 @@ namespace DistanceBtwCities.Model
             Cities = new List<CityInfo>();
         }
 
+        public List<CityInfo> Cities { get; }
+
         public Task SearchCityAsync(string query)
         {
-            return Task.Run(() =>
-            {
-                _searchCity(query);
-            });
+            return Task.Run(() => { _searchCity(query); });
         }
 
         private void _searchCity(string query)
@@ -37,6 +29,5 @@ namespace DistanceBtwCities.Model
             var cities = dbProcedures.SearchCity(query);
             Cities.AddRange(cities);
         }
-
     }
 }

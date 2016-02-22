@@ -14,7 +14,7 @@ module ServerData
         CladrCode: string;
         PostCode: string;
         Fullname: string;
-    } 
+    }
 
     export class AjaxRouteInfo
     {

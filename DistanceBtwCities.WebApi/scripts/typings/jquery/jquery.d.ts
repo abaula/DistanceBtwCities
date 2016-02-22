@@ -82,7 +82,7 @@ interface JQueryAjaxSettings {
      */
     error? (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): any;
     /**
-     * Whether to trigger global Ajax event handlers for this request. The default is true. Set to false to prevent the global handlers like ajaxStart or ajaxStop from being triggered. This can be used to control various Ajax Events.
+     * Whether to trigger global Ajax event handlers for this request. The default is true. Set to false to prevent the global handlers like ajaxStart or ajaxStop from being triggered. This can be used to Control various Ajax Events.
      */
     global?: boolean;
     /**
@@ -791,7 +791,7 @@ interface JQueryStatic {
     (html: string, attributes: Object): JQuery;
 
     /**
-     * Relinquish jQuery's control of the $ variable.
+     * Relinquish jQuery's Control of the $ variable.
      *
      * @param removeAll A Boolean indicating whether to remove all jQuery variables from the global scope (including jQuery itself).
      */
@@ -1620,7 +1620,7 @@ interface JQuery {
     animate(properties: Object, options: JQueryAnimationOptions): JQuery;
 
     /**
-     * Set a timer to delay execution of subsequent items in the queue.
+     * Set a Timer to delay execution of subsequent items in the queue.
      *
      * @param duration An integer indicating the number of milliseconds to delay execution of the next item in the queue.
      * @param queueName A string containing the name of the queue. Defaults to fx, the standard effects queue.

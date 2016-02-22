@@ -1,31 +1,25 @@
-﻿///<reference path="typings\jquery\jquery.d.ts"/>
-///<reference path="ServerAjaxData.ts"/>
-///<reference path="CitySelector.ts"/>
-
+﻿/// <reference path="typings\jquery\jquery.d.ts" />
+/// <reference path="ServerAjaxData.ts" />
+/// <reference path="CitySelector.ts" />
 module DistanceEditor
 {
     export class DistanceEditorController implements CitySelector.ICitySelector
     {
-        currentDataFrame: ServerData.AjaxRoutesInfoPackage;
-        searchByQuery: boolean;
-        selectedSearchCity: ServerData.AjaxCityInfo;
-        currentSearchQuery: string;
-        queryForEmptyDistance: boolean;
-        currentPage: number = 0;
-        rowsPerPage: number = 20;
+        CurrentDataFrame: ServerData.AjaxRoutesInfoPackage;
+        SearchByQuery: boolean;
+        SelectedSearchCity: ServerData.AjaxCityInfo;
+        CurrentSearchQuery: string;
+        QueryForEmptyDistance: boolean;
+        CurrentPage = 0;
+        RowsPerPage = 20;
 
-        maxDistance: number = 100000;
-
-
-        onSearchButtonClick(event: JQueryEventObject): void 
-        {
-        }
+        MaxDistance = 100000;
 
         applySearchCityData(): void
         {
-            var searchCityButton: JQuery = $("#i-page-search-form-search-city-btn");
-            var city: ServerData.AjaxCityInfo = __currDistanceEditor.selectedSearchCity;
-            var fullName: string = "";
+            var searchCityButton = $("#i-page-search-form-search-city-btn");
+            var city = this.SelectedSearchCity;
+            var fullName = "";
             searchCityButton.attr("disabled", "disabled");
 
             if (null != city)
@@ -38,54 +32,52 @@ module DistanceEditor
             $("#i-page-search-form-search-city-txt").removeClass("c-page-city-select-txt-empty");
         }
 
-        clearSearchCityData(): void 
+        clearSearchCityData(): void
         {
             $("#i-page-search-form-search-city-txt").val("");
             $("#i-page-search-form-search-city-txt").removeClass("c-page-city-select-txt-empty");
         }
 
-        onCitySelected(city: ServerData.AjaxCityInfo): void 
+        onCitySelected = (city: ServerData.AjaxCityInfo): void =>
         {
-            __currDistanceEditor.selectedSearchCity = city;
-            __currDistanceEditor.applySearchCityData();
-        }
+            this.SelectedSearchCity = city;
+            this.applySearchCityData();
+        };
 
-        onCitySelectedAbort(): void 
+        onCitySelectedAbort = (): void =>
         {
-           __currDistanceEditor.applySearchCityData();
-        }
+            this.applySearchCityData();
+        };
 
-        onCityEmpty(): void
+        onCityEmpty = (): void =>
         {
             $("#i-page-search-form-search-city-txt").addClass("c-page-city-select-txt-empty");
-        }
+        };
 
-        onCitySearchTxtFocus(event: JQueryEventObject): void
+        OnCitySearchTxtFocus = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.clearSearchCityData();
-        }
+            this.clearSearchCityData();
+        };
 
-        onFormTabClick(event: JQueryEventObject): void
+        OnFormTabClick = (event: JQueryEventObject): void =>
         {
-            var ctrl: JQuery = $(event.delegateTarget);
+            var ctrl = $(event.delegateTarget);
 
             // если вкладка уже активна, то ничего не делаем
             if (ctrl.hasClass("c-page-search-form-tab-selected"))
                 return;
 
             // меняем активную вкладку
-            var id: string = ctrl.attr("id");
+            var id = ctrl.attr("id");
 
-            if ("i-page-search-form-tab-search-text" == id)
+            if ("i-page-search-form-tab-search-text" === id)
             {
                 $("#i-page-search-form-tab-search-text").addClass("c-page-search-form-tab-selected");
                 $("#i-page-search-form-tab-search-city").removeClass("c-page-search-form-tab-selected");
 
                 $("#i-page-search-form-search-city").addClass("hidden");
                 $("#i-page-search-form-search-text").removeClass("hidden");
-
-            }
-            else if ("i-page-search-form-tab-search-city" == id)
+            } else if ("i-page-search-form-tab-search-city" === id)
             {
                 $("#i-page-search-form-tab-search-city").addClass("c-page-search-form-tab-selected");
                 $("#i-page-search-form-tab-search-text").removeClass("c-page-search-form-tab-selected");
@@ -93,115 +85,112 @@ module DistanceEditor
                 $("#i-page-search-form-search-text").addClass("hidden");
                 $("#i-page-search-form-search-city").removeClass("hidden");
             }
-        }
+        };
 
-        onSearchCityButtonClick(event: JQueryEventObject): void
+        OnSearchCityButtonClick = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.searchByQuery = false;
-            __currDistanceEditor.setSearchParametersPanel();
-            __currDistanceEditor.getRoutePageData(1);
-        }
+            this.SearchByQuery = false;
+            this.setSearchParametersPanel();
+            this.getRoutePageData(1);
+        };
 
-        onSearchTextButtonClick(event: JQueryEventObject): void
+        OnSearchTextButtonClick = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.searchByQuery = true;
-            __currDistanceEditor.currentSearchQuery = $("#i-page-search-form-search-text-txt").val().trim();
-            __currDistanceEditor.queryForEmptyDistance = $("#i-page-search-form-search-empty-distance-chk").is(":checked");
-            __currDistanceEditor.setSearchParametersPanel();
-            __currDistanceEditor.getRoutePageData(1);
-        }
+            this.SearchByQuery = true;
+            this.CurrentSearchQuery = $("#i-page-search-form-search-text-txt").val().trim();
+            this.QueryForEmptyDistance = $("#i-page-search-form-search-empty-distance-chk").is(":checked");
+            this.setSearchParametersPanel();
+            this.getRoutePageData(1);
+        };
 
         setSearchParametersPanel(): void
         {
             $("#i-page-search-parameters").removeClass("hidden");
 
-            if (__currDistanceEditor.searchByQuery)
+            if (this.SearchByQuery)
             {
-                $("#i-page-search-parameters-text-value").text(__currDistanceEditor.currentSearchQuery);
+                $("#i-page-search-parameters-text-value").text(this.CurrentSearchQuery);
 
-                if (__currDistanceEditor.queryForEmptyDistance)
+                if (this.QueryForEmptyDistance)
                     $("#i-page-search-parameters-text-empty").removeClass("hidden");
                 else
                     $("#i-page-search-parameters-text-empty").addClass("hidden");
 
                 $("#i-page-search-parameters-city").addClass("hidden");
                 $("#i-page-search-parameters-text").removeClass("hidden");
-            }
-            else
+            } else
             {
-                $("#i-page-search-parameters-city-value").text(__currDistanceEditor.selectedSearchCity.Fullname);
+                $("#i-page-search-parameters-city-value").text(this.SelectedSearchCity.Fullname);
 
                 $("#i-page-search-parameters-city").removeClass("hidden");
-                $("#i-page-search-parameters-text").addClass("hidden");                
+                $("#i-page-search-parameters-text").addClass("hidden");
             }
         }
 
 
-        onPageNavigationClick(event: JQueryEventObject): void
+        OnPageNavigationClick = (event: JQueryEventObject): void =>
         {
-            var ctrl: JQuery = $(event.delegateTarget);
+            var ctrl = $(event.delegateTarget);
 
-            var pageNum: number = parseInt(ctrl.attr("data-page-num"));
+            var pageNum = parseInt(ctrl.attr("data-page-num"));
 
             // загружаем данные указанной страницы
-            __currDistanceEditor.getRoutePageData(pageNum);
-        }
+            this.getRoutePageData(pageNum);
+        };
 
         getRoutePageData(pageNumber: number): void
         {
-            __currDistanceEditor.showOverlay("#i-page-loading-container", "#i-page-main-container");
-            __currDistanceEditor.currentPage = pageNumber;
+            this.showOverlay("#i-page-loading-container", "#i-page-main-container");
+            this.CurrentPage = pageNumber;
 
-            var prefix: string = __currDistanceEditor.searchByQuery ? "query" : "city";
-            var query = __currDistanceEditor.searchByQuery ? __currDistanceEditor.currentSearchQuery : __currDistanceEditor.selectedSearchCity.Id.toString();
-            var maxDistance: number = (__currDistanceEditor.searchByQuery && __currDistanceEditor.queryForEmptyDistance) ? 0 : __currDistanceEditor.maxDistance;
-            var offset: number = (pageNumber - 1) * __currDistanceEditor.rowsPerPage;
+            var prefix = this.SearchByQuery ? "query" : "city";
+            var query = this.SearchByQuery ? this.CurrentSearchQuery : this.SelectedSearchCity.Id.toString();
+            var maxDistance = (this.SearchByQuery && this.QueryForEmptyDistance) ? 0 : this.MaxDistance;
+            var offset = (pageNumber - 1) * this.RowsPerPage;
 
-            var queryPath: string = prefix;
-            queryPath += "/" + query;
-            queryPath += "/" + maxDistance.toString();
-            queryPath += "/" + offset.toString();
-            queryPath += "/" + __currDistanceEditor.rowsPerPage.toString();
+            var queryPath = prefix;
+            queryPath += `/${query}`;
+            queryPath += `/${maxDistance.toString()}`;
+            queryPath += `/${offset.toString()}`;
+            queryPath += `/${this.RowsPerPage.toString()}`;
 
             // отправляем запрос на сервер
             $.ajax({
                 type: "GET",
-                url: "/api/searchroute/" + queryPath,
-                success: __currDistanceEditor.onAjaxRoutePageDataSuccess,
-                error: __currDistanceEditor.onAjaxRoutePageDataError
+                url: `/api/searchroute/${queryPath}`,
+                success: this.OnAjaxRoutePageDataSuccess,
+                error: this.OnAjaxRoutePageDataError
             });
-
         }
 
-        onAjaxRoutePageDataError(jqXHR: JQueryXHR, status: string, message: string): void
+        OnAjaxRoutePageDataError = (jqXhr: JQueryXHR, status: string, message: string): void =>
         {
             // ничего не делаем
-            __currDistanceEditor.hideOverlay("#i-page-loading-container");
-        }
+            this.hideOverlay("#i-page-loading-container");
+        };
 
-        onAjaxRoutePageDataSuccess(data: ServerData.AjaxRoutesInfoPackage, status: string, jqXHR: JQueryXHR): void
+        OnAjaxRoutePageDataSuccess = (data: ServerData.AjaxRoutesInfoPackage, status: string, jqXhr: JQueryXHR): void =>
         {
-            __currDistanceEditor.currentDataFrame = data;
-            __currDistanceEditor.drawTableData();
-            __currDistanceEditor.drawPageNavigation();
-            __currDistanceEditor.hideOverlay("#i-page-loading-container");
-        }
-
+            this.CurrentDataFrame = data;
+            this.drawTableData();
+            this.drawPageNavigation();
+            this.hideOverlay("#i-page-loading-container");
+        };
 
         showOverlay(overlayId: string, parentId: string): void
         {
-            var overlay: JQuery = $(overlayId);
-            var parent: JQuery = $(parentId);
-            var icon: JQuery = $("div.fa-spinner", overlay);
+            var overlay = $(overlayId);
+            var parent = $(parentId);
+            var icon = $("div.fa-spinner", overlay);
 
             overlay.css({
-                top: 0,                
+                top: 0,
                 width: parent.innerWidth(),
                 height: parent.innerHeight()
             });
 
-            var iconWidth: number = 64;
-            var iconHeight: number = 64;
+            var iconWidth = 64;
+            var iconHeight = 64;
 
             icon.css({
                 top: (parent.height() / 2 - (iconHeight / 2)),
@@ -213,41 +202,40 @@ module DistanceEditor
 
         hideOverlay(overlayId: string): void
         {
-            var overlay: JQuery = $(overlayId);
+            var overlay = $(overlayId);
             overlay.hide();
         }
 
         drawTableData(): void
         {
-            __currDistanceEditor.clearTableData();
+            this.clearTableData();
 
-            var tableBody: JQuery = $("#i-page-main-table > tbody");
+            var tableBody = $("#i-page-main-table > tbody");
 
-            var data: ServerData.AjaxRoutesInfoPackage = __currDistanceEditor.currentDataFrame;
+            var data = this.CurrentDataFrame;
 
             if (1 > data.Routes.length)
             {
-                var rowNoDataTemplate: JQuery = $("#i-page-main-table-row-no-data-template").clone();
+                var rowNoDataTemplate = $("#i-page-main-table-row-no-data-template").clone();
                 rowNoDataTemplate.removeClass("hidden");
                 rowNoDataTemplate.appendTo(tableBody);
-            }
-            else
+            } else
             {
-                for (var i: number = 0; i < data.Routes.length; i++)
+                for (var i = 0; i < data.Routes.length; i++)
                 {
-                    var entry: ServerData.AjaxRouteInfo = data.Routes[i];
-                    var rowDataTemplate: JQuery = $("#i-page-main-table-row-template").clone();
+                    var entry = data.Routes[i];
+                    var rowDataTemplate = $("#i-page-main-table-row-template").clone();
                     rowDataTemplate.removeClass("hidden");
 
                     rowDataTemplate.attr("data-route-id", entry.Id);
                     $("td.c-page-main-table-col-num", rowDataTemplate).text(entry.Id.toString());
                     $("td.c-page-main-table-col-city1", rowDataTemplate).text(entry.City1.Fullname);
                     $("td.c-page-main-table-col-city2", rowDataTemplate).text(entry.City2.Fullname);
-                    var distance: string = __currDistanceEditor.getFormattedDistance(entry.Distance);
+                    var distance = this.getFormattedDistance(entry.Distance);
                     $("td.c-page-main-table-col-distance", rowDataTemplate).text(distance);
 
                     // привязываем обработчик открытия формы редактирования
-                    $("td.c-page-main-table-col-edit > i", rowDataTemplate).click(__currDistanceEditor.onEditDistanceOpenClick);
+                    $("td.c-page-main-table-col-edit > i", rowDataTemplate).click(this.OnEditDistanceOpenClick);
 
                     rowDataTemplate.appendTo(tableBody);
                 }
@@ -266,11 +254,11 @@ module DistanceEditor
         getRouteInfoFromCurrentDataFarme(routeId: number): ServerData.AjaxRouteInfo
         {
             var route: ServerData.AjaxRouteInfo = null;
-            var routes: ServerData.AjaxRouteInfo[] = __currDistanceEditor.currentDataFrame.Routes;
+            var routes = this.CurrentDataFrame.Routes;
 
-            for (var i: number = 0; i < routes.length; i++)
+            for (var i = 0; i < routes.length; i++)
             {
-                if (routeId == routes[i].Id)
+                if (routeId === routes[i].Id)
                 {
                     route = routes[i];
                     break;
@@ -282,17 +270,17 @@ module DistanceEditor
 
         clearTableData(): void
         {
-            var rows: JQuery = $("#i-page-main-table > tbody > tr");
+            var rows = $("#i-page-main-table > tbody > tr");
             rows.remove();
         }
 
         drawPageNavigation(): void
         {
-            __currDistanceEditor.clearPageNavigation();
+            this.clearPageNavigation();
 
             // рассчитываем данные панели навигации
             // ... отображаемое количество ссылок
-            var displayPagesNumber: number = 10;
+            var displayPagesNumber = 10;
             // ... номер страницы в первой отображаемой ссылке
             var displayFirstPageNumber: number;
             // ... номер страницы в последней отображаемой ссылке
@@ -303,10 +291,10 @@ module DistanceEditor
             var currentPageNumber: number;
 
             // рассчитываем общее количество страниц в выборке
-            allPagesNumber = Math.ceil(__currDistanceEditor.currentDataFrame.AllFoundRoutesCount / __currDistanceEditor.rowsPerPage);
+            allPagesNumber = Math.ceil(this.CurrentDataFrame.AllFoundRoutesCount / this.RowsPerPage);
 
             // номер текущей страницы
-            currentPageNumber = __currDistanceEditor.currentPage;
+            currentPageNumber = this.CurrentPage;
 
             // находим номер первой страницы в списке
             displayFirstPageNumber = currentPageNumber - Math.floor(displayPagesNumber / 2);
@@ -317,102 +305,99 @@ module DistanceEditor
             displayFirstPageNumber = Math.max(displayLastPageNumber - displayPagesNumber + 1, 1);
 
             // рисуем панель навигации
-            var container: JQuery = $("#i-page-navpage-container");
-            var pageNumTempl: JQuery = $("#i-page-navpage-pagelink-template");
+            var container = $("#i-page-navpage-container");
+            var pageNumTempl = $("#i-page-navpage-pagelink-template");
 
-            for (var i: number = displayFirstPageNumber; i <= displayLastPageNumber; i++)
+            for (var i = displayFirstPageNumber; i <= displayLastPageNumber; i++)
             {
-                var pageNumContainer: JQuery = pageNumTempl.clone();
+                var pageNumContainer = pageNumTempl.clone();
                 pageNumContainer.removeAttr("id");
                 pageNumContainer.attr("data-page-num", i);
                 pageNumContainer.text(i);
                 pageNumContainer.appendTo(container);
 
-                if (i == currentPageNumber)
+                if (i === currentPageNumber)
                 {
                     pageNumContainer.addClass("c-page-navpage-panel-link-current");
-                }
-                else
+                } else
                 {
                     // привязываем обработчик события
-                    pageNumContainer.click(__currDistanceEditor.onPageNavigationClick);
+                    pageNumContainer.click(this.OnPageNavigationClick);
                 }
             }
 
             // расставляем обработчики и стили на сслыки быстрой навигации
             // ... отображаем ли ссылку на страницу назад
-            var displayPrevLinkActive: boolean = (currentPageNumber > 1);
+            var displayPrevLinkActive = (currentPageNumber > 1);
             // ... отображаем ли ссылку на страницу вперёд
-            var displayNextLinkActive: boolean = (currentPageNumber < allPagesNumber);
+            var displayNextLinkActive = (currentPageNumber < allPagesNumber);
             // ... отображаем ли ссылку на страницу назад
-            var displayPrevPageLinkActive: boolean = (displayFirstPageNumber > 1);
+            var displayPrevPageLinkActive = (displayFirstPageNumber > 1);
             // ... отображаем ли ссылку на страницу вперёд
-            var displayNextPageLinkActive: boolean = (displayLastPageNumber < allPagesNumber);
+            var displayNextPageLinkActive = (displayLastPageNumber < allPagesNumber);
             // ... отображаем ли ссылку на первую страницу
-            var displayFirstLinkActive: boolean = (currentPageNumber != 1);
+            var displayFirstLinkActive = (currentPageNumber !== 1);
             // ... отображаем ли ссылку на последнюю страницу
-            var displayLastLinkActive: boolean = (currentPageNumber < allPagesNumber);
+            var displayLastLinkActive = (currentPageNumber < allPagesNumber);
 
             var linkPageNumber: number;
 
             if (displayPrevLinkActive)
             {
                 linkPageNumber = Math.max(currentPageNumber - 1, 1);
-                $("#i-page-navpage-prev").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-prev").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
 
             if (displayNextLinkActive)
             {
                 linkPageNumber = Math.min(currentPageNumber + 1, allPagesNumber);
-                $("#i-page-navpage-next").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-next").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
 
             if (displayPrevPageLinkActive)
             {
                 linkPageNumber = Math.max(currentPageNumber - displayPagesNumber, 1);
-                $("#i-page-navpage-prev-page").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-prev-page").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
 
             if (displayNextPageLinkActive)
             {
                 linkPageNumber = Math.min(currentPageNumber + displayPagesNumber, allPagesNumber);
-                $("#i-page-navpage-next-page").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-next-page").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
 
             if (displayFirstLinkActive)
             {
                 linkPageNumber = 1;
-                $("#i-page-navpage-first").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-first").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
 
             if (displayLastLinkActive)
             {
                 linkPageNumber = allPagesNumber;
-                $("#i-page-navpage-last").click(__currDistanceEditor.onPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
+                $("#i-page-navpage-last").click(this.OnPageNavigationClick).removeClass("c-page-navpage-panel-link-disabled").attr("data-page-num", linkPageNumber);
             }
-
-
         }
 
         clearPageNavigation(): void
         {
             // удаляем обработчики событий со ссылок быстрой навигации и ставим стили по умолчанию
-            $("#i-page-navpage-prev, #i-page-navpage-next, #i-page-navpage-prev-page, #i-page-navpage-next-page, #i-page-navpage-first, #i-page-navpage-last").unbind("click", __currDistanceEditor.onPageNavigationClick).addClass("c-page-navpage-panel-link-disabled").attr("data-page-num", "");
-            
+            $("#i-page-navpage-prev, #i-page-navpage-next, #i-page-navpage-prev-page, #i-page-navpage-next-page, #i-page-navpage-first, #i-page-navpage-last").unbind("click", this.OnPageNavigationClick).addClass("c-page-navpage-panel-link-disabled").attr("data-page-num", "");
+
             // получаем коллекцию контролов с номерами страниц
-            var divs: JQuery = $("#i-page-navpage-container > div");
+            var divs = $("#i-page-navpage-container > div");
             // удаляем все обработчики событий
-            divs.unbind("click", __currDistanceEditor.onPageNavigationClick);
+            divs.unbind("click", this.OnPageNavigationClick);
             // удаляем все контейнеры навигации
             divs.remove();
         }
 
-        onEditDistanceOpenClick(event: JQueryEventObject): void
+        OnEditDistanceOpenClick = (event: JQueryEventObject): void =>
         {
             // заполняем данные на форме
-            var tableRow: JQuery = $(event.delegateTarget).parent().parent();
-            var routeId: number = parseInt(tableRow.attr("data-route-id"));
-            var routeInfo: ServerData.AjaxRouteInfo = __currDistanceEditor.getRouteInfoFromCurrentDataFarme(routeId);
+            var tableRow = $(event.delegateTarget).parent().parent();
+            var routeId = parseInt(tableRow.attr("data-route-id"));
+            var routeInfo = this.getRouteInfoFromCurrentDataFarme(routeId);
 
             if (null == routeInfo)
                 return;
@@ -420,7 +405,7 @@ module DistanceEditor
             $("#i-page-distance-edit-form").attr("data-route-id", routeId);
             $("#i-page-distance-edit-form-city-info-1").text(routeInfo.City1.Fullname);
             $("#i-page-distance-edit-form-city-info-2").text(routeInfo.City2.Fullname);
-            var distance: string = __currDistanceEditor.getFormattedDistance(routeInfo.Distance);
+            var distance = this.getFormattedDistance(routeInfo.Distance);
             $("#i-page-distance-edit-form-current-distance").text(distance);
             $("#i-page-distance-edit-form-new-distance").val("").removeClass("c-page-distance-edit-form-edit-txt-error");
             $("#i-page-distance-edit-form-save-btn").attr("disabled", "disabled");
@@ -429,7 +414,7 @@ module DistanceEditor
             $("#i-page-edit-form-overlay-mask").fadeIn(300);
 
             // отображаем форму
-            var editForm: JQuery = $("#i-page-distance-edit-form");
+            var editForm = $("#i-page-distance-edit-form");
             editForm.fadeIn(300);
 
             // выравниваем позицию формы по центру экрана
@@ -443,34 +428,33 @@ module DistanceEditor
 
             // назначаем фокус ввода для текстового поля
             $("#i-page-distance-edit-form-new-distance").focus();
-        }
+        };
 
-
-        onEditDistanceCloseClick(event: JQueryEventObject): void
+        OnEditDistanceCloseClick = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.hideEditDistanceForm();
-        }
+            this.hideEditDistanceForm();
+        };
 
         hideEditDistanceForm(): void
         {
             // прячем форму
             $("#i-page-distance-edit-form").fadeOut(300);
             // прячем подложку формы
-            $("#i-page-edit-form-overlay-mask").fadeOut(300);            
+            $("#i-page-edit-form-overlay-mask").fadeOut(300);
 
             // скрываем информацию об ошибке
             $("#i-page-distance-edit-form-error-message").text("");
             $("#i-page-distance-edit-form-error").addClass("hidden");
         }
 
-        onEditDistanceSaveClick(event: JQueryEventObject): void
+        OnEditDistanceSaveClick = (event: JQueryEventObject): void =>
         {
-            var routeInfo: ServerData.AjaxRouteInfo = new ServerData.AjaxRouteInfo();
+            var routeInfo = new ServerData.AjaxRouteInfo();
             routeInfo.Distance = parseInt($("#i-page-distance-edit-form-new-distance").val());
             routeInfo.Id = parseInt($("#i-page-distance-edit-form").attr("data-route-id"));
 
             // показываем "крутилку"
-            __currDistanceEditor.showOverlay("#i-distance-edit-form-loading-container", "#i-page-distance-edit-form");
+            this.showOverlay("#i-distance-edit-form-loading-container", "#i-page-distance-edit-form");
 
             // Обновляем данные дистанции - отправляем запрос на сервер.
             $.ajax({
@@ -479,103 +463,99 @@ module DistanceEditor
                 data: JSON.stringify(routeInfo),
                 contentType: "application/json",
                 dataType: "json",
-                success: __currDistanceEditor.onAjaxUpdateRouteSuccess,
-                error: __currDistanceEditor.onAjaxUpdateRouteError
+                success: this.OnAjaxUpdateRouteSuccess,
+                error: this.OnAjaxUpdateRouteError
             });
-        }
+        };
 
-
-        onAjaxUpdateRouteError(jqXHR: JQueryXHR, status: string, message: string): void
+        OnAjaxUpdateRouteError = (jqXhr: JQueryXHR, status: string, message: string): void =>
         {
             // отображаем текст ошибки
             $("#i-page-distance-edit-form-error-message").text(message);
             $("#i-page-distance-edit-form-error").removeClass("hidden");
 
             // прячем крутилку
-            __currDistanceEditor.hideOverlay("#i-distance-edit-form-loading-container");
-        }
+            this.hideOverlay("#i-distance-edit-form-loading-container");
+        };
 
-        onAjaxUpdateRouteSuccess(data: ServerData.AjaxRouteInfo, status: string, jqXHR: JQueryXHR): void
+        OnAjaxUpdateRouteSuccess = (data: ServerData.AjaxRouteInfo, status: string, jqXhr: JQueryXHR): void =>
         {
             // обновляем значение дистанции в сохранённых страничных данных
-            var routeInfo: ServerData.AjaxRouteInfo = __currDistanceEditor.getRouteInfoFromCurrentDataFarme(data.Id);
+            var routeInfo = this.getRouteInfoFromCurrentDataFarme(data.Id);
             routeInfo.Distance = data.Distance;
 
             // обновляем значение дистанции в таблице
-            var tableRow: JQuery = __currDistanceEditor.getRouteTableRowByRouteId(data.Id);
-            var distance: string = __currDistanceEditor.getFormattedDistance(data.Distance);
+            var tableRow = this.getRouteTableRowByRouteId(data.Id);
+            var distance = this.getFormattedDistance(data.Distance);
             $("td.c-page-main-table-col-distance", tableRow).text(distance);
 
             // прячем "крутилку"
-            __currDistanceEditor.hideOverlay("#i-distance-edit-form-loading-container");
+            this.hideOverlay("#i-distance-edit-form-loading-container");
 
             // скрываем форму редактирования дистанции
-            __currDistanceEditor.hideEditDistanceForm();
-        }
-
+            this.hideEditDistanceForm();
+        };
 
         getRouteTableRowByRouteId(routeId: number): JQuery
         {
-            return $("#i-page-main-table > tbody > tr[data-route-id=" + routeId.toString() + "]");
+            return $(`#i-page-main-table > tbody > tr[data-route-id=${routeId.toString()}]`);
         }
 
-        onEditDistanceFocusOut(event: JQueryEventObject): void
+        OnEditDistanceFocusOut = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.checkNewDistanceValue();
-        }
+            this.checkNewDistanceValue();
+        };
 
-        onEditDistanceKeyUp(event: JQueryEventObject): void
+        OnEditDistanceKeyUp = (event: JQueryEventObject): void =>
         {
-            __currDistanceEditor.checkNewDistanceValue();
-        }
+            this.checkNewDistanceValue();
+        };
 
         checkNewDistanceValue(): void
         {
-            var saveBtn: JQuery  = $("#i-page-distance-edit-form-save-btn");
-            var newDistanceTxt: JQuery = $("#i-page-distance-edit-form-new-distance");
-            var distance: number = parseInt(newDistanceTxt.val());
+            var saveBtn = $("#i-page-distance-edit-form-save-btn");
+            var newDistanceTxt = $("#i-page-distance-edit-form-new-distance");
+            var distance = parseInt(newDistanceTxt.val());
 
             if (isNaN(distance))
             {
                 saveBtn.attr("disabled", "disabled");
                 newDistanceTxt.addClass("c-page-distance-edit-form-edit-txt-error");
                 newDistanceTxt.val("");
-            }
-            else
+            } else
             {
                 newDistanceTxt.val(distance.toString());
                 newDistanceTxt.removeClass("c-page-distance-edit-form-edit-txt-error");
                 saveBtn.removeAttr("disabled");
-            }            
+            }
         }
 
-
-        onDocumentReady(): void
+        OnDocumentReady = (): void =>
         {
             /////////////////////////////////////
             // цепляем обработчики событий
-            $("#i-page-search-form-search-city-txt").focus(__currDistanceEditor.onCitySearchTxtFocus);
+            $("#i-page-search-form-search-city-txt").focus(this.OnCitySearchTxtFocus);
 
             // подключаем контрол выбора города
-            CitySelector.__currentCitySelector.init($("#i-page-search-form-search-city-txt"), __currDistanceEditor);
+            CitySelector.currentCitySelector.init($("#i-page-search-form-search-city-txt"), currDistanceEditor);
 
             // навигация по закладкам
-            $("#i-page-search-form-tab-search-text, #i-page-search-form-tab-search-city").click(__currDistanceEditor.onFormTabClick);
+            $("#i-page-search-form-tab-search-text, #i-page-search-form-tab-search-city").click(this.OnFormTabClick);
 
             // поиск
-            $("#i-page-search-form-search-city-btn").click(__currDistanceEditor.onSearchCityButtonClick);
-            $("#i-page-search-form-search-text-btn").click(__currDistanceEditor.onSearchTextButtonClick);
+            $("#i-page-search-form-search-city-btn").click(this.OnSearchCityButtonClick);
+            $("#i-page-search-form-search-text-btn").click(this.OnSearchTextButtonClick);
 
             // форма редактирования дистанции
-            $("#i-page-distance-edit-form-cancel-btn").click(__currDistanceEditor.onEditDistanceCloseClick);
-            $("#i-page-distance-edit-form-save-btn").click(__currDistanceEditor.onEditDistanceSaveClick);
-            $("#i-page-distance-edit-form-new-distance").focusout(__currDistanceEditor.onEditDistanceFocusOut);
-            $("#i-page-distance-edit-form-new-distance").keyup(__currDistanceEditor.onEditDistanceKeyUp);
-        }
-    }  
-    
-    export var __currDistanceEditor: DistanceEditorController = new DistanceEditorController();       
+            $("#i-page-distance-edit-form-cancel-btn").click(this.OnEditDistanceCloseClick);
+            $("#i-page-distance-edit-form-save-btn").click(this.OnEditDistanceSaveClick);
+            $("#i-page-distance-edit-form-new-distance").focusout(this.OnEditDistanceFocusOut);
+            $("#i-page-distance-edit-form-new-distance").keyup(this.OnEditDistanceKeyUp);
+        };
+    }
+
+    export var currDistanceEditor = new DistanceEditorController();
 }
 
 // подключаем обработчик события о готовности страницы
-$(document).ready(DistanceEditor.__currDistanceEditor.onDocumentReady);
+$(document).ready(DistanceEditor.currDistanceEditor.OnDocumentReady);

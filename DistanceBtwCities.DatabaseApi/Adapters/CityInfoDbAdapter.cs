@@ -1,19 +1,19 @@
 ﻿using System.Data.SqlClient;
 using DistanceBtwCities.DatabaseApi.Constants;
-using DistanceBtwCities.DataContract;
 using DistanceBtwCities.DatabaseApi.Helpers;
+using DistanceBtwCities.DataContract;
 
 namespace DistanceBtwCities.DatabaseApi.Adapters
 {
-    static class CityInfoDbAdapter
+    internal static class CityInfoDbAdapter
     {
         public static CityInfo GetCityInfo(this SqlDataReader reader)
         {
             var city = DataContractFactory.CreateCityInfo();
 
             city.Id = reader.GetValue<long>(0);
-            city.Latitude = (double)reader.GetValue<int>(1) / GeoConstants.GeoFactor;
-            city.Longitude = (double)reader.GetValue<int>(2) / GeoConstants.GeoFactor;
+            city.Latitude = (double) reader.GetValue<int>(1)/GeoConstants.GeoFactor;
+            city.Longitude = (double) reader.GetValue<int>(2)/GeoConstants.GeoFactor;
             city.Name = reader.GetValue<string>(3);
             city.District = reader.GetValue<string>(4);
             city.Region = reader.GetValue<string>(5);

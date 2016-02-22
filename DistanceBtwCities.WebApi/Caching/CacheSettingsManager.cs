@@ -1,44 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Configuration;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.Caching;
-using System.Web;
 using DistanceBtwCities.WebApi.Configuration;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
-    class CacheSettingsManager
+    internal class CacheSettingsManager
     {
         /// <summary>
-        /// Ссылка на единственный объект класса CacheSettingsManager.
+        ///     Ссылка на единственный объект класса CacheSettingsManager.
         /// </summary>
         private static CacheSettingsManager _instance;
 
         /// <summary>
-        /// Настройки кэширования в структуре обеспечивающей быстрый поиск настроект для входящего запроса.
+        ///     Настройки кэширования в структуре обеспечивающей быстрый поиск настроект для входящего запроса.
         /// </summary>
         private ILookup<int, KeyValuePair<CachePathSegments, CacheSettingsElement>> _cacheSettingsLookup;
 
         /// <summary>
-        /// Объект реализующий сравнение входящего запроса с настройками кэширования. 
-        /// Используется с целью определить существуют ли настройки кэширования для входящего запроса. 
-        /// </summary>
-        public CacheSegmentsComparer CacheSegmentsComparer { get; set; }
-
-        /// <summary>
-        /// Конструктор по умолчанию скрыт, чтобы реализовать патерн Singleton.
+        ///     Конструктор по умолчанию скрыт, чтобы реализовать патерн Singleton.
         /// </summary>
         private CacheSettingsManager()
         {
         }
 
         /// <summary>
-        /// Возвращает ссылку на объект CacheSettingsManager, который реализует паттерн Singleton.
+        ///     Объект реализующий сравнение входящего запроса с настройками кэширования.
+        ///     Используется с целью определить существуют ли настройки кэширования для входящего запроса.
+        /// </summary>
+        public CacheSegmentsComparer CacheSegmentsComparer { get; set; }
+
+        /// <summary>
+        ///     Возвращает ссылку на объект CacheSettingsManager, который реализует паттерн Singleton.
         /// </summary>
         /// <returns></returns>
         public static CacheSettingsManager GetInstance()
@@ -53,11 +47,11 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        /// Инициализирует объекты настроек кэширования для быстрого поиска настроек кэширования для входящего запроса.
+        ///     Инициализирует объекты настроек кэширования для быстрого поиска настроек кэширования для входящего запроса.
         /// </summary>
-        void _init()
+        private void _init()
         {
-            var cacheSettings = (CacheSettingsSection)ConfigurationManager.GetSection("cacheSettingsSection");
+            var cacheSettings = (CacheSettingsSection) ConfigurationManager.GetSection("cacheSettingsSection");
             var lookupItems = new List<KeyValuePair<CachePathSegments, CacheSettingsElement>>();
 
             foreach (var cahceSettingElement in cacheSettings.CacheSettings.Cast<CacheSettingsElement>())
@@ -71,7 +65,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        /// Получает настройки кэширования из конфигурации для входящего запроса.
+        ///     Получает настройки кэширования из конфигурации для входящего запроса.
         /// </summary>
         /// <param name="requestUri">Uri входящего запроса.</param>
         /// <returns>Настройки кэширования или null.</returns>
@@ -92,6 +86,5 @@ namespace DistanceBtwCities.WebApi.Caching
 
             return null;
         }
-
     }
 }

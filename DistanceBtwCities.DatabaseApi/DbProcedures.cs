@@ -2,18 +2,14 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DistanceBtwCities.DatabaseApi.Adapters;
-using DistanceBtwCities.DatabaseApi.Constants;
 using DistanceBtwCities.DataContract;
 
 namespace DistanceBtwCities.DatabaseApi
 {
     public class DbProcedures
     {
-        private string _connectionString;
+        private readonly string _connectionString;
 
         internal DbProcedures(string connectionString)
         {
@@ -75,7 +71,7 @@ namespace DistanceBtwCities.DatabaseApi
                     param.Value = query;
                     cmd.Parameters.Add(param);
 
-                    param = new SqlParameter("maxDistance", SqlDbType.Int);
+                    param = new SqlParameter("MaxDistance", SqlDbType.Int);
                     param.Value = maxDistance;
                     cmd.Parameters.Add(param);
 
@@ -130,7 +126,7 @@ namespace DistanceBtwCities.DatabaseApi
                     param.Value = cityId;
                     cmd.Parameters.Add(param);
 
-                    param = new SqlParameter("maxDistance", SqlDbType.Int);
+                    param = new SqlParameter("MaxDistance", SqlDbType.Int);
                     param.Value = maxDistance;
                     cmd.Parameters.Add(param);
 

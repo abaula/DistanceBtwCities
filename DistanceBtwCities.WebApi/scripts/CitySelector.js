@@ -1,203 +1,222 @@
-///<reference path="typings\jquery\jquery.d.ts"/>
-///<reference path="ServerAjaxData.ts"/>
+/// <reference path="typings\jquery\jquery.d.ts" />
+/// <reference path="ServerAjaxData.ts" />
 var CitySelector;
-(function (_CitySelector) {
+(function (CitySelector_1) {
     var CitySelector = (function () {
         function CitySelector() {
-            this.control = null;
-            this.component = null;
-            this.timer = 0;
-            this.searchValue = null;
-            this.busy = false;
-            this.timeoutMs = 1000;
-            this.currentRequest = null;
-            this.listBlockHtml = null;
-            this.listData = null;
+            var _this = this;
+            this.Control = null;
+            this.Component = null;
+            this.Timer = 0;
+            this.SearchValue = null;
+            this.Busy = false;
+            this.TimeoutMs = 1000;
+            this.CurrentRequest = null;
+            this.ListBlockHtml = null;
+            this.ListData = null;
+            this.OnMouseEnter = function (event) {
+                $("div.c-page-city-select-item", _this.ListBlockHtml).removeClass("c-page-city-select-item-selected");
+                $(event.delegateTarget).addClass("c-page-city-select-item-selected");
+            };
+            this.OnMouseLeave = function (event) {
+                $("div.c-page-city-select-item", _this.ListBlockHtml).removeClass("c-page-city-select-item-selected");
+            };
+            this.OnKeyDown = function (event) {
+                if (null != _this.ListBlockHtml) {
+                    if (40 === event.keyCode) 
+                    // arrow down
+                    {
+                        _this.OnArrowDown();
+                        return;
+                    }
+                    else if (38 === event.keyCode) 
+                    // arrow up
+                    {
+                        _this.OnArrowUp();
+                        return;
+                    }
+                    else if (13 === event.keyCode) 
+                    // enter
+                    {
+                        _this.OnEnter();
+                        return;
+                    }
+                    else if (27 === event.keyCode) 
+                    // escape
+                    {
+                        _this.OnEscape();
+                        return;
+                    }
+                }
+                _this.OnTextChange(event);
+            };
+            this.OnArrowDown = function () {
+                var selectedItem = _this.getSelectedItem();
+                if (0 < selectedItem.length) {
+                    var nextItem = selectedItem.next();
+                    if (0 < nextItem.length) {
+                        selectedItem.removeClass("c-page-city-select-item-selected");
+                        nextItem.addClass("c-page-city-select-item-selected");
+                    }
+                }
+                else {
+                    $("div.c-page-city-select-item", _this.ListBlockHtml).first().addClass("c-page-city-select-item-selected");
+                }
+            };
+            this.OnArrowUp = function () {
+                var selectedItem = _this.getSelectedItem();
+                if (0 < selectedItem.length) {
+                    var prevItem = selectedItem.prev();
+                    if (0 < prevItem.length) {
+                        selectedItem.removeClass("c-page-city-select-item-selected");
+                        prevItem.addClass("c-page-city-select-item-selected");
+                    }
+                }
+            };
+            this.OnEnter = function () {
+                var selectedItem = _this.getSelectedItem();
+                if (0 < selectedItem.length) {
+                    var id = parseInt(selectedItem.attr("data-id"));
+                    _this.OnItemClicked(id);
+                }
+            };
+            this.OnEscape = function () {
+                _this.clearListBlock();
+            };
+            this.OnTextChange = function (event) {
+                if (0 < _this.Timer)
+                    clearTimeout(_this.Timer);
+                if (_this.Busy)
+                    return;
+                _this.Timer = setTimeout(_this.OnTimeout, _this.TimeoutMs);
+            };
+            this.OnTimeout = function () {
+                var value = _this.Control.val().trim();
+                if (value === _this.SearchValue)
+                    return;
+                _this.SearchValue = value;
+                if (3 > value.length) {
+                    _this.clearListBlock();
+                    return;
+                }
+                //window.console.log(this.SearchValue);
+                // выставляем флаг блокировки поиска и отправляем поисковый запрос на сервер
+                _this.Busy = true;
+                _this.getData(value);
+            };
+            this.OnAjaxGetOrgDataError = function (jqXhr, status, message) {
+                _this.Busy = false;
+                _this.CurrentRequest = null;
+                //window.console.log("_onAjaxError");
+            };
+            this.OnAjaxGetOrgDataSuccess = function (data, status, jqXhr) {
+                _this.Busy = false;
+                _this.CurrentRequest = null;
+                //window.console.log("_onAjaxGetAccountDataSuccess");
+                _this.ListData = data;
+                // данные получены рисуем выпадающий список выбора
+                _this.drawList();
+            };
+            this.OnItemClick = function (event) {
+                _this.SearchValue = null;
+                var elem = $(event.delegateTarget);
+                //window.console.log("this.OnItemClick(" + elem.attr("data-id") + ")");
+                _this.OnItemClicked(parseInt(elem.attr("data-id")));
+            };
+            this.OnItemClicked = function (id) {
+                var city = _this.getCityById(id);
+                _this.Component.onCitySelected(city);
+                _this.clearListBlock();
+            };
+            this.OnLostFocus = function (event) {
+                if (null != _this.ListBlockHtml) {
+                    if ($(_this.ListBlockHtml).is(":hover"))
+                        setTimeout(_this.clearListBlock, 500);
+                    else
+                        _this.clearListBlock();
+                }
+                _this.SearchValue = null;
+                _this.Component.onCitySelectedAbort();
+            };
         }
         CitySelector.prototype.init = function (control, component) {
-            _CitySelector.__currentCitySelector.clear();
-            _CitySelector.__currentCitySelector.component = component;
-            _CitySelector.__currentCitySelector.control = control;
-            _CitySelector.__currentCitySelector.control.bind("cut paste", _CitySelector.__currentCitySelector.onTextChange);
-            _CitySelector.__currentCitySelector.control.bind("keydown", _CitySelector.__currentCitySelector.onKeyDown);
-            _CitySelector.__currentCitySelector.control.bind("blur", _CitySelector.__currentCitySelector.onLostFocus);
+            this.clear();
+            this.Component = component;
+            this.Control = control;
+            this.Control.bind("cut paste", this.OnTextChange);
+            this.Control.bind("keydown", this.OnKeyDown);
+            this.Control.bind("blur", this.OnLostFocus);
         };
         CitySelector.prototype.clear = function () {
-            _CitySelector.__currentCitySelector.clearListBlock();
-            if (0 < _CitySelector.__currentCitySelector.timer)
-                clearTimeout(_CitySelector.__currentCitySelector.timer);
-            if (null != _CitySelector.__currentCitySelector.control) {
-                _CitySelector.__currentCitySelector.control.unbind("cut paste", _CitySelector.__currentCitySelector.onTextChange);
-                _CitySelector.__currentCitySelector.control.unbind("keydown", _CitySelector.__currentCitySelector.onKeyDown);
-                _CitySelector.__currentCitySelector.control.unbind("blur", _CitySelector.__currentCitySelector.onLostFocus);
+            this.clearListBlock();
+            if (0 < this.Timer)
+                clearTimeout(this.Timer);
+            if (null != this.Control) {
+                this.Control.unbind("cut paste", this.OnTextChange);
+                this.Control.unbind("keydown", this.OnKeyDown);
+                this.Control.unbind("blur", this.OnLostFocus);
             }
             // сбрасываем отправленные на сервер запросы
-            if (null != _CitySelector.__currentCitySelector.currentRequest)
-                _CitySelector.__currentCitySelector.currentRequest.abort();
-            _CitySelector.__currentCitySelector.currentRequest = null;
-            _CitySelector.__currentCitySelector.busy = false;
-            _CitySelector.__currentCitySelector.listData = null;
-            _CitySelector.__currentCitySelector.component = null;
+            if (null != this.CurrentRequest)
+                this.CurrentRequest.abort();
+            this.CurrentRequest = null;
+            this.Busy = false;
+            this.ListData = null;
+            this.Component = null;
         };
         CitySelector.prototype.clearListBlock = function () {
-            if (null != _CitySelector.__currentCitySelector.listBlockHtml) {
-                $("div", _CitySelector.__currentCitySelector.listBlockHtml).unbind("click mouseenter mouseleave");
-                _CitySelector.__currentCitySelector.listBlockHtml.remove();
-                _CitySelector.__currentCitySelector.listBlockHtml = null;
+            if (null != this.ListBlockHtml) {
+                $("div", this.ListBlockHtml).unbind("click mouseenter mouseleave");
+                this.ListBlockHtml.remove();
+                this.ListBlockHtml = null;
             }
-        };
-        CitySelector.prototype.onMouseEnter = function (event) {
-            $("div.c-page-city-select-item", _CitySelector.__currentCitySelector.listBlockHtml).removeClass("c-page-city-select-item-selected");
-            $(event.delegateTarget).addClass("c-page-city-select-item-selected");
-        };
-        CitySelector.prototype.onMouseLeave = function (event) {
-            $("div.c-page-city-select-item", _CitySelector.__currentCitySelector.listBlockHtml).removeClass("c-page-city-select-item-selected");
-        };
-        CitySelector.prototype.onKeyDown = function (event) {
-            if (null != _CitySelector.__currentCitySelector.listBlockHtml) {
-                if (40 == event.keyCode) {
-                    _CitySelector.__currentCitySelector.onArrowDown();
-                    return;
-                }
-                else if (38 == event.keyCode) {
-                    _CitySelector.__currentCitySelector.onArrowUp();
-                    return;
-                }
-                else if (13 == event.keyCode) {
-                    _CitySelector.__currentCitySelector.onEnter();
-                    return;
-                }
-                else if (27 == event.keyCode) {
-                    _CitySelector.__currentCitySelector.onEscape();
-                    return;
-                }
-            }
-            _CitySelector.__currentCitySelector.onTextChange(event);
-        };
-        CitySelector.prototype.onArrowDown = function () {
-            var selectedItem = _CitySelector.__currentCitySelector.getSelectedItem();
-            if (0 < selectedItem.length) {
-                var nextItem = selectedItem.next();
-                if (0 < nextItem.length) {
-                    selectedItem.removeClass("c-page-city-select-item-selected");
-                    nextItem.addClass("c-page-city-select-item-selected");
-                }
-            }
-            else {
-                $("div.c-page-city-select-item", _CitySelector.__currentCitySelector.listBlockHtml).first().addClass("c-page-city-select-item-selected");
-            }
-        };
-        CitySelector.prototype.onArrowUp = function () {
-            var selectedItem = _CitySelector.__currentCitySelector.getSelectedItem();
-            if (0 < selectedItem.length) {
-                var prevItem = selectedItem.prev();
-                if (0 < prevItem.length) {
-                    selectedItem.removeClass("c-page-city-select-item-selected");
-                    prevItem.addClass("c-page-city-select-item-selected");
-                }
-            }
-        };
-        CitySelector.prototype.onEnter = function () {
-            var selectedItem = _CitySelector.__currentCitySelector.getSelectedItem();
-            if (0 < selectedItem.length) {
-                var id = parseInt(selectedItem.attr("data-id"));
-                _CitySelector.__currentCitySelector.onItemClicked(id);
-            }
-        };
-        CitySelector.prototype.onEscape = function () {
-            _CitySelector.__currentCitySelector.clearListBlock();
         };
         CitySelector.prototype.getSelectedItem = function () {
-            return $("div.c-page-city-select-item-selected", _CitySelector.__currentCitySelector.listBlockHtml);
-        };
-        CitySelector.prototype.onTextChange = function (event) {
-            if (0 < _CitySelector.__currentCitySelector.timer)
-                clearTimeout(_CitySelector.__currentCitySelector.timer);
-            if (true == _CitySelector.__currentCitySelector.busy)
-                return;
-            _CitySelector.__currentCitySelector.timer = setTimeout(_CitySelector.__currentCitySelector.onTimeout, _CitySelector.__currentCitySelector.timeoutMs);
-        };
-        CitySelector.prototype.onTimeout = function () {
-            var value = _CitySelector.__currentCitySelector.control.val().trim();
-            if (value == _CitySelector.__currentCitySelector.searchValue)
-                return;
-            _CitySelector.__currentCitySelector.searchValue = value;
-            if (3 > value.length) {
-                _CitySelector.__currentCitySelector.clearListBlock();
-                return;
-            }
-            //window.console.log(__currentCitySelector.searchValue);
-            // выставляем флаг блокировки поиска и отправляем поисковый запрос на сервер
-            _CitySelector.__currentCitySelector.busy = true;
-            _CitySelector.__currentCitySelector.getData(value);
+            return $("div.c-page-city-select-item-selected", this.ListBlockHtml);
         };
         CitySelector.prototype.getData = function (query) {
-            _CitySelector.__currentCitySelector.currentRequest = $.ajax({
+            this.CurrentRequest = $.ajax({
                 type: "GET",
                 url: "/api/searchcity/" + query,
-                success: _CitySelector.__currentCitySelector.onAjaxGetOrgDataSuccess,
-                error: _CitySelector.__currentCitySelector.onAjaxGetOrgDataError
+                success: this.OnAjaxGetOrgDataSuccess,
+                error: this.OnAjaxGetOrgDataError
             });
         };
-        CitySelector.prototype.onAjaxGetOrgDataError = function (jqXHR, status, message) {
-            _CitySelector.__currentCitySelector.busy = false;
-            _CitySelector.__currentCitySelector.currentRequest = null;
-            //window.console.log("_onAjaxError");
-        };
-        CitySelector.prototype.onAjaxGetOrgDataSuccess = function (data, status, jqXHR) {
-            _CitySelector.__currentCitySelector.busy = false;
-            _CitySelector.__currentCitySelector.currentRequest = null;
-            //window.console.log("_onAjaxGetAccountDataSuccess");
-            _CitySelector.__currentCitySelector.listData = data;
-            // данные получены рисуем выпадающий список выбора
-            _CitySelector.__currentCitySelector.drawList();
-        };
         CitySelector.prototype.drawList = function () {
-            _CitySelector.__currentCitySelector.clearListBlock();
-            var data = _CitySelector.__currentCitySelector.listData;
+            this.clearListBlock();
+            var data = this.ListData;
             // если контрол уже потерял фокус, то ничего не отображаем
-            if (false == _CitySelector.__currentCitySelector.control.is(":focus"))
+            if (false === this.Control.is(":focus"))
                 return;
             if (null == data || 1 > data.length) {
                 // сообщаем, что не найдено ни одного города
-                _CitySelector.__currentCitySelector.component.onCityEmpty();
+                this.Component.onCityEmpty();
                 return;
             }
-            _CitySelector.__currentCitySelector.listBlockHtml = $('<div class="c-page-city-select-block"></div>');
+            this.ListBlockHtml = $('<div class="c-page-city-select-block"></div>');
             for (var i = 0; i < data.length; i++) {
                 var city = data[i];
                 var item = $('<div class="c-page-city-select-item"></div>');
                 item.text(city.Fullname);
                 item.attr("data-id", city.Id);
-                item.bind("click", _CitySelector.__currentCitySelector.onItemClick);
-                item.bind("mouseenter", _CitySelector.__currentCitySelector.onMouseEnter);
-                item.bind("mouseleave", _CitySelector.__currentCitySelector.onMouseLeave);
-                _CitySelector.__currentCitySelector.listBlockHtml.append(item);
+                item.bind("click", this.OnItemClick);
+                item.bind("mouseenter", this.OnMouseEnter);
+                item.bind("mouseleave", this.OnMouseLeave);
+                this.ListBlockHtml.append(item);
             }
             // вычисляем положение списка на экране
-            var top = _CitySelector.__currentCitySelector.control.offset().top;
-            top += _CitySelector.__currentCitySelector.control.height();
-            var left = _CitySelector.__currentCitySelector.control.offset().left;
-            _CitySelector.__currentCitySelector.listBlockHtml.appendTo($("body"));
-            _CitySelector.__currentCitySelector.listBlockHtml.css({ top: top, left: left });
-        };
-        CitySelector.prototype.onItemClick = function (event) {
-            _CitySelector.__currentCitySelector.searchValue = null;
-            var elem = $(event.delegateTarget);
-            //window.console.log("__currentCitySelector.onItemClick(" + elem.attr("data-id") + ")");
-            _CitySelector.__currentCitySelector.onItemClicked(parseInt(elem.attr("data-id")));
-        };
-        CitySelector.prototype.onItemClicked = function (id) {
-            var city = _CitySelector.__currentCitySelector.getCityById(id);
-            _CitySelector.__currentCitySelector.component.onCitySelected(city);
-            _CitySelector.__currentCitySelector.clearListBlock();
+            var top = this.Control.offset().top;
+            top += this.Control.height();
+            var left = this.Control.offset().left;
+            this.ListBlockHtml.appendTo($("body"));
+            this.ListBlockHtml.css({ top: top, left: left });
         };
         CitySelector.prototype.getCityById = function (id) {
             var city = null;
-            if (null != _CitySelector.__currentCitySelector.listData) {
-                for (var i = 0; i < _CitySelector.__currentCitySelector.listData.length; i++) {
-                    var c = _CitySelector.__currentCitySelector.listData[i];
-                    if (id == c.Id) {
+            if (null != this.ListData) {
+                for (var i = 0; i < this.ListData.length; i++) {
+                    var c = this.ListData[i];
+                    if (id === c.Id) {
                         city = c;
                         break;
                     }
@@ -205,19 +224,9 @@ var CitySelector;
             }
             return city;
         };
-        CitySelector.prototype.onLostFocus = function (event) {
-            if (null != _CitySelector.__currentCitySelector.listBlockHtml) {
-                if ($(_CitySelector.__currentCitySelector.listBlockHtml).is(':hover'))
-                    setTimeout(_CitySelector.__currentCitySelector.clearListBlock, 500);
-                else
-                    _CitySelector.__currentCitySelector.clearListBlock();
-            }
-            _CitySelector.__currentCitySelector.searchValue = null;
-            _CitySelector.__currentCitySelector.component.onCitySelectedAbort();
-        };
         return CitySelector;
     })();
-    _CitySelector.CitySelector = CitySelector;
-    _CitySelector.__currentCitySelector = new CitySelector();
+    CitySelector_1.CitySelector = CitySelector;
+    CitySelector_1.currentCitySelector = new CitySelector();
 })(CitySelector || (CitySelector = {}));
 //# sourceMappingURL=CitySelector.js.map

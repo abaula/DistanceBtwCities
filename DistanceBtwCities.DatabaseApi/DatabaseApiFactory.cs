@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DistanceBtwCities.DatabaseApi
+﻿namespace DistanceBtwCities.DatabaseApi
 {
     public static class DatabaseApiFactory
     {
@@ -12,6 +6,5 @@ namespace DistanceBtwCities.DatabaseApi
         {
             return new DbProcedures(connectionString);
         }
-
     }
 }
