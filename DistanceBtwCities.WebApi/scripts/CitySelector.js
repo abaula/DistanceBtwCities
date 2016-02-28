@@ -3,7 +3,7 @@
 var CitySelector;
 (function (CitySelector_1) {
     var CitySelector = (function () {
-        function CitySelector() {
+        function CitySelector(control, component) {
             var _this = this;
             this.Control = null;
             this.Component = null;
@@ -138,32 +138,12 @@ var CitySelector;
                 _this.SearchValue = null;
                 _this.Component.onCitySelectedAbort();
             };
-        }
-        CitySelector.prototype.init = function (control, component) {
-            this.clear();
             this.Component = component;
             this.Control = control;
             this.Control.bind("cut paste", this.OnTextChange);
             this.Control.bind("keydown", this.OnKeyDown);
             this.Control.bind("blur", this.OnLostFocus);
-        };
-        CitySelector.prototype.clear = function () {
-            this.clearListBlock();
-            if (0 < this.Timer)
-                clearTimeout(this.Timer);
-            if (null != this.Control) {
-                this.Control.unbind("cut paste", this.OnTextChange);
-                this.Control.unbind("keydown", this.OnKeyDown);
-                this.Control.unbind("blur", this.OnLostFocus);
-            }
-            // сбрасываем отправленные на сервер запросы
-            if (null != this.CurrentRequest)
-                this.CurrentRequest.abort();
-            this.CurrentRequest = null;
-            this.Busy = false;
-            this.ListData = null;
-            this.Component = null;
-        };
+        }
         CitySelector.prototype.clearListBlock = function () {
             if (null != this.ListBlockHtml) {
                 $("div", this.ListBlockHtml).unbind("click mouseenter mouseleave");
@@ -227,6 +207,4 @@ var CitySelector;
         return CitySelector;
     })();
     CitySelector_1.CitySelector = CitySelector;
-    CitySelector_1.currentCitySelector = new CitySelector();
 })(CitySelector || (CitySelector = {}));
-//# sourceMappingURL=CitySelector.js.map

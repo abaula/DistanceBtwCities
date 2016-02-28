@@ -150,7 +150,7 @@ var DistanceEditor;
                 // цепляем обработчики событий
                 $("#i-page-search-form-search-city-txt").focus(_this.OnCitySearchTxtFocus);
                 // подключаем контрол выбора города
-                CitySelector.currentCitySelector.init($("#i-page-search-form-search-city-txt"), DistanceEditor.currDistanceEditor);
+                _this.CitySelectorCtrl = new CitySelector.CitySelector($("#i-page-search-form-search-city-txt"), DistanceEditor.currDistanceEditor);
                 // навигация по закладкам
                 $("#i-page-search-form-tab-search-text, #i-page-search-form-tab-search-city").click(_this.OnFormTabClick);
                 // поиск
@@ -407,4 +407,3 @@ var DistanceEditor;
 })(DistanceEditor || (DistanceEditor = {}));
 // подключаем обработчик события о готовности страницы
 $(document).ready(DistanceEditor.currDistanceEditor.OnDocumentReady);
-//# sourceMappingURL=DistanceEditor.js.map

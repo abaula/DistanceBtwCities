@@ -21,38 +21,14 @@ module CitySelector
         ListBlockHtml: JQuery = null;
         ListData: ServerData.AjaxCityInfo[] = null;
 
-        init(control: JQuery, component: ICitySelector): void
+
+        constructor(control: JQuery, component: ICitySelector)
         {
-            this.clear();
             this.Component = component;
             this.Control = control;
             this.Control.bind("cut paste", this.OnTextChange);
             this.Control.bind("keydown", this.OnKeyDown);
             this.Control.bind("blur", this.OnLostFocus);
-        }
-
-        clear(): void
-        {
-            this.clearListBlock();
-
-            if (0 < this.Timer)
-                clearTimeout(this.Timer);
-
-            if (null != this.Control)
-            {
-                this.Control.unbind("cut paste", this.OnTextChange);
-                this.Control.unbind("keydown", this.OnKeyDown);
-                this.Control.unbind("blur", this.OnLostFocus);
-            }
-
-            // сбрасываем отправленные на сервер запросы
-            if (null != this.CurrentRequest)
-                this.CurrentRequest.abort();
-
-            this.CurrentRequest = null;
-            this.Busy = false;
-            this.ListData = null;
-            this.Component = null;
         }
 
         clearListBlock(): void
@@ -311,6 +287,4 @@ module CitySelector
             this.Component.onCitySelectedAbort();
         };
     }
-
-    export var currentCitySelector = new CitySelector();
 }

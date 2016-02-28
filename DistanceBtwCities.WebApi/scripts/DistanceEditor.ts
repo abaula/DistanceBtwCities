@@ -5,6 +5,7 @@ module DistanceEditor
 {
     export class DistanceEditorController implements CitySelector.ICitySelector
     {
+        CitySelectorCtrl: CitySelector.CitySelector;
         CurrentDataFrame: ServerData.AjaxRoutesInfoPackage;
         SearchByQuery: boolean;
         SelectedSearchCity: ServerData.AjaxCityInfo;
@@ -537,7 +538,7 @@ module DistanceEditor
             $("#i-page-search-form-search-city-txt").focus(this.OnCitySearchTxtFocus);
 
             // подключаем контрол выбора города
-            CitySelector.currentCitySelector.init($("#i-page-search-form-search-city-txt"), currDistanceEditor);
+            this.CitySelectorCtrl = new CitySelector.CitySelector($("#i-page-search-form-search-city-txt"), currDistanceEditor);
 
             // навигация по закладкам
             $("#i-page-search-form-tab-search-text, #i-page-search-form-tab-search-city").click(this.OnFormTabClick);
