@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Data.SqlClient;
 
-namespace DistanceBtwCities.DatabaseApi.Helpers
+namespace DistanceBtwCities.Dal.Helpers
 {
     internal static class SqlReaderHelper
     {

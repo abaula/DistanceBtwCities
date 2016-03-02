@@ -1,25 +1,24 @@
 ﻿using System.Threading.Tasks;
-using DistanceBtwCities.DatabaseApi;
+using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
 {
-    internal class RouteEditTask : IRouteEditTask
+    public class RouteEditService : IRouteEditService
     {
-        private readonly string _connectionString;
+        private readonly IDbProcedures _dbProcedures;
 
-        public RouteEditTask(string connectionString)
+        public RouteEditService(IDbProcedures dbProcedures)
         {
-            _connectionString = connectionString;
+            _dbProcedures = dbProcedures;
         }
 
         public Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo)
         {
             return Task.Run(() =>
             {
-                var dbProcedures = DatabaseApiFactory.CreateDbProcedures(_connectionString);
-                dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);
+                _dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);
 
                 // Возвращаем новый экземпляр объекта
                 return new RouteInfo {Id = routeInfo.Id, Distance = routeInfo.Distance};

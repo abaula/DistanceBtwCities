@@ -1,4 +1,4 @@
-﻿namespace DistanceBtwCities.DatabaseApi.Constants
+﻿namespace DistanceBtwCities.Dal.Constants
 {
     internal static class GeoConstants
     {

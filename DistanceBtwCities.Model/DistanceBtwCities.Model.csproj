@@ -40,20 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contract\ISearchCityTask.cs" />
-    <Compile Include="Contract\ISearchRouteTask.cs" />
-    <Compile Include="Contract\IRouteEditTask.cs" />
-    <Compile Include="ModelFactory.cs" />
-    <Compile Include="ModelFactoryInternal.cs" />
+    <Compile Include="Contract\ISearchCityService.cs" />
+    <Compile Include="Contract\ISearchRouteService.cs" />
+    <Compile Include="Contract\IRouteEditService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteEditTask.cs" />
-    <Compile Include="SearchCityTask.cs" />
-    <Compile Include="SearchRouteTask.cs" />
+    <Compile Include="RouteEditService.cs" />
+    <Compile Include="SearchCityService.cs" />
+    <Compile Include="SearchRouteService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DistanceBtwCities.DatabaseApi\DistanceBtwCities.DatabaseApi.csproj">
+    <ProjectReference Include="..\DistanceBtwCities.DatabaseApi\DistanceBtwCities.Dal.csproj">
       <Project>{64d8eae1-0442-45c4-8d4f-624a9495a009}</Project>
-      <Name>DistanceBtwCities.DatabaseApi</Name>
+      <Name>DistanceBtwCities.Dal</Name>
     </ProjectReference>
     <ProjectReference Include="..\DistanceBtwCities.DataContract\DistanceBtwCities.DataContract.csproj">
       <Project>{63BD09F3-A40F-49D9-B6B2-D295842E62BA}</Project>

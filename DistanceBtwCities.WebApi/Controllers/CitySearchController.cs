@@ -2,32 +2,27 @@
 using System.Threading.Tasks;
 using System.Web.Http;
 using DistanceBtwCities.DataContract;
-using DistanceBtwCities.Model;
 using DistanceBtwCities.Model.Contract;
-using DistanceBtwCities.WebApi.Properties;
 
 namespace DistanceBtwCities.WebApi.Controllers
 {
     [RoutePrefix("api/searchcity")]
     public class CitySearchController : ApiController
     {
-        [HttpGet]
-        [Route("{query:maxlength(255)}")]
-        public async Task<IEnumerable<CityInfo>> SearchCity(string query)
+        private readonly ISearchCityService _searchCityService;
+
+        public CitySearchController(ISearchCityService searchCityService)
         {
-            var searchCityTask = _getSearchCityTask();
-
-            await searchCityTask.SearchCityAsync(query);
-
-            return searchCityTask.Cities;
+            _searchCityService = searchCityService;
         }
 
-        private ISearchCityTask _getSearchCityTask()
+        [HttpGet]
+        [Route("{query:maxlength(255)}")]
+        public async Task<IList<CityInfo>> SearchCity(string query)
         {
-            var factory = ModelFactory.CreateInstance(Settings.Default.DbConnectionString);
-            var searchCityTask = factory.CreateSearchCityTask();
+            var cities = await _searchCityService.SearchCityAsync(query);
 
-            return searchCityTask;
+            return cities;
         }
     }
 }

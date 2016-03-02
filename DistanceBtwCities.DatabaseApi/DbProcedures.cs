@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using DistanceBtwCities.DatabaseApi.Adapters;
+using DistanceBtwCities.Dal.Adapters;
+using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.DataContract;
 
-namespace DistanceBtwCities.DatabaseApi
+namespace DistanceBtwCities.Dal
 {
-    public class DbProcedures
+    public class DbProcedures : IDbProcedures
     {
         private readonly string _connectionString;
 
-        internal DbProcedures(string connectionString)
+        public DbProcedures(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public List<CityInfo> SearchCity(string query)
+        public IList<CityInfo> SearchCity(string query)
         {
             var result = new List<CityInfo>();
 

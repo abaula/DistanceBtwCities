@@ -3,7 +3,7 @@ using DistanceBtwCities.WebApi.Configuration;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
-    internal class CacheDataItem
+    public class CacheDataItem
     {
         public object Data { get; set; }
         public Type DataType { get; set; }

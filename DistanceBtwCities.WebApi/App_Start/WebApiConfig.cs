@@ -16,7 +16,7 @@ namespace DistanceBtwCities.WebApi
                 );
 
             // добавляем общие обработчики сообщений для всех HttpRoute
-            config.MessageHandlers.Add(new MessageHandlerForCaching());
+            config.MessageHandlers.Add(new DelegatingHandlerProxy<MessageHandlerForCaching>(NinjectWebCommon.Kernel));
         }
     }
 }

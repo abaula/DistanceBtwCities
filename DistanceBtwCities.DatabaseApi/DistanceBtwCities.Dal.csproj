@@ -7,8 +7,8 @@
     <ProjectGuid>{64D8EAE1-0442-45C4-8D4F-624A9495A009}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DistanceBtwCities.DatabaseApi</RootNamespace>
-    <AssemblyName>DistanceBtwCities.DatabaseApi</AssemblyName>
+    <RootNamespace>DistanceBtwCities.Dal</RootNamespace>
+    <AssemblyName>DistanceBtwCities.Dal</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -42,7 +42,7 @@
     <Compile Include="Adapters\CityInfoDbAdapter.cs" />
     <Compile Include="Adapters\RouteInfoDbAdapter.cs" />
     <Compile Include="Constants\GeoConstants.cs" />
-    <Compile Include="DatabaseApiFactory.cs" />
+    <Compile Include="Contract\IDbProcedures.cs" />
     <Compile Include="Helpers\SqlReaderHelper.cs" />
     <Compile Include="DbProcedures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +53,7 @@
       <Name>DistanceBtwCities.DataContract</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,9 +4,8 @@ using DistanceBtwCities.DataContract;
 
 namespace DistanceBtwCities.Model.Contract
 {
-    public interface ISearchCityTask
+    public interface ISearchCityService
     {
-        List<CityInfo> Cities { get; }
-        Task SearchCityAsync(string query);
+        Task<IList<CityInfo>> SearchCityAsync(string query);
     }
 }

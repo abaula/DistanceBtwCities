@@ -19,3 +19,4 @@ var ServerData;
     })();
     ServerData.AjaxRoutesInfoPackage = AjaxRoutesInfoPackage;
 })(ServerData || (ServerData = {}));
+//# sourceMappingURL=ServerAjaxData.js.map

@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.WebApi", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.DataContract", "DistanceBtwCities.DataContract\DistanceBtwCities.DataContract.csproj", "{63BD09F3-A40F-49D9-B6B2-D295842E62BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.DatabaseApi", "DistanceBtwCities.DatabaseApi\DistanceBtwCities.DatabaseApi.csproj", "{64D8EAE1-0442-45C4-8D4F-624A9495A009}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DistanceBtwCities.Dal", "DistanceBtwCities.DatabaseApi\DistanceBtwCities.Dal.csproj", "{64D8EAE1-0442-45C4-8D4F-624A9495A009}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DistanceBtwCities.Database", "DistanceBtwCities.Database\DistanceBtwCities.Database.sqlproj", "{600DA28B-34DC-45E9-BED1-7152C87A9B54}"
 EndProject

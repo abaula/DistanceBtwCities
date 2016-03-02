@@ -407,3 +407,4 @@ var DistanceEditor;
 })(DistanceEditor || (DistanceEditor = {}));
 // подключаем обработчик события о готовности страницы
 $(document).ready(DistanceEditor.currDistanceEditor.OnDocumentReady);
+//# sourceMappingURL=DistanceEditor.js.map

@@ -6,44 +6,27 @@ using DistanceBtwCities.WebApi.Configuration;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
-    internal class CacheSettingsManager
+    internal class CacheSettingsManager : ICacheSettingsManager
     {
-        /// <summary>
-        ///     Ссылка на единственный объект класса CacheSettingsManager.
-        /// </summary>
-        private static CacheSettingsManager _instance;
-
         /// <summary>
         ///     Настройки кэширования в структуре обеспечивающей быстрый поиск настроект для входящего запроса.
         /// </summary>
         private ILookup<int, KeyValuePair<CachePathSegments, CacheSettingsElement>> _cacheSettingsLookup;
 
         /// <summary>
-        ///     Конструктор по умолчанию скрыт, чтобы реализовать патерн Singleton.
-        /// </summary>
-        private CacheSettingsManager()
-        {
-        }
-
-        /// <summary>
         ///     Объект реализующий сравнение входящего запроса с настройками кэширования.
         ///     Используется с целью определить существуют ли настройки кэширования для входящего запроса.
         /// </summary>
-        public CacheSegmentsComparer CacheSegmentsComparer { get; set; }
+        private readonly CacheSegmentsComparer _сacheSegmentsComparer;
 
         /// <summary>
-        ///     Возвращает ссылку на объект CacheSettingsManager, который реализует паттерн Singleton.
+        ///     Конструктор по умолчанию скрыт, чтобы реализовать патерн Singleton.
         /// </summary>
-        /// <returns></returns>
-        public static CacheSettingsManager GetInstance()
+        public CacheSettingsManager(CacheSegmentsComparer сacheSegmentsComparer)
         {
-            if (null == _instance)
-            {
-                _instance = new CacheSettingsManager {CacheSegmentsComparer = new CacheSegmentsComparer()};
-                _instance._init();
-            }
+            _сacheSegmentsComparer = сacheSegmentsComparer;
 
-            return _instance;
+            _init();
         }
 
         /// <summary>
@@ -80,7 +63,7 @@ namespace DistanceBtwCities.WebApi.Caching
             {
                 var cachePathSegments = pair.Key;
 
-                if (CacheSegmentsComparer.AreEqual(cachePathSegments.Segments, requestUri.Segments))
+                if (_сacheSegmentsComparer.AreEqual(cachePathSegments.Segments, requestUri.Segments))
                     return pair.Value;
             }
 

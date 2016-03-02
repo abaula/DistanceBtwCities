@@ -3,7 +3,7 @@ using DistanceBtwCities.DataContract;
 
 namespace DistanceBtwCities.Model.Contract
 {
-    public interface IRouteEditTask
+    public interface IRouteEditService
     {
         Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo);
     }

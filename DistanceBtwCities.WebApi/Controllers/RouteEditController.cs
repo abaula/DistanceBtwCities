@@ -10,23 +10,20 @@ namespace DistanceBtwCities.WebApi.Controllers
     [RoutePrefix("api/editroute")]
     public class RouteEditController : ApiController
     {
+        private readonly IRouteEditService _routeEditService;
+
+        public RouteEditController(IRouteEditService routeEditService)
+        {
+            _routeEditService = routeEditService;
+        }
+
         [HttpPut]
         [Route("distance")]
         public async Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo)
-        {
-            var routeEditTask = _getRouteEditTask();
+        {            
+            var info = await _routeEditService.UpdateRouteDistance(routeInfo);
 
-            var result = await routeEditTask.UpdateRouteDistance(routeInfo);
-
-            return result;
-        }
-
-        private IRouteEditTask _getRouteEditTask()
-        {
-            var factory = ModelFactory.CreateInstance(Settings.Default.DbConnectionString);
-            var routeEditTask = factory.CreateRouteEditTask();
-
-            return routeEditTask;
+            return info;
         }
     }
 }

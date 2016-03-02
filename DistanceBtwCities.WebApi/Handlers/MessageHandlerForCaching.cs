@@ -8,6 +8,14 @@ namespace DistanceBtwCities.WebApi.Handlers
 {
     public class MessageHandlerForCaching : DelegatingHandler
     {
+        private readonly ICacheManager _cacheManager;
+
+
+        public MessageHandlerForCaching(ICacheManager cacheManager)
+        {
+            _cacheManager = cacheManager;
+        }
+
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
@@ -35,8 +43,7 @@ namespace DistanceBtwCities.WebApi.Handlers
         private HttpResponseMessage _tryGetResponseFromCache(HttpRequestMessage request)
         {
             // пробуем получить данные из кэша 
-            var cacheManager = CacheManager.GetInstance();
-            var cachedData = cacheManager.GetCacheDataForRequest(request);
+            var cachedData = _cacheManager.GetCacheDataForRequest(request);
 
             // если данные есть в кэше, то возвращаем результат из кэша.
             if (cachedData != null)
@@ -44,7 +51,7 @@ namespace DistanceBtwCities.WebApi.Handlers
                 HttpResponseMessage response;
 
                 // проверяем отправил ли клиент заголовок If-None-Match.
-                var isMatchForClient = cacheManager.CheckIfCachedDataIsValidForClient(request, cachedData);
+                var isMatchForClient = _cacheManager.CheckIfCachedDataIsValidForClient(request, cachedData);
 
                 if (isMatchForClient)
                 {
@@ -63,7 +70,7 @@ namespace DistanceBtwCities.WebApi.Handlers
                 }
 
                 // настраиваем заголовки ответа
-                cacheManager.AddResponseHeadersForCachingOnClientSide(response, cachedData);
+                _cacheManager.AddResponseHeadersForCachingOnClientSide(response, cachedData);
                 // возвращаем кэшированные данные
                 return response;
             }
@@ -74,14 +81,12 @@ namespace DistanceBtwCities.WebApi.Handlers
 
         private void _trySaveResponseInCache(HttpResponseMessage response)
         {
-            var cacheManager = CacheManager.GetInstance();
-
             // пробуем сохранить данные в кэше 
-            var cahcedData = cacheManager.SaveResponseInCache(response);
+            var cahcedData = _cacheManager.SaveResponseInCache(response);
 
             // настраиваем заголовки ответа для кэширования на строне клиента.
             if (cahcedData != null)
-                cacheManager.AddResponseHeadersForCachingOnClientSide(response, cahcedData);
+                _cacheManager.AddResponseHeadersForCachingOnClientSide(response, cahcedData);
         }
     }
 }

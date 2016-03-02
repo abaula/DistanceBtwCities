@@ -6,22 +6,13 @@ using System.Runtime.Caching;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
-    internal class CacheManager
+    internal class CacheManager : ICacheManager
     {
-        private static CacheManager _instance;
-        private readonly CacheSettingsManager _cacheSettingsManager;
+        private readonly ICacheSettingsManager _cacheSettingsManager;
 
-        private CacheManager(CacheSettingsManager cacheSettingsManager)
+        public CacheManager(ICacheSettingsManager cacheSettingsManager)
         {
             _cacheSettingsManager = cacheSettingsManager;
-        }
-
-        public static CacheManager GetInstance()
-        {
-            if (_instance == null)
-                _instance = new CacheManager(CacheSettingsManager.GetInstance());
-
-            return _instance;
         }
 
         /// <summary>

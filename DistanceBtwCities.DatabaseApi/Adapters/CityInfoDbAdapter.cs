@@ -1,9 +1,9 @@
 ﻿using System.Data.SqlClient;
-using DistanceBtwCities.DatabaseApi.Constants;
-using DistanceBtwCities.DatabaseApi.Helpers;
+using DistanceBtwCities.Dal.Constants;
+using DistanceBtwCities.Dal.Helpers;
 using DistanceBtwCities.DataContract;
 
-namespace DistanceBtwCities.DatabaseApi.Adapters
+namespace DistanceBtwCities.Dal.Adapters
 {
     internal static class CityInfoDbAdapter
     {
