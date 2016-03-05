@@ -82,7 +82,7 @@ interface JQueryAjaxSettings {
      */
     error? (jqXHR: JQueryXHR, textStatus: string, errorThrown: string): any;
     /**
-     * Whether to trigger global Ajax event handlers for this request. The default is true. Set to false to prevent the global handlers like ajaxStart or ajaxStop from being triggered. This can be used to Control various Ajax Events.
+     * Whether to trigger global Ajax event handlers for this request. The default is true. Set to false to prevent the global handlers like ajaxStart or ajaxStop from being triggered. This can be used to control various Ajax Events.
      */
     global?: boolean;
     /**
@@ -180,7 +180,7 @@ interface JQueryXHR extends XMLHttpRequest, JQueryPromise<any> {
     /**
      * Incorporates the functionality of the .done() and .fail() methods, allowing (as of jQuery 1.8) the underlying Promise to be manipulated. Refer to deferred.then() for implementation details.
      */
-    then(doneCallback: (data: any, textStatus: string, jqXHR: JQueryXHR) => void, failCallback?: (jqXHR: JQueryXHR, textStatus: string, errorThrown: any) => void): JQueryPromise<any>;
+    then<R>(doneCallback: (data: any, textStatus: string, jqXHR: JQueryXHR) => R, failCallback?: (jqXHR: JQueryXHR, textStatus: string, errorThrown: any) => void): JQueryPromise<R>;
     /**
      * Property containing the parsed response if the response Content-Type is json
      */
@@ -607,6 +607,16 @@ interface JQueryAnimationOptions {
     specialEasing?: Object;
 }
 
+interface JQueryEasingFunction {
+    ( percent: number ): number;
+}
+
+interface JQueryEasingFunctions {
+    [ name: string ]: JQueryEasingFunction;
+    linear: JQueryEasingFunction;
+    swing: JQueryEasingFunction;
+}
+
 /**
  * Static members of jQuery (those on $ and jQuery themselves)
  */
@@ -791,11 +801,11 @@ interface JQueryStatic {
     (html: string, attributes: Object): JQuery;
 
     /**
-     * Relinquish jQuery's Control of the $ variable.
+     * Relinquish jQuery's control of the $ variable.
      *
      * @param removeAll A Boolean indicating whether to remove all jQuery variables from the global scope (including jQuery itself).
      */
-    noConflict(removeAll?: boolean): Object;
+    noConflict(removeAll?: boolean): JQueryStatic;
 
     /**
      * Provides a way to execute callback functions based on one or more objects, usually Deferred objects that represent asynchronous events.
@@ -889,6 +899,9 @@ interface JQueryStatic {
     /**
      * Effects
      */
+
+    easing: JQueryEasingFunctions;
+
     fx: {
         tick: () => void;
         /**
@@ -1363,9 +1376,9 @@ interface JQuery {
     /**
      * Set the value of each element in the set of matched elements.
      *
-     * @param value A string of text or an array of strings corresponding to the value of each matched element to set as selected/checked.
+     * @param value A string of text, an array of strings or number corresponding to the value of each matched element to set as selected/checked.
      */
-    val(value: string|string[]): JQuery;
+    val(value: string|string[]|number): JQuery;
     /**
      * Set the value of each element in the set of matched elements.
      *
@@ -1620,7 +1633,7 @@ interface JQuery {
     animate(properties: Object, options: JQueryAnimationOptions): JQuery;
 
     /**
-     * Set a Timer to delay execution of subsequent items in the queue.
+     * Set a timer to delay execution of subsequent items in the queue.
      *
      * @param duration An integer indicating the number of milliseconds to delay execution of the next item in the queue.
      * @param queueName A string containing the name of the queue. Defaults to fx, the standard effects queue.
@@ -2258,6 +2271,13 @@ interface JQuery {
      * @param handler A handler function previously attached for the event(s), or the special value false.
      */
     off(events: string, selector?: string, handler?: (eventObject: JQueryEventObject) => any): JQuery;
+    /**
+     * Remove an event handler.
+     *
+     * @param events One or more space-separated event types and optional namespaces, or just namespaces, such as "click", "keydown.myPlugin", or ".myPlugin".
+     * @param handler A handler function previously attached for the event(s), or the special value false. Takes handler with extra args that can be attached with on().
+     */
+    off(events: string, handler: (eventObject: JQueryEventObject, ...args: any[]) => any): JQuery;
     /**
      * Remove an event handler.
      *

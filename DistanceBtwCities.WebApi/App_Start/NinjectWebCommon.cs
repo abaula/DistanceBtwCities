@@ -3,7 +3,6 @@ using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.Model;
 using DistanceBtwCities.Model.Contract;
 using DistanceBtwCities.WebApi.Caching;
-using DistanceBtwCities.WebApi.Controllers;
 using DistanceBtwCities.WebApi.Properties;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DistanceBtwCities.WebApi.NinjectWebCommon), "Start")]
@@ -24,7 +23,6 @@ namespace DistanceBtwCities.WebApi
         private static readonly Bootstrapper bootstrapper = new Bootstrapper();
 
         public static IKernel Kernel => bootstrapper.Kernel;
-
         /// <summary>
         /// Starts the application
         /// </summary>
@@ -80,6 +78,6 @@ namespace DistanceBtwCities.WebApi
 
             kernel.Bind<IDbProcedures>().To<DbProcedures>().InRequestScope()
                 .WithConstructorArgument("connectionString", Settings.Default.DbConnectionString);
-        }
+        }        
     }
 }
