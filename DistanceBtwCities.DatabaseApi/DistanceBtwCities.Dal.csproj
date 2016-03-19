@@ -43,6 +43,7 @@
     <Compile Include="Adapters\RouteInfoDbAdapter.cs" />
     <Compile Include="Constants\GeoConstants.cs" />
     <Compile Include="Contract\IDbProcedures.cs" />
+    <Compile Include="DbProceduresBase.cs" />
     <Compile Include="Helpers\SqlReaderHelper.cs" />
     <Compile Include="DbProcedures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

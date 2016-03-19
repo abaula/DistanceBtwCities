@@ -7,7 +7,7 @@ namespace DistanceBtwCities.Dal.Adapters
 {
     internal static class RouteInfoDbAdapter
     {
-        public static RouteInfo GetRouteInfo(this SqlDataReader reader)
+        public static RouteInfo GetRouteInfo(SqlDataReader reader)
         {
             var route = DataContractFactory.CreateRouteInfo();
 

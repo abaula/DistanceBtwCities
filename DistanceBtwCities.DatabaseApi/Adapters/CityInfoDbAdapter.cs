@@ -7,7 +7,7 @@ namespace DistanceBtwCities.Dal.Adapters
 {
     internal static class CityInfoDbAdapter
     {
-        public static CityInfo GetCityInfo(this SqlDataReader reader)
+        public static CityInfo GetCityInfo(SqlDataReader reader)
         {
             var city = DataContractFactory.CreateCityInfo();
 
