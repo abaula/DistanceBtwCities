@@ -20,7 +20,7 @@ namespace DistanceBtwCities.WebApi.Controllers
         [Route("{query:maxlength(255)}")]
         public async Task<IList<CityInfo>> SearchCity(string query)
         {
-            var cities = await _searchCityService.SearchCityAsync(query);
+            var cities = await Task.Run(() => _searchCityService.SearchCityAsync(query));
 
             return cities;
         }

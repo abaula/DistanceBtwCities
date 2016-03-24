@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
-using DistanceBtwCities.Dal.Contract;
+﻿using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
 {
+    /// <summary>
+    /// Сервис изменения данных маршрута.
+    /// </summary>
     public class RouteEditService : IRouteEditService
     {
         private readonly IDbProcedures _dbProcedures;
@@ -14,15 +16,17 @@ namespace DistanceBtwCities.Model
             _dbProcedures = dbProcedures;
         }
 
-        public Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo)
+        /// <summary>
+        /// Изменение значения дистанции маршрута.
+        /// </summary>
+        /// <param name="routeInfo">Данные маршрута.</param>
+        /// <returns>Новый экземпляр маршрута с обновлёнными значениями.</returns>
+        public RouteInfo UpdateRouteDistance(RouteInfo routeInfo)
         {
-            return Task.Run(() =>
-            {
-                _dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);
+            _dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);
 
-                // Возвращаем новый экземпляр объекта
-                return new RouteInfo {Id = routeInfo.Id, Distance = routeInfo.Distance};
-            });
+            // Возвращаем новый экземпляр объекта
+            return new RouteInfo {Id = routeInfo.Id, Distance = routeInfo.Distance};
         }
     }
 }

@@ -3,6 +3,9 @@ using System.Text;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
+    /// <summary>
+    /// Вспомогательный класс для разбора конфигурации кэширования, хранит сегменты настройки.
+    /// </summary>
     public class CachePathSegments
     {
         public CachePathSegments(string relativeUri)

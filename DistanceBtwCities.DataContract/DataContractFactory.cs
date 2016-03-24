@@ -1,5 +1,8 @@
 ﻿namespace DistanceBtwCities.DataContract
 {
+    /// <summary>
+    /// Фабрика для создания объектов контракта.
+    /// </summary>
     public static class DataContractFactory
     {
         public static CityInfo CreateCityInfo()

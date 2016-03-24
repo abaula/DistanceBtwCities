@@ -6,6 +6,9 @@ using DistanceBtwCities.WebApi.Configuration;
 
 namespace DistanceBtwCities.WebApi.Caching
 {
+    /// <summary>
+    /// Класс управляющий настройками кэширования.
+    /// </summary>
     internal class CacheSettingsManager : ICacheSettingsManager
     {
         /// <summary>

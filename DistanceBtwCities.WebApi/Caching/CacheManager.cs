@@ -16,7 +16,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        ///     Ищем кэшированные данные для входящего запроса.
+        /// Ищет кэшированные данные для входящего запроса.
         /// </summary>
         /// <param name="request">Входящий запрос.</param>
         /// <returns>Объект кэширования или null.</returns>
@@ -39,7 +39,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        ///     Проверяем тэг IfNoneMatch с Etag кэшированных данных
+        /// Проверяет тэг IfNoneMatch с Etag кэшированных данных.
         /// </summary>
         /// <param name="request">Запрос</param>
         /// <param name="cacheData">Кэшированные данные</param>
@@ -59,7 +59,7 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        ///     Добавляем заголовки для кэширования на строрне клиента
+        /// Добавляет заголовки для кэширования на стороне клиента.
         /// </summary>
         /// <param name="response">Ответ</param>
         /// <param name="cachedData">Кэшированные данные</param>
@@ -78,8 +78,8 @@ namespace DistanceBtwCities.WebApi.Caching
         }
 
         /// <summary>
-        ///     Проверяет нужно ли кэшировать ответ для запроса.
-        ///     Если заданы настройки кэширования для запроса, то содержимое ответа сохраняется в кэше.
+        /// Проверяет нужно ли кэшировать ответ для запроса.
+        /// Если заданы настройки кэширования для запроса, то содержимое ответа сохраняется в кэше.
         /// </summary>
         /// <param name="response">Ответ</param>
         /// <returns>Если ответ был сохранён в кэше, то возвращаем объект кэшированных данных, иначе null</returns>
