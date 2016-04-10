@@ -1,5 +1,6 @@
 ﻿using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.DataContract;
+using DistanceBtwCities.Interception;
 using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
@@ -24,9 +25,11 @@ namespace DistanceBtwCities.Model
         /// <param name="offset">Номер первой записи из найденнго списка, которая попадает в возвращаемый результат.</param>
         /// <param name="rows">Количество возвращаемых записей.</param>
         /// <returns>Выборка из найденных маршрутов в соответствии с параметрами <paramref name="offset"/> и <paramref name="rows"/>.</returns>
+        [Transaction]
         public RoutesInfoPackage SearchRouteForQuery(string query, int maxDistance, int offset, int rows)
         {
-            return _searchRouteForQuery(query, maxDistance, offset, rows);
+            var package = _dbProcedures.SearchRouteForQuery(query, maxDistance, offset, rows);
+            return package;
         }
 
         /// <summary>
@@ -37,18 +40,8 @@ namespace DistanceBtwCities.Model
         /// <param name="offset">Номер первой записи из найденнго списка, которая попадает в возвращаемый результат.</param>
         /// <param name="rows">Количество возвращаемых записей.</param>
         /// <returns>Выборка из найденных маршрутов в соответствии с параметрами <paramref name="offset"/> и <paramref name="rows"/>.</returns>
+        [Transaction]
         public RoutesInfoPackage SearchRouteForCity(long cityId, int maxDistance, int offset, int rows)
-        {
-            return _searchRouteForCity(cityId, maxDistance, offset, rows);
-        }
-
-        private RoutesInfoPackage _searchRouteForQuery(string query, int maxDistance, int offset, int rows)
-        {
-            var package = _dbProcedures.SearchRouteForQuery(query, maxDistance, offset, rows);
-            return package;
-        }
-
-        private RoutesInfoPackage _searchRouteForCity(long cityId, int maxDistance, int offset, int rows)
         {
             var package = _dbProcedures.SearchRouteForCity(cityId, maxDistance, offset, rows);
             return package;

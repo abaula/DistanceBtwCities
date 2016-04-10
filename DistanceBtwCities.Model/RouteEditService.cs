@@ -1,5 +1,6 @@
 ﻿using DistanceBtwCities.Dal.Contract;
 using DistanceBtwCities.DataContract;
+using DistanceBtwCities.Interception;
 using DistanceBtwCities.Model.Contract;
 
 namespace DistanceBtwCities.Model
@@ -21,6 +22,7 @@ namespace DistanceBtwCities.Model
         /// </summary>
         /// <param name="routeInfo">Данные маршрута.</param>
         /// <returns>Новый экземпляр маршрута с обновлёнными значениями.</returns>
+        [Transaction]
         public RouteInfo UpdateRouteDistance(RouteInfo routeInfo)
         {
             _dbProcedures.UpdateRouteDistance(routeInfo.Id, routeInfo.Distance);

@@ -26,11 +26,6 @@ namespace DistanceBtwCities.Model
         /// <returns>Список найденных городов.</returns>
         public IList<CityInfo> SearchCityAsync(string query)
         {
-            return _searchCity(query);
-        }
-
-        private IList<CityInfo> _searchCity(string query)
-        {
             var cities = _dbProcedures.SearchCity(query);
             return cities;
         }
