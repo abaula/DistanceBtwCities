@@ -12,7 +12,16 @@ namespace DistanceBtwCities.WebApi
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            //config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional});
+            // Route по умолчанию
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "",
+                defaults: new
+                {
+                    controller = "Default",
+                    action = "Index"
+                }
+            );
 
             // добавляем общие обработчики сообщений для всех HttpRoute
             config.MessageHandlers.Add(new DelegatingHandlerProxy<MessageHandlerForCaching>(NinjectWebCommon.Kernel));

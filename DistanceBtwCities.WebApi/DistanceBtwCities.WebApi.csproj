@@ -115,7 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="index.html" />
+    <Content Include="HtmlPages\index.html" />
     <Content Include="resources\font-awesome-4.3.0\css\font-awesome.css" />
     <Content Include="resources\font-awesome-4.3.0\css\font-awesome.min.css" />
     <Content Include="resources\font-awesome-4.3.0\fonts\fontawesome-webfont.svg" />
@@ -137,6 +137,7 @@
     <Compile Include="Configuration\CacheSettingsElement.cs" />
     <Compile Include="Configuration\CacheSettingsElementCollection.cs" />
     <Compile Include="Configuration\CacheSettingsSection.cs" />
+    <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\RouteEditController.cs" />
     <Compile Include="Controllers\RouteSearchController.cs" />
     <Compile Include="Handlers\MessageHandlerForCaching.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CachedPageProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -198,7 +200,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DistanceBtwCities.DatabaseApi\DistanceBtwCities.Dal.csproj">
