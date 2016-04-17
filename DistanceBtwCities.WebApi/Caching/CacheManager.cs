@@ -9,6 +9,7 @@ namespace DistanceBtwCities.WebApi.Caching
     internal class CacheManager : ICacheManager
     {
         private readonly ICacheSettingsManager _cacheSettingsManager;
+        private static readonly object CacheLock = new object();
 
         public CacheManager(ICacheSettingsManager cacheSettingsManager)
         {
@@ -25,17 +26,7 @@ namespace DistanceBtwCities.WebApi.Caching
             // пробуем получить данные из кэша.
             var key = _getCacheKeyFromRequest(request);
 
-            var cache = MemoryCache.Default;
-            var cacheData = (CacheDataItem) cache.Get(key);
-
-            if (cacheData != null)
-            {
-                // возвращаем данные из кэша.
-                return cacheData;
-            }
-
-            // отсутствуют данные в кэше и отсутствуют настройки кэширования.
-            return null;
+            return (CacheDataItem) MemoryCache.Default.Get(key);
         }
 
         /// <summary>
@@ -46,16 +37,7 @@ namespace DistanceBtwCities.WebApi.Caching
         /// <returns>true, если значения IfNoneMatch и Etag совпадают</returns>
         public bool CheckIfCachedDataIsValidForClient(HttpRequestMessage request, CacheDataItem cacheData)
         {
-            if (request.Headers.IfNoneMatch.Any())
-            {
-                foreach (var tagHeader in request.Headers.IfNoneMatch)
-                {
-                    if (string.Compare(tagHeader.Tag, cacheData.ETag, StringComparison.InvariantCulture) == 0)
-                        return true;
-                }
-            }
-
-            return false;
+            return request.Headers.IfNoneMatch.Any(tagHeader => string.Compare(tagHeader.Tag, cacheData.ETag, StringComparison.InvariantCulture) == 0);
         }
 
         /// <summary>
@@ -87,8 +69,26 @@ namespace DistanceBtwCities.WebApi.Caching
         {
             var cachedDataItem = _createCacheItemForRequest(response.RequestMessage);
 
-            if (cachedDataItem != null)
+            // если отсутствуют настройки кэширования, то выходим
+            if (cachedDataItem == null)
+                return null;
+
+            // создаём ключ для кэша
+            var key = _getCacheKeyFromRequest(response.RequestMessage);
+
+            var cache = MemoryCache.Default;
+            var cachedData = (CacheDataItem)cache.Get(key);
+
+            if (cachedData != null)
+                return cachedData;
+
+            lock (CacheLock)
             {
+                cachedData = (CacheDataItem)cache.Get(key);
+
+                if (cachedData != null)
+                    return cachedDataItem;
+
                 // создаём ETag
                 cachedDataItem.ETag = string.Format("\"{0}\"", Guid.NewGuid().ToString("N"));
 
@@ -96,23 +96,19 @@ namespace DistanceBtwCities.WebApi.Caching
                 cachedDataItem.CreatedAt = DateTime.Now;
 
                 // устанавливаем содержимое ответа и его тип
-                var content = (ObjectContent) response.Content;
+                var content = (ObjectContent)response.Content;
                 cachedDataItem.Data = content.Value;
                 cachedDataItem.DataType = content.ObjectType;
-
-                // создаём ключ для кэша
-                var key = _getCacheKeyFromRequest(response.RequestMessage);
 
                 // создаём политику хранения данных
                 var policy = new CacheItemPolicy();
                 policy.AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(cachedDataItem.Settings.MaxAgeMinutes);
 
                 // сохраняем данные в кэше
-                var cache = MemoryCache.Default;
                 cache.Add(key, cachedDataItem, policy);
-            }
 
-            return cachedDataItem;
+                return cachedDataItem;
+            }
         }
 
         private CacheDataItem _createCacheItemForRequest(HttpRequestMessage request)
