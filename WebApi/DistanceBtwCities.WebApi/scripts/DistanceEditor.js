@@ -401,7 +401,7 @@ var DistanceEditor;
             }
         };
         return DistanceEditorController;
-    })();
+    }());
     DistanceEditor.DistanceEditorController = DistanceEditorController;
     DistanceEditor.currDistanceEditor = new DistanceEditorController();
 })(DistanceEditor || (DistanceEditor = {}));

@@ -205,7 +205,7 @@ var CitySelector;
             return city;
         };
         return CitySelector;
-    })();
+    }());
     CitySelector_1.CitySelector = CitySelector;
 })(CitySelector || (CitySelector = {}));
 //# sourceMappingURL=CitySelector.js.map
