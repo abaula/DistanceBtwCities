@@ -1,0 +1,4 @@
+﻿<!-- <%= appName %> -->
+<!-- Version <%= version %> -->
+<!-- <%= url %> -->
+<!-- <%= copyright %> -->

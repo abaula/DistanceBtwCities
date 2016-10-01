@@ -1,0 +1,20 @@
+{
+	"version": "1.0.0",
+	"name": "asp.net",
+	"private": true,
+  "devDependencies": {
+    "bower": "1.7.9",
+    "gulp": "3.9.1",
+    "gulp-bower": "0.0.13",
+    "merge-stream": "1.0.0",
+    "gulp-concat": "2.6.0",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "2.0.0",
+    "gulp-header": "1.8.8",
+    "gulp-less": "3.1.0",
+    "gulp-minify-css": "1.2.4",
+    "node-dir": "0.1.16",
+    "del": "2.2.2",
+    "gulp-replace": "0.5.4"
+  }
+}
