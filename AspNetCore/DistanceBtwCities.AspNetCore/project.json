@@ -12,7 +12,13 @@
     "Microsoft.Extensions.Configuration.FileExtensions": "1.0.0",
     "Microsoft.Extensions.Configuration.Json": "1.0.0",
     "Microsoft.AspNetCore.Mvc": "1.0.0",
-    "Microsoft.AspNetCore.StaticFiles": "1.0.0"
+    "Microsoft.AspNetCore.StaticFiles": "1.0.0",
+    "Autofac.Extensions.DependencyInjection": "4.0.0",
+    "UnitOfWork": "1.0.0-*",
+    "DistanceBtwCities.Common": "1.0.0-*",
+    "DistanceBtwCities.Dal": "1.0.0-*",
+    "DistanceBtwCities.Domain": "1.0.0-*",
+    "AutoMapper": "5.1.1" 
   },
 
   "tools": {

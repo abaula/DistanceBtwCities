@@ -16,7 +16,7 @@ var replace = require("gulp-replace");
 var settings = {
     appName: "DistanceBetweenCities",
     appVersion: "1.0.0",
-    url: "https://github.com/abaula/DistanceBtwCities/AspNetCore",
+    url: "https://github.com/abaula/DistanceBtwCities",
     copyright: "Copyright 2016 / Anton Baula, anton.baula@gmail.com",
     path: {
         build: {
