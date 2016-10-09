@@ -38,7 +38,7 @@ namespace DistanceBtwCities.AspNetCore
             builder.RegisterType<SearchCityQuery>().As<IQuery<string, CityInfo[]>>().InstancePerLifetimeScope();
             builder.RegisterType<SearchRouteQuery>().As<IQuery<RouteSearchRequestDto, RoutesInfoPackage>>().InstancePerLifetimeScope();
             builder.RegisterType<SearchRouteByCityQuery>().As<IQuery<RouteSearchRequestCityDto, RoutesInfoPackage>>().InstancePerLifetimeScope();
-            builder.RegisterType<UpdateRouteCmd>().As<ICommand<RouteUpdateDistanceRequestDto>>().InstancePerLifetimeScope();
+            builder.RegisterType<UpdateRouteCmd>().As<ICommand<RouteInfo>>().InstancePerLifetimeScope();
 
 
             // Сервисы

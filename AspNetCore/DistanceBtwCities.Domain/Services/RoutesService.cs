@@ -30,13 +30,15 @@ namespace DistanceBtwCities.Domain.Services
             }
         }
 
-        public void UpdateRouteDistance(RouteUpdateDistanceRequestDto request)
+        public RouteInfo UpdateRouteDistance(RouteInfo request)
         {
             using (var scope = _unitOfWorkFactory.CreateTransactionScope())
             {
-                var cmd = scope.Get<ICommand<RouteUpdateDistanceRequestDto>>();
+                var cmd = scope.Get<ICommand<RouteInfo>>();
                 cmd.Execute(request);
-                scope.Commit();                
+                scope.Commit();
+
+                return request;
             }
         }
     }

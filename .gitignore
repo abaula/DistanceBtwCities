@@ -354,3 +354,4 @@ FakesAssemblies/
 >>>>>>> origin/master
 *.lock.json
 */*/wwwroot/*
+*.jfm

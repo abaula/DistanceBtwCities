@@ -23,9 +23,9 @@ namespace DistanceBtwCities.AspNetCore.Controllers
         }
 
         [HttpPut]
-        public async Task UpdateRouteDistance([FromBody]RouteUpdateDistanceRequestDto request)
+        public async Task<RouteInfo> UpdateRouteDistance([FromBody]RouteInfo request)
         {
-            await Task.Run(() => _routesService.UpdateRouteDistance(request));
+            return await Task.Run(() => _routesService.UpdateRouteDistance(request));
         }
     }
 }
