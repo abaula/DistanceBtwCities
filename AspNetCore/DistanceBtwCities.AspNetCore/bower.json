@@ -1,9 +1,11 @@
 {
-	"name": "asp.net",
-	"private": true,
+  "name": "asp.net",
+  "private": true,
   "dependencies": {
     "angular": "1.5.8",
     "angular-route": "1.5.8",
-    "angular-animate": "1.5.8"
+    "angular-animate": "1.5.8",
+    "bootstrap": "3.3.6",
+    "angular-bootstrap": "2.2.0" 
   }
 }

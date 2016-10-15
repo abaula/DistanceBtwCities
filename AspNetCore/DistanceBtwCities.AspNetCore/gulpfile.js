@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild="clean:wwwroot, build:increaseBuildNumber, build:html, build:js, build:css" Clean="clean:wwwroot" />
+﻿/// <binding BeforeBuild="clean:wwwroot, build:increaseBuildNumber, build:html, build:js, build:css, copy:jslibs, copy:csslibs" Clean="clean:wwwroot" />
 "use strict";
 
 var fs = require("fs");
@@ -29,7 +29,17 @@ var settings = {
             html: "ClientApp/*.html",
             js: "ClientApp/js/*.js",
             style: "ClientApp/css/*.less",
-            buildNumber: "BuildNumber.txt"
+            buildNumber: "BuildNumber.txt",
+            jslibs: [
+                "bower_components/angular/angular.min.js",
+                "bower_components/angular-animate/angular-animate.min.js",
+                "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+                "bower_components/angular-route/angular-route.min.js"
+            ],
+            csslibs: [
+                "bower_components/bootstrap/dist/css/bootstrap.min.css",
+                "bower_components/bootstrap/dist/css/bootstrap-theme.min.css"
+            ]
         }
     }
 };
@@ -100,5 +110,17 @@ gulp.task("build:css", function ()
             url: settings.url,
             copyright: settings.copyright
         }))
+        .pipe(gulp.dest(settings.path.build.style));
+});
+
+gulp.task("copy:jslibs", function ()
+{
+    return gulp.src(settings.path.src.jslibs)
+        .pipe(gulp.dest(settings.path.build.js));
+});
+
+gulp.task("copy:csslibs", function ()
+{
+    return gulp.src(settings.path.src.csslibs)
         .pipe(gulp.dest(settings.path.build.style));
 });
