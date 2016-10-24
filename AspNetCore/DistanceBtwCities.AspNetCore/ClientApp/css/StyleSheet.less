@@ -1,2 +1,42 @@
-﻿body {
+﻿@bg-color: #f8f8f8;
+@border-color: #ccc;
+@content-padding: 10px;
+
+@import url(http://fonts.googleapis.com/css?family=PT+Sans&subset=cyrillic,cyrillic-ext,latin,latin-ext);
+
+body{
+    background-color: #ffffff;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 11pt;
+    margin: 0px 0px 0px 0px;
+    padding: 10px 10px 10px 10px;
+}
+
+.content-panel{
+    margin: 0 auto; /* Выравниваем макет по центру */
+    width: 1200px; /* Ширина макета */
+}
+
+.nav-tabs > li.active > a, 
+.nav-tabs > li.active > a:hover, 
+.nav-tabs > li.active > a:focus {
+    background-color: @bg-color;
+    border: 1px solid @border-color;
+    border-bottom-color: transparent;
+}
+
+.tab-pane {
+    padding: @content-padding;
+}
+.main-contents-panel{
+    padding: @content-padding;
+}
+
+.tab-content > div.active{
+    background-color: @bg-color;
+    border: 1px solid @border-color;
+    border-top: none;
+    border-radius: 3px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }

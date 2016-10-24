@@ -1,4 +1,4 @@
-﻿/// <binding BeforeBuild="clean:wwwroot, build:increaseBuildNumber, build:html, build:js, build:css, copy:jslibs, copy:csslibs" Clean="clean:wwwroot" />
+﻿/// <binding BeforeBuild="clean:wwwroot, build:increaseBuildNumber, build:html, build:js, build:css, copy:jslibs, copy:csslibs, copy:fonts" Clean="clean:wwwroot" />
 "use strict";
 
 var fs = require("fs");
@@ -23,12 +23,18 @@ var settings = {
             root: "wwwroot",
             html: "wwwroot",
             js: "wwwroot/js",
-            style: "wwwroot/css"
+            style: "wwwroot/css",
+            font: "wwwroot/fonts"
         },
         src: {
             html: "ClientApp/*.html",
-            js: "ClientApp/js/*.js",
+            js: ["ClientApp/js/app.js",
+                "ClientApp/js/headController.js",
+                "ClientApp/js/searchPanelController.js",
+                "ClientApp/js/searchResultsController.js"
+            ],
             style: "ClientApp/css/*.less",
+            font: "bower_components/bootstrap/fonts/*",
             buildNumber: "BuildNumber.txt",
             jslibs: [
                 "bower_components/angular/angular.min.js",
@@ -123,4 +129,10 @@ gulp.task("copy:csslibs", function ()
 {
     return gulp.src(settings.path.src.csslibs)
         .pipe(gulp.dest(settings.path.build.style));
+});
+
+gulp.task("copy:fonts", function ()
+{
+    return gulp.src(settings.path.src.font)
+        .pipe(gulp.dest(settings.path.build.font));
 });
