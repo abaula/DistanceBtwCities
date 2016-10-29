@@ -13,9 +13,15 @@ namespace UnitOfWork.Implementation
             _serviceProvider = serviceProvider;
         }
 
-        public IUnitOfWorkTransactionScope CreateTransactionScope()
+        public IUnitOfWorkTransactionScope CreateTransactionScope(bool useRepeatableRead = false)
         {
-            return _serviceProvider.GetRequiredService<IUnitOfWorkTransactionScope>();
+            var scope = _serviceProvider.GetRequiredService<IUnitOfWorkTransactionScope>();
+            var repeatableReadSupport = scope as IRepeatableReadSupport;
+
+            if (repeatableReadSupport != null)
+                repeatableReadSupport.UseRepeatableRead = useRepeatableRead;
+
+            return scope;
         }
 
         public IUnitOfWorkScope CreateScope()

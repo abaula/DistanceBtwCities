@@ -1,20 +1,17 @@
 ﻿using System.Linq;
-using AutoMapper;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Connections.Abstractions;
 using DistanceBtwCities.Common.Dtos;
 using DistanceBtwCities.Dal.Common;
 using DistanceBtwCities.Dal.DataObjects;
+using DistanceBtwCities.Dal.Extensions;
 
 namespace DistanceBtwCities.Dal.Queries
 {
     public class SearchCityQuery : DaoBase, IQuery<string, CityInfo[]>
     {
-        private readonly IMapper _mapper;
-
-        public SearchCityQuery(IDistanceBtwCitiesConnection connection, IMapper mapper) : base(connection)
+        public SearchCityQuery(IDistanceBtwCitiesConnection connection) : base(connection)
         {
-            _mapper = mapper;
         }
 
         public CityInfo[] Ask(string request)
@@ -23,7 +20,7 @@ namespace DistanceBtwCities.Dal.Queries
             parameters.Add("@query", request);
 
             return Get<CityInfoDo>("dbo.api_SearchCity", parameters)
-                .Select(_mapper.Map<CityInfo>)
+                .Select(d => d.ToCityInfo())
                 .ToArray();
         }
     }

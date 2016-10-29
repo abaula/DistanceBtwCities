@@ -1,12 +1,12 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchPanelController", ["$scope", "$http", function ($scope, $http)
+    app.controller("searchPanelController", ["$scope", "$http", function($scope, $http)
     {
         //$scope.activeTabIndex = 1;
         $scope.canSearch = false;
 
-        $scope.onSelect = function ($item, $model, $label)
+        $scope.onSelect = function($item, $model, $label)
         {
             $scope.selectedItem = $item;
             $scope.label = $label;
@@ -21,6 +21,16 @@
             {
                 return response.data;
             });
+        }
+
+        $scope.findByCityId = function()
+        {
+            
+        }
+
+        $scope.findByCityName = function()
+        {
+
         }
     }]);
 })(angular, angular.module("distanceBtwCities"));

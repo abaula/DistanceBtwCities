@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using AutoMapper;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Abstractions.Domain;
 using DistanceBtwCities.Common.Connections.Abstractions;
@@ -21,11 +20,6 @@ namespace DistanceBtwCities.AspNetCore
         {
             var builder = new ContainerBuilder();
 
-            // AutoMapper
-            var autoMapperInstance = new MapperConfiguration(cfg => cfg.AddProfile<AutoMapperDapperProfile>())
-                .CreateMapper();
-            builder.RegisterInstance(autoMapperInstance).As<IMapper>();
-
             // CQRS
             builder.RegisterType<DistanceBtwCitiesConnection>().As<IDistanceBtwCitiesConnection>()
                 .WithParameter(new TypedParameter(typeof(string), configuration["ConnectionString"]));
@@ -40,12 +34,9 @@ namespace DistanceBtwCities.AspNetCore
             builder.RegisterType<SearchRouteByCityQuery>().As<IQuery<RouteSearchRequestCityDto, RoutesInfoPackage>>().InstancePerLifetimeScope();
             builder.RegisterType<UpdateRouteCmd>().As<ICommand<RouteInfo>>().InstancePerLifetimeScope();
 
-
             // Сервисы
             builder.RegisterType<CitiesService>().As<ICitiesService>();
             builder.RegisterType<RoutesService>().As<IRoutesService>();
-
-
 
             return builder;
         }

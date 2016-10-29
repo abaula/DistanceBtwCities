@@ -17,8 +17,7 @@
     "UnitOfWork": "1.0.0-*",
     "DistanceBtwCities.Common": "1.0.0-*",
     "DistanceBtwCities.Dal": "1.0.0-*",
-    "DistanceBtwCities.Domain": "1.0.0-*",
-    "AutoMapper": "5.1.1" 
+    "DistanceBtwCities.Domain": "1.0.0-*"
   },
 
   "tools": {

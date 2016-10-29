@@ -1,22 +1,19 @@
 ﻿using System.Data;
 using System.Linq;
-using AutoMapper;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Connections.Abstractions;
 using DistanceBtwCities.Common.Dtos;
 using DistanceBtwCities.Common.Dtos.Requests;
 using DistanceBtwCities.Dal.Common;
 using DistanceBtwCities.Dal.DataObjects;
+using DistanceBtwCities.Dal.Extensions;
 
 namespace DistanceBtwCities.Dal.Queries
 {
     public class SearchRouteQuery : DaoBase, IQuery<RouteSearchRequestDto, RoutesInfoPackage>
     {
-        private readonly IMapper _mapper;
-
-        public SearchRouteQuery(IDistanceBtwCitiesConnection connection, IMapper mapper) : base(connection)
+        public SearchRouteQuery(IDistanceBtwCitiesConnection connection) : base(connection)
         {
-            _mapper = mapper;
         }
 
         public RoutesInfoPackage Ask(RouteSearchRequestDto request)
@@ -29,7 +26,7 @@ namespace DistanceBtwCities.Dal.Queries
             parameters.Add("@rows", request.Rows);
 
             var routesInfos = Get<RouteInfoDo>("dbo.api_GetDistancePageForQuery", parameters)
-                .Select(_mapper.Map<RouteInfo>)
+                .Select(r => r.ToRouteInfo())
                 .ToArray();
 
             return new RoutesInfoPackage

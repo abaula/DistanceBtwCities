@@ -17,20 +17,26 @@
     <div class="content-panel" ng-controller="searchPanelController">
         <uib-tabset active="activeTabIndex">
             <uib-tab index="0" heading="Поиск по городам">
-                <input type="text" ng-model="citySelected" 
-                       placeholder="Введите название города"
-                       typehead-editable="false"
-                       typeahead-min-length="3"
-                       typeahead-wait-ms="500"
-                       uib-typeahead="city as city.fullName for city in findCities($viewValue)"
-                       typeahead-on-select="onSelect($item, $model, $label)"
-                       typeahead-loading="loadingCities"
-                       typeahead-no-results="noResults" class="form-control"
-                       ng-focus="citySelected = null;"
-                       ng-blur="citySelected = label;">
-                <i ng-show="loadingCities" class="glyphicon glyphicon-refresh"></i>
-                <div ng-show="noResults">
-                    <i class="glyphicon glyphicon-remove"></i> Ничего не найдено. Уточните параметры поиска.
+                <div class="form-horizontal">
+                    <div class="form-group col-sm-10">
+                        <input type="text"
+                                ng-model="citySelected"
+                                placeholder="Введите название города"
+                                typehead-editable="false"
+                                typeahead-min-length="3"
+                                typeahead-wait-ms="500"
+                                uib-typeahead="city as city.fullName for city in findCities($viewValue)"
+                                typeahead-on-select="onSelect($item, $model, $label)"
+                                typeahead-loading="loadingCities"
+                                typeahead-no-results="noResults" class="form-control"
+                                ng-focus="citySelected = null;"
+                                ng-blur="citySelected = label;" />
+                        <i ng-show="loadingCities" class="glyphicon glyphicon-refresh"></i>
+                        <div ng-show="noResults">
+                            <i class="glyphicon glyphicon-remove"></i> Ничего не найдено. Уточните параметры поиска.
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-default col-sm-2" ng-click="findByCityId()">Искать</button>
                 </div>
             </uib-tab>
             <uib-tab index="1" heading="Текстовый поиск">

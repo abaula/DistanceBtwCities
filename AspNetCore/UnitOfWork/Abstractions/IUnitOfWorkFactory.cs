@@ -3,7 +3,7 @@ namespace UnitOfWork.Abstractions
 {
     public interface IUnitOfWorkFactory
     {
-        IUnitOfWorkTransactionScope CreateTransactionScope();
+        IUnitOfWorkTransactionScope CreateTransactionScope(bool useRepeatableRead = false);
         IUnitOfWorkScope CreateScope();
     }
 }

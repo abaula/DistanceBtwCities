@@ -8,7 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace UnitOfWork.Implementation
 {
-    public class UnitOfWorkScopeTransactionManager : IUnitOfWorkScopeTransactionManager
+    public class UnitOfWorkScopeTransactionManager : IUnitOfWorkScopeTransactionManager, IRepeatableReadSupport
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly Dictionary<Type, IDbTransaction> _transactions;
@@ -18,6 +18,8 @@ namespace UnitOfWork.Implementation
             _serviceProvider = serviceProvider;
             _transactions = new Dictionary<Type, IDbTransaction>();
         }
+
+        public bool UseRepeatableRead { get; set; }
 
         public void RegisterAndBeginTransaction(Type scopeWorkerType)
         {
@@ -40,7 +42,7 @@ namespace UnitOfWork.Implementation
             var connectionType = parameters.Single();
             var connectionInstance = (IDbConnection)_serviceProvider.GetRequiredService(connectionType);
             connectionInstance.Open();
-            var transaction = connectionInstance.BeginTransaction();
+            var transaction = connectionInstance.BeginTransaction(UseRepeatableRead ? IsolationLevel.RepeatableRead : IsolationLevel.ReadCommitted);
             _transactions.Add(connectionType, transaction);
         }
 
