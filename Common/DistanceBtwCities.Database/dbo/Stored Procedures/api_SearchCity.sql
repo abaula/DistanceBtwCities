@@ -17,7 +17,7 @@ BEGIN
 		postcode,
 		fullname
 	FROM dbo.geoCities
-	WHERE name LIKE @query + '%'
+	WHERE fullname LIKE @query + '%'
 		-- ищем только среди городов
 		AND suffix = 'Город'
 END
