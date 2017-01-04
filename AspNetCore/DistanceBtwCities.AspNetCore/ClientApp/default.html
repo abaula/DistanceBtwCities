@@ -50,7 +50,7 @@
                             <div class="col-lg-11 nopadding">
                                 <input class="form-control"
                                        type="text"
-                                       ng-model="cityNameQuery"
+                                       ng-model="formData.cityNameQuery"
                                        placeholder="Введите название города"/>
                             </div>
                             <div class="col-lg-1 nopadding">
@@ -64,11 +64,61 @@
         </div>
         <div class="content-panel" ng-controller="searchResultsController">
             <div class="main-contents-panel">
-                fdfsdfdsfsd<br />
-                fdfsdfdsfsd<br />
-                fdfsdfdsfsd<br />
-                fdfsdfdsfsd<br />
-                fdfsdfdsfsd<br />
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <tr>
+                            <th>Id маршрута</th>
+                            <th>Город 1</th>
+                            <th>Город 2</th>
+                            <th>Дистанция, км.</th>
+                            <th></th>
+                        </tr>                                                
+                    </thead>
+                    <tbody>
+                        <tr ng-hide="hasResultData">
+                            <td colspan="5">Нет данных</td>
+                        </tr>
+                        <tr ng-repeat="route in routes track by route.id">
+                            <td>{{::route.id}}</td>
+                            <td>{{::route.city1.name}}</td>
+                            <td>{{::route.city2.name}}</td>
+                            <td>{{route.distance}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Редактировать">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <nav ng-show="hasResultData" aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li ng-class="{disabled: paginationData.firstPageEnabled == false}">
+                            <a href="#" ng-click="loadPage(paginationData.firstPageNum)" aria-label="First">
+                                <span aria-hidden="true">&laquo;&laquo;</span>
+                            </a>
+                        </li>
+                        <li ng-class="{disabled: paginationData.previousPageEnabled == false}">
+                            <a href="#" ng-click="loadPage(paginationData.previousPageNum)" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li ng-repeat="page in paginationData.pages track by page.pageNumber" ng-class="{active: page.isCurrent}">
+                            <a href="#" ng-click="loadPage(page.pageNumber)">{{::page.pageNumber + 1}}</a>
+                        </li>
+                        <li ng-class="{disabled: paginationData.nextPageEnabled == false}">
+                            <a href="#" ng-click="loadPage(paginationData.nextPageNum)" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li ng-class="{disabled: paginationData.lastPageEnabled == false}">
+                            <a href="#" ng-click="loadPage(paginationData.lastPageNum)" aria-label="Last">
+                                <span aria-hidden="true">&raquo;&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

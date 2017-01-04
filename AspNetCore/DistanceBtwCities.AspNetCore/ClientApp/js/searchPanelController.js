@@ -1,10 +1,10 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchPanelController", ["$scope", "$http", function($scope, $http)
+    app.controller("searchPanelController", ["$scope", "$http", "searchService", function ($scope, $http, searchService)
     {
-        //$scope.activeTabIndex = 1;
         $scope.canSearch = false;
+        $scope.formData = {};
 
         $scope.onSelect = function($item, $model, $label)
         {
@@ -25,12 +25,29 @@
 
         $scope.findByCityId = function()
         {
-            
+            if (ng.isUndefined($scope.selectedItem))
+                return;
+
+            searchService.setFilter(createFilter($scope.selectedItem.id, null));
+            searchService.loadPage(0);
         }
 
         $scope.findByCityName = function()
         {
+            if (ng.isUndefined($scope.formData.cityNameQuery))
+                return;
 
+            searchService.setFilter(createFilter(null, $scope.formData.cityNameQuery));
+            searchService.loadPage(0);
         }
+
+        var createFilter = function(cityId, cityName)
+        {
+            return {
+                cityId: cityId,
+                cityName: cityName
+            };
+        }
+
     }]);
 })(angular, angular.module("distanceBtwCities"));

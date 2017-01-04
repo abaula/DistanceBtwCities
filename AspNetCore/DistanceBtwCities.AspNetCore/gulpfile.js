@@ -29,6 +29,9 @@ var settings = {
         src: {
             html: "ClientApp/*.html",
             js: ["ClientApp/js/app.js",
+                "ClientApp/js/appConstants.js",
+                "ClientApp/js/searchService.js",
+                "ClientApp/js/paginationService.js",
                 "ClientApp/js/headController.js",
                 "ClientApp/js/searchPanelController.js",
                 "ClientApp/js/searchResultsController.js"
