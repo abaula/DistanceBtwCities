@@ -3,6 +3,6 @@
     "use strict";
     app.controller("headController", ["$scope", function ($scope)
     {
-        $scope.title = "Привет!";
+        $scope.title = "Расстояние между городами";
     }]);
 })(angular.module("distanceBtwCities"));

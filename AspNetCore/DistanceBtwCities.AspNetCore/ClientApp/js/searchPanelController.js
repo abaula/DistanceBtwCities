@@ -1,7 +1,7 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchPanelController", ["$scope", "$http", "searchService", function ($scope, $http, searchService)
+    app.controller("searchPanelController", ["$scope", "$http", "searchService", "overlayService", function ($scope, $http, searchService, overlayService)
     {
         $scope.canSearch = false;
         $scope.formData = {};
@@ -28,6 +28,7 @@
             if (ng.isUndefined($scope.selectedItem))
                 return;
 
+            overlayService.showOverlay();
             searchService.setFilter(createFilter($scope.selectedItem.id, null));
             searchService.loadPage(0);
         }
@@ -37,6 +38,7 @@
             if (ng.isUndefined($scope.formData.cityNameQuery))
                 return;
 
+            overlayService.showOverlay();
             searchService.setFilter(createFilter(null, $scope.formData.cityNameQuery));
             searchService.loadPage(0);
         }

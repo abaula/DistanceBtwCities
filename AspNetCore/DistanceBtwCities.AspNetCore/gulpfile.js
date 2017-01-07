@@ -32,7 +32,9 @@ var settings = {
                 "ClientApp/js/appConstants.js",
                 "ClientApp/js/searchService.js",
                 "ClientApp/js/paginationService.js",
+                "ClientApp/js/overlayService.js",
                 "ClientApp/js/headController.js",
+                "ClientApp/js/overlayController.js",
                 "ClientApp/js/searchPanelController.js",
                 "ClientApp/js/searchResultsController.js"
             ],

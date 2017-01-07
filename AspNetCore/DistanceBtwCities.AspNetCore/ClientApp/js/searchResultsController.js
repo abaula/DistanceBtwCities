@@ -1,7 +1,8 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchResultsController", ["$scope", "searchService", "paginationService", "appConstants", function ($scope, searchService, paginationService, appConstants)
+    app.controller("searchResultsController", ["$scope", "searchService", "paginationService", "appConstants", "overlayService",
+        function ($scope, searchService, paginationService, appConstants, overlayService)
     {
         var setDefaults = function()
         {
@@ -13,6 +14,7 @@
 
         $scope.loadPage = function(pageNumber)
         {
+            overlayService.showOverlay();
             searchService.loadPage(pageNumber);
         }
 
@@ -34,6 +36,8 @@
 
         searchService.subscribeOnPageLoaded(function (data)
         {
+            overlayService.hideOverlay();
+
             setDefaults();
             
             if (!isDataValid(data))
