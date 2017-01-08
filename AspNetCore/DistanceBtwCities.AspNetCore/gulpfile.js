@@ -17,7 +17,7 @@ var settings = {
     appName: "DistanceBetweenCities",
     appVersion: "1.0.0",
     url: "https://github.com/abaula/DistanceBtwCities",
-    copyright: "Copyright 2016 / Anton Baula, anton.baula@gmail.com",
+    copyright: "Copyright 2017 / Anton Baula, anton.baula@gmail.com",
     path: {
         build: {
             root: "wwwroot",
@@ -33,10 +33,14 @@ var settings = {
                 "ClientApp/js/searchService.js",
                 "ClientApp/js/paginationService.js",
                 "ClientApp/js/overlayService.js",
+                "ClientApp/js/distanceEditService.js",
+                "ClientApp/js/contentLayoutService.js",                
+                "ClientApp/js/domHelperService.js",
                 "ClientApp/js/headController.js",
                 "ClientApp/js/overlayController.js",
                 "ClientApp/js/searchPanelController.js",
-                "ClientApp/js/searchResultsController.js"
+                "ClientApp/js/searchResultsController.js",
+                "ClientApp/js/distanceEditController.js"
             ],
             style: "ClientApp/css/*.less",
             font: "bower_components/bootstrap/fonts/*",

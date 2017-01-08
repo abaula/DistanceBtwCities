@@ -1,14 +1,15 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("overlayController", ["$scope", "overlayService", function ($scope, overlayService)
+    app.controller("overlayController", ["$scope", "overlayService", "domHelperService", "contentLayoutService",
+        function ($scope, overlayService, domHelperService, contentLayoutService)
     {
         $scope.overlayVisible = false;
         overlayService.subscribeOnShowOverlay(function ()
         {
-            var mainContainerElement = ng.element(document.querySelector("#page-main-container"));
-            var overlayContainerElement = ng.element(document.querySelector("#page-overlay-container"));
-            overlayContainerElement.css("height", getElementHeight(mainContainerElement) + "px");
+            var layoutRect = contentLayoutService.getLayoutRect();
+            var overlayContainerElement = domHelperService.getDomElement("#page-overlay-container");
+            contentLayoutService.setElementLayout(overlayContainerElement, layoutRect);
             $scope.overlayVisible = true;
         });
 
@@ -16,10 +17,5 @@
         {
             $scope.overlayVisible = false;
         });
-
-        var getElementHeight = function(element)
-        {
-            return element.prop("offsetHeight");
-        }
     }]);
 })(angular, angular.module("distanceBtwCities"));

@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="distanceBtwCities">
 <head ng-controller="headController">
     <meta charset="utf-8" />
@@ -14,12 +13,27 @@
     <script src="js/app.min.{#version#}.js"></script>
 </head>
 <body>
-    <div id="page-main-container" class="container">
-        <!-- индикатор загрузки содержимого страницы -->
-        <div id="page-overlay-container" class="page-overlay" ng-show="overlayVisible" ng-controller="overlayController">
-            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+    <!-- форма редактирования расстояний -->
+    <div id="page-distance-editor-controller" class="container route-editor" ng-show="editorVisible" ng-controller="distanceEditController">
+        <div class="edit-value-control-container">
+            <input type="number" min="-1" max="30000" ng-model="editValue" />
         </div>
-        <!-- /индикатор загрузки содержимого страницы -->
+        <div class="edit-value-buttons-container">
+            <button type="button" class="btn btn-default btn-xs" aria-label="Сохранить" ng-click="save()">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-default btn-xs" aria-label="Отмена" ng-click="close()">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+    <!-- /форма редактирования расстояний -->
+    <!-- индикатор загрузки содержимого страницы -->
+    <div id="page-overlay-container" class="container page-overlay" ng-show="overlayVisible" ng-controller="overlayController">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+    </div>
+    <!-- /индикатор загрузки содержимого страницы -->
+    <div id="page-main-container" class="container">
         <div class="row" ng-controller="searchPanelController">
             <div class="container">
                 <uib-tabset>
@@ -72,7 +86,7 @@
         <div class="row" ng-controller="searchResultsController">
             <div class="container">
                 <div class="main-contents-panel">
-                    <table class="table">
+                    <table id="routes-table" class="table">
                         <thead>
                             <tr>
                             <tr>
@@ -87,13 +101,13 @@
                             <tr ng-hide="hasResultData">
                                 <td colspan="5">Нет данных</td>
                             </tr>
-                            <tr ng-repeat="route in routes track by route.id">
+                            <tr ng-attr-id="{{dataRowIdPrefix + route.id}}" ng-repeat="route in routes track by route.id">
                                 <td>{{::route.id}}</td>
                                 <td>{{::route.city1.name}}</td>
                                 <td>{{::route.city2.name}}</td>
-                                <td>{{route.distance}}</td>
-                                <td>
-                                    <button type="button" class="btn btn-default btn-xs" aria-label="Редактировать">
+                                <td ng-class="distanceTdClassName">{{::route.distance}}</td>
+                                <td ng-class="buttonsTdClassName">
+                                    <button type="button" class="btn btn-default btn-xs" aria-label="Редактировать" ng-click="edit(route)">
                                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                                     </button>
                                 </td>

@@ -1,8 +1,8 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchResultsController", ["$scope", "searchService", "paginationService", "appConstants", "overlayService",
-        function ($scope, searchService, paginationService, appConstants, overlayService)
+    app.controller("searchResultsController", ["$scope", "searchService", "paginationService", "appConstants", "overlayService", "distanceEditService",
+    function ($scope, searchService, paginationService, appConstants, overlayService, distanceEditService)
     {
         var setDefaults = function()
         {
@@ -10,6 +10,15 @@
             $scope.routes = null;
             $scope.allRoutesCount = 0;
             $scope.paginationData = null;
+        }
+
+        $scope.dataRowIdPrefix = appConstants.dataRowIdPrefix;
+        $scope.distanceTdClassName = appConstants.distanceTdClassName;
+        $scope.buttonsTdClassName = appConstants.buttonsTdClassName;
+
+        $scope.edit = function(routeItem)
+        {
+            distanceEditService.showEditor(routeItem);
         }
 
         $scope.loadPage = function(pageNumber)
@@ -37,7 +46,6 @@
         searchService.subscribeOnPageLoaded(function (data)
         {
             overlayService.hideOverlay();
-
             setDefaults();
             
             if (!isDataValid(data))
