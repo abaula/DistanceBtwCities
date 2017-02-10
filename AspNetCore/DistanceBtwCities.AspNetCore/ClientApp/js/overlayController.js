@@ -1,15 +1,30 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("overlayController", ["$scope", "overlayService", "domHelperService", "contentLayoutService",
-        function ($scope, overlayService, domHelperService, contentLayoutService)
+    app.controller("overlayController", ["$scope", "overlayService", "domHelperService", "contentLayoutService", "windowResizeWatchService",
+        function ($scope, overlayService, domHelperService, contentLayoutService, windowResizeWatchService)
     {
         $scope.overlayVisible = false;
-        overlayService.subscribeOnShowOverlay(function ()
+
+        var layoutOverlay = function ()
         {
             var layoutRect = contentLayoutService.getLayoutRect();
             var overlayContainerElement = domHelperService.getDomElement("#page-overlay-container");
             contentLayoutService.setElementLayout(overlayContainerElement, layoutRect);
+        }
+
+        windowResizeWatchService.subscribeOnWindowResize(function ()
+        {
+            if ($scope.overlayVisible == false)
+                return;
+
+            // обновляем layout контроллера
+            layoutOverlay();
+        });
+
+        overlayService.subscribeOnShowOverlay(function ()
+        {
+            layoutOverlay();
             $scope.overlayVisible = true;
         });
 

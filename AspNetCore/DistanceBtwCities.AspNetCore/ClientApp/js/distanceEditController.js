@@ -2,11 +2,22 @@
 {
     "use strict";
     app.controller("distanceEditController", ["$scope", "appConstants", "distanceEditService", "domHelperService", "contentLayoutService",
-        function ($scope, appConstants, distanceEditService, domHelperService, contentLayoutService)
+        "windowResizeWatchService",
+        function ($scope, appConstants, distanceEditService, domHelperService, contentLayoutService, windowResizeWatchService)
     {
         var _editRouteItem = undefined;
         $scope.editValue = undefined;
         $scope.editorVisible = false;
+
+        windowResizeWatchService.subscribeOnWindowResize(function ()
+        {
+            if ($scope.editorVisible == false)
+                return;
+
+            // TODO обновляем layout контроллера
+
+
+        });
 
         distanceEditService.subscribeOnShowEditor(function (routeItem)
         {

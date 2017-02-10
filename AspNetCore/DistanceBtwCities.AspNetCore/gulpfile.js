@@ -36,6 +36,7 @@ var settings = {
                 "ClientApp/js/distanceEditService.js",
                 "ClientApp/js/contentLayoutService.js",                
                 "ClientApp/js/domHelperService.js",
+                "ClientApp/js/windowResizeWatchService.js",
                 "ClientApp/js/headController.js",
                 "ClientApp/js/overlayController.js",
                 "ClientApp/js/searchPanelController.js",
