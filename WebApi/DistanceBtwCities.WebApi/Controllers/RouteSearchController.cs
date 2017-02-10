@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model.Contract;
 
@@ -17,30 +16,23 @@ namespace DistanceBtwCities.WebApi.Controllers
 
         [HttpGet]
         [Route("query/{query:maxlength(255)}/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
-        public async Task<RoutesInfoPackage> SearchRouteForQuery(string query, int maxDistance, int offset, int rows)
+        public RoutesInfoPackage SearchRouteForQuery(string query, int maxDistance, int offset, int rows)
         {
-            var package = await Task.Run(() => _searchRouteService.SearchRouteForQuery(query, maxDistance, offset, rows));
-
-            return package;
+            return _searchRouteService.SearchRouteForQuery(query, maxDistance, offset, rows);
         }
 
         [HttpGet]
         [Route("query/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
-        public async Task<RoutesInfoPackage> SearchRouteForEmptyQuery(int maxDistance, int offset, int rows)
+        public RoutesInfoPackage SearchRouteForEmptyQuery(int maxDistance, int offset, int rows)
         {
-            var package = await Task.Run(() => _searchRouteService.SearchRouteForQuery(string.Empty, maxDistance, offset, rows));
-
-            return package;
+            return _searchRouteService.SearchRouteForQuery(string.Empty, maxDistance, offset, rows);
         }
-
 
         [HttpGet]
         [Route("city/{cityId:long:min(1)}/{MaxDistance:int:min(0)}/{offset:int:min(0)}/{rows:int:min(1)}")]
-        public async Task<RoutesInfoPackage> SearchRouteForCity(long cityId, int maxDistance, int offset, int rows)
+        public RoutesInfoPackage SearchRouteForCity(long cityId, int maxDistance, int offset, int rows)
         {
-            var package = await Task.Run(() => _searchRouteService.SearchRouteForCity(cityId, maxDistance, offset, rows));
-
-            return package;
+            return _searchRouteService.SearchRouteForCity(cityId, maxDistance, offset, rows);
         }
     }
 }

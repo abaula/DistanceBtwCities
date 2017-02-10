@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using DistanceBtwCities.DataContract;
 using DistanceBtwCities.Model.Contract;
 
@@ -17,11 +16,9 @@ namespace DistanceBtwCities.WebApi.Controllers
 
         [HttpPut]
         [Route("distance")]
-        public async Task<RouteInfo> UpdateRouteDistance(RouteInfo routeInfo)
+        public RouteInfo UpdateRouteDistance(RouteInfo routeInfo)
         {            
-            var info = await Task.Run(() => _routeEditService.UpdateRouteDistance(routeInfo));
-
-            return info;
+            return _routeEditService.UpdateRouteDistance(routeInfo);
         }
     }
 }
