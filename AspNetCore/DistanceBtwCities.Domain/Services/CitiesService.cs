@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Abstractions.Domain;
 using DistanceBtwCities.Common.Dtos;
@@ -15,11 +16,11 @@ namespace DistanceBtwCities.Domain.Services
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public IEnumerable<CityInfo> SearchCity(string query)
+        public async Task<IEnumerable<CityInfo>> SearchCity(string query)
         {
             using (var scope = _unitOfWorkFactory.CreateScope())
             {
-                return scope.Get<IQuery<string, CityInfo[]>>()
+                return await scope.Get<IQuery<string, CityInfo[]>>()
                     .Ask(query);
             }
         }

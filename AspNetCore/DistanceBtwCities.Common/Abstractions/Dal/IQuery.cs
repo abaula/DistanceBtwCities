@@ -1,8 +1,9 @@
-﻿
+﻿using System.Threading.Tasks;
+
 namespace DistanceBtwCities.Common.Abstractions.Dal
 {
-    public interface IQuery<in TRequest, out TResult>
+    public interface IQuery<in TRequest, TResult>
     {
-        TResult Ask(TRequest request);
+        Task<TResult> Ask(TRequest request);
     }
 }

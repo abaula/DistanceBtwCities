@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using DistanceBtwCities.Common.Dtos;
 
 namespace DistanceBtwCities.Common.Abstractions.Domain
@@ -15,6 +16,6 @@ namespace DistanceBtwCities.Common.Abstractions.Domain
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
         /// <returns>Список найденных городов.</returns>
-        IEnumerable<CityInfo> SearchCity(string query);
+        Task<IEnumerable<CityInfo>> SearchCity(string query);
     }
 }

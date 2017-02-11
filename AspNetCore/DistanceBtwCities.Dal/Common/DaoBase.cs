@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
 using Dapper;
 
 namespace DistanceBtwCities.Dal.Common
 {
     public class DaoBase
     {
-        protected IDbConnection Connection { get; }
+        protected SqlConnection Connection { get; }
 
-        public DaoBase(IDbConnection connection)
+        public DaoBase(SqlConnection connection)
         {
             Connection = connection;
         }
@@ -19,24 +21,24 @@ namespace DistanceBtwCities.Dal.Common
             return new DynamicParameters();
         }
 
-        protected IEnumerable<T> Get<T>(string spName, DynamicParameters parameters = null)
+        protected async Task<IEnumerable<T>> Get<T>(string spName, DynamicParameters parameters = null)
         {
-            return Connection.Query<T>(spName, parameters, commandType: CommandType.StoredProcedure);
+            return await Connection.QueryAsync<T>(spName, parameters, commandType: CommandType.StoredProcedure);
         }
 
-        protected int Execute(string spName, DynamicParameters parameters = null)
+        protected async Task<int> Execute(string spName, DynamicParameters parameters = null)
         {
-            return Connection.Execute(spName, parameters, commandType: CommandType.StoredProcedure);
+            return await Connection.ExecuteAsync(spName, parameters, commandType: CommandType.StoredProcedure);
         }
 
-        protected T ExecuteScalar<T>(string spName, DynamicParameters parameters = null)
+        protected async Task<T> ExecuteScalar<T>(string spName, DynamicParameters parameters = null)
         {
-           return Connection.ExecuteScalar<T>(spName, parameters, commandType: CommandType.StoredProcedure);
+           return await Connection.ExecuteScalarAsync<T>(spName, parameters, commandType: CommandType.StoredProcedure);
         }
 
-        protected T ReadMultiple<T>(string spName, DynamicParameters parameters, Func<SqlMapper.GridReader, T> func)
+        protected async Task<T> ReadMultiple<T>(string spName, DynamicParameters parameters, Func<Task<SqlMapper.GridReader>, Task<T>> func)
         {
-            return func(Connection.QueryMultiple(spName, parameters, commandType: CommandType.StoredProcedure));
+            return await func(Connection.QueryMultipleAsync(spName, parameters, commandType: CommandType.StoredProcedure));
         }
     }
 }

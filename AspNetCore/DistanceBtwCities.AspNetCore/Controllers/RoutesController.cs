@@ -1,4 +1,5 @@
-﻿using DistanceBtwCities.Common.Abstractions.Domain;
+﻿using System.Threading.Tasks;
+using DistanceBtwCities.Common.Abstractions.Domain;
 using DistanceBtwCities.Common.Dtos;
 using DistanceBtwCities.Common.Dtos.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -16,15 +17,15 @@ namespace DistanceBtwCities.AspNetCore.Controllers
         }
 
         [HttpGet]
-        public RoutesInfoPackage SearchRouteForQuery([FromQuery]RouteSearchRequestDto request)
+        public async Task<RoutesInfoPackage> SearchRouteForQuery([FromQuery]RouteSearchRequestDto request)
         {
-            return _routesService.SearchRoute(request);
+            return await _routesService.SearchRoute(request);
         }
 
         [HttpPut]
-        public RouteInfo UpdateRouteDistance([FromBody]RouteInfo request)
+        public async Task<RouteInfo> UpdateRouteDistance([FromBody]RouteInfo request)
         {
-            return _routesService.UpdateRouteDistance(request);
+            return await _routesService.UpdateRouteDistance(request);
         }
     }
 }

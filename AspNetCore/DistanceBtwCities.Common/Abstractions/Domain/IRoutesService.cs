@@ -1,4 +1,5 @@
-﻿using DistanceBtwCities.Common.Dtos;
+﻿using System.Threading.Tasks;
+using DistanceBtwCities.Common.Dtos;
 using DistanceBtwCities.Common.Dtos.Requests;
 
 namespace DistanceBtwCities.Common.Abstractions.Domain
@@ -11,11 +12,11 @@ namespace DistanceBtwCities.Common.Abstractions.Domain
         /// <summary>
         /// Поиск маршрута по поисковому запросу.
         /// </summary>
-        RoutesInfoPackage SearchRoute(RouteSearchRequestDto request);
+        Task<RoutesInfoPackage> SearchRoute(RouteSearchRequestDto request);
 
         /// <summary>
         /// Изменение значения дистанции маршрута.
         /// </summary>
-        RouteInfo UpdateRouteDistance(RouteInfo request);
+        Task<RouteInfo> UpdateRouteDistance(RouteInfo request);
     }
 }

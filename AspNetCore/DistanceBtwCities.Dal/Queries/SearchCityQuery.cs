@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Connections.Abstractions;
 using DistanceBtwCities.Common.Dtos;
@@ -10,16 +11,19 @@ namespace DistanceBtwCities.Dal.Queries
 {
     public class SearchCityQuery : DaoBase, IQuery<string, CityInfo[]>
     {
-        public SearchCityQuery(IDistanceBtwCitiesConnection connection) : base(connection)
+        public SearchCityQuery(IDistanceBtwCitiesConnection connection) 
+            : base(connection.Connection)
         {
         }
 
-        public CityInfo[] Ask(string request)
+        public async Task<CityInfo[]> Ask(string request)
         {
             var parameters = CreateDynamicParameters();
             parameters.Add("@query", request);
 
-            return Get<CityInfoDo>("dbo.api_SearchCity", parameters)
+            var data = await Get<CityInfoDo>("dbo.api_SearchCity", parameters);
+
+            return data
                 .Select(d => d.ToCityInfo())
                 .ToArray();
         }
