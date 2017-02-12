@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnitOfWork.Abstractions;
 using System.Reflection;
 using System.Linq;
-using DistanceBtwCities.Common.Connections.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UnitOfWork.Implementation
@@ -34,16 +33,16 @@ namespace UnitOfWork.Implementation
 
             var parameters = constructors.Single().GetParameters()
                 .Select(p => p.ParameterType)
-                .Where(t => typeof(IAppCommonConnection).IsAssignableFrom(t))
+                .Where(t => typeof(IDbConnection).IsAssignableFrom(t))
                 .ToArray();
 
             if (parameters.Length != 1)
-                throw new NotSupportedException("Указанный тип объекта не поддерживается. Поддерживаются объекты имеющие конструктор с одним параметром IAppCommonConnection.");
+                throw new NotSupportedException("Указанный тип объекта не поддерживается. Поддерживаются объекты имеющие конструктор с одним параметром IDbConnection.");
 
             var connectionType = parameters.Single();
-            var connectionInstance = (IAppCommonConnection)_serviceProvider.GetRequiredService(connectionType);
-            connectionInstance.Connection.Open();
-            var transaction = connectionInstance.Connection.BeginTransaction(UseRepeatableRead ? IsolationLevel.RepeatableRead : IsolationLevel.ReadCommitted);
+            var connectionInstance = (IDbConnection)_serviceProvider.GetRequiredService(connectionType);
+            connectionInstance.Open();
+            var transaction = connectionInstance.BeginTransaction(UseRepeatableRead ? IsolationLevel.RepeatableRead : IsolationLevel.ReadCommitted);
             _transactions.Add(connectionType, transaction);
         }
 

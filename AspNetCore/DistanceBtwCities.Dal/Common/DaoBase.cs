@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
 
@@ -9,9 +8,9 @@ namespace DistanceBtwCities.Dal.Common
 {
     public class DaoBase
     {
-        protected SqlConnection Connection { get; }
+        protected IDbConnection Connection { get; }
 
-        public DaoBase(SqlConnection connection)
+        public DaoBase(IDbConnection connection)
         {
             Connection = connection;
         }

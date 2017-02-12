@@ -3,13 +3,11 @@ using DistanceBtwCities.Common.Connections.Abstractions;
 
 namespace DistanceBtwCities.Common.Connections.Implementation
 {
-    public class DistanceBtwCitiesConnection : IDistanceBtwCitiesConnection
+    public class DistanceBtwCitiesConnection : AppConnectionBase, IDistanceBtwCitiesConnection
     {
         public DistanceBtwCitiesConnection(string connectionString)
+            : base(new SqlConnection(connectionString))
         {
-            Connection = new SqlConnection(connectionString);
         }
-
-        public SqlConnection Connection { get; }
     }
 }

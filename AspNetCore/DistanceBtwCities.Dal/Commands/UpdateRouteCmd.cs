@@ -9,7 +9,7 @@ namespace DistanceBtwCities.Dal.Commands
     public class UpdateRouteCmd : DaoBase, ICommand<RouteInfo>
     {
         public UpdateRouteCmd(IDistanceBtwCitiesConnection connection) 
-            : base(connection.Connection)
+            : base(connection)
         {
         }
 

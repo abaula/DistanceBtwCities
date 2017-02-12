@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using Microsoft.Extensions.DependencyInjection;
 using UnitOfWork.Abstractions;
 using System.Reflection;
 using System.Linq;
-using DistanceBtwCities.Common.Connections.Abstractions;
 
 namespace UnitOfWork.Implementation
 {
@@ -31,15 +31,15 @@ namespace UnitOfWork.Implementation
 
             var parameters = constructors.Single().GetParameters()
                 .Select(p => p.ParameterType)
-                .Where(t => typeof(IAppCommonConnection).IsAssignableFrom(t))
+                .Where(t => typeof(IDbConnection).IsAssignableFrom(t))
                 .ToArray();
 
             if (parameters.Length != 1)
-                throw new NotSupportedException("Указанный тип объекта не поддерживается. Поддерживаются объекты имеющие конструктор с одним параметром IAppCommonConnection.");
+                throw new NotSupportedException("Указанный тип объекта не поддерживается. Поддерживаются объекты имеющие конструктор с одним параметром IDbConnection.");
 
             var connectionType = parameters.Single();
-            var connectionInstance = (IAppCommonConnection)_serviceProvider.GetRequiredService(connectionType);
-            connectionInstance.Connection.Open();
+            var connectionInstance = (IDbConnection)_serviceProvider.GetRequiredService(connectionType);
+            connectionInstance.Open();
             _connections.Add(connectionType);
         }
     }

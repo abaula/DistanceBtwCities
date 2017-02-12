@@ -14,7 +14,7 @@ namespace DistanceBtwCities.Dal.Queries
     public class SearchRouteByCityQuery : DaoBase, IQuery<RouteSearchRequestCityDto, RoutesInfoPackage>
     {
         public SearchRouteByCityQuery(IDistanceBtwCitiesConnection connection) 
-            : base(connection.Connection)
+            : base(connection)
         {
         }
 
