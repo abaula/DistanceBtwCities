@@ -35,23 +35,33 @@ body{
     opacity: 0.5;
 }
 
-.route-editor{
-    z-index:98;
-    position: absolute;
-    overflow: hidden;
-    background: rgba(255,255,255,0.5);
-}
-.route-editor > div{
-    position: absolute;
-    background: #ffffff;
-}
-
 .page-overlay > span {
     position: absolute;
     top: 50%;
     margin-top: -24pt;
     color: #e0e0e0;
     font-size: 48pt;
+}
+
+.route-editor-overlay {
+    z-index:98;
+    position: absolute;
+    overflow: hidden;
+    display: table;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.route-editor-container{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.route-editor {
+    display: inline-block;
+    background: #ffffff;
+    padding: 20px;
+    border: 1px dotted #000000
 }
 
 .glyphicon-refresh-animate {

@@ -9,60 +9,28 @@
         $scope.editValue = undefined;
         $scope.editorVisible = false;
 
+        var setLayout = function()
+        {
+            var layoutRect = contentLayoutService.getOverlayRect();
+            var editorControllerElement = domHelperService.getDomElement("#page-distance-editor-controller");
+            contentLayoutService.setElementLayout(editorControllerElement, layoutRect);
+        }
+
         windowResizeWatchService.subscribeOnWindowResize(function ()
         {
-            if ($scope.editorVisible == false)
+            if ($scope.editorVisible === false)
                 return;
 
-            // TODO обновляем layout контроллера
-
-
+            // Обновляем layout контроллера.
+            setLayout();
         });
 
         distanceEditService.subscribeOnShowEditor(function (routeItem)
         {
             _editRouteItem = routeItem;
+
             // Размещаем слой формы редактирования.
-            var layoutRect = contentLayoutService.getLayoutRect();
-            var mainContainerElement = domHelperService.getDomElement("#page-main-container");
-            var editorControllerElement = domHelperService.getDomElement("#page-distance-editor-controller");
-            contentLayoutService.setElementLayout(editorControllerElement, layoutRect);
-
-            // Размещаем элементы формы редактирования.
-            var routesTableElement = domHelperService.getDomElement("#routes-table");
-            var routesTableLeftOffset = domHelperService.getElementLeft(routesTableElement);
-            var routesTableTopOffset = domHelperService.getElementTop(routesTableElement);
-            var editorControllerLeftOffset = domHelperService.getElementLeft(mainContainerElement);
-            var editorControllerTopOffset = domHelperService.getElementTop(mainContainerElement);
-
-            var offsetLeft = routesTableLeftOffset - editorControllerLeftOffset;
-            var offsetTop = routesTableTopOffset - editorControllerTopOffset;
-
-
-            var rowId = "#" + appConstants.dataRowIdPrefix + _editRouteItem.id;
-            var targetDistanceCellElement = domHelperService.getDomElement(rowId + " > td." + appConstants.distanceTdClassName);            
-            var editValueControlContainer = domHelperService.getDomElement("#page-distance-editor-controller > div.edit-value-control-container");
-            editValueControlContainer.css("left", (domHelperService.getElementLeft(targetDistanceCellElement) + offsetLeft) + "px");
-            editValueControlContainer.css("top", (domHelperService.getElementTop(targetDistanceCellElement) + offsetTop) + "px");
-            editValueControlContainer.css("width", domHelperService.getElementWidth(targetDistanceCellElement) + "px");
-            editValueControlContainer.css("height", domHelperService.getElementHeight(targetDistanceCellElement) + "px");
-
-
-            /*
-            console.log(targetDistanceCellElement.html());
-            console.log(domHelperService.getElementLeft(targetDistanceCellElement)
-                + "-" + domHelperService.getElementTop(targetDistanceCellElement)
-                + "-" + domHelperService.getElementWidth(targetDistanceCellElement)
-                + "-" + domHelperService.getElementHeight(targetDistanceCellElement)
-            )
-            */
-
-            var targetButtonsCellElement = domHelperService.getDomElement(rowId + " > td." + appConstants.buttonsTdClassName);
-            var editValueButtonsContainer = domHelperService.getDomElement("#page-distance-editor-controller > div.edit-value-buttons-container");
-            editValueButtonsContainer.css("left", (domHelperService.getElementLeft(targetButtonsCellElement) + offsetLeft) + "px");
-            editValueButtonsContainer.css("top", (domHelperService.getElementTop(targetButtonsCellElement) + offsetTop) + "px");
-            editValueButtonsContainer.css("width", domHelperService.getElementWidth(targetButtonsCellElement) + "px");
-            editValueButtonsContainer.css("height", domHelperService.getElementHeight(targetButtonsCellElement) + "px");
+            setLayout();
 
             $scope.editValue = _editRouteItem.distance;
             $scope.editorVisible = true;

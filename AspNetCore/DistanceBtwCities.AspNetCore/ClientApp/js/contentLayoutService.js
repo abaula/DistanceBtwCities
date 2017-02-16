@@ -3,21 +3,22 @@
     "use strict";
     app.service("contentLayoutService", ["domHelperService", function (domHelperService)
     {
-        var getLayoutRect = function()
+        var getElementRect = function (element)
         {
-            var mainContainerElement = domHelperService.getDomElement("#page-main-container");
-            // Ширину всегда считаем по таблице, т.к. её сжатие по ширине ограничено.
-            var routesTableElement = domHelperService.getDomElement("#routes-table");
-
             return {
-                left: domHelperService.getElementLeft(mainContainerElement),
-                top: domHelperService.getElementTop(mainContainerElement),
-                width: domHelperService.getElementWidth(routesTableElement),
-                height: domHelperService.getElementHeight(mainContainerElement)
+                left: domHelperService.getElementLeft(element),
+                top: domHelperService.getElementTop(element),
+                width: domHelperService.getElementWidth(element),
+                height: domHelperService.getElementHeight(element)
             };
         }
 
-        var setElementLayout = function(element, layoutRect)
+        var getOverlayRect = function ()
+        {
+            return getElementRect(domHelperService.getDomElement("#page-main-container"));
+        }
+
+        var setElementLayout = function (element, layoutRect)
         {
             element.css("left", layoutRect.left + "px");
             element.css("top", layoutRect.top + "px");
@@ -26,7 +27,8 @@
         }
 
         return {
-            getLayoutRect: getLayoutRect,
+            getOverlayRect: getOverlayRect,
+            getElementRect: getElementRect,
             setElementLayout: setElementLayout
         };
     }]);

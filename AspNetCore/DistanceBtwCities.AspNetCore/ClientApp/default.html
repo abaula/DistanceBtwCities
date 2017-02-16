@@ -18,6 +18,25 @@
         <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
     </div>
     <!-- /индикатор загрузки содержимого страницы -->
+    <!-- форма редактирования расстояний -->
+    <div id="page-distance-editor-controller" class="route-editor-overlay" ng-show="editorVisible" ng-controller="distanceEditController">
+        <div class="route-editor-container">
+            <div class="route-editor">
+                <div class="edit-value-control-container">
+                    <input type="number" min="-1" max="30000" ng-model="editValue" />
+                </div>
+                <div class="edit-value-buttons-container">
+                    <button type="button" class="btn btn-default" aria-label="Сохранить" ng-click="save()">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true">Сохранить</span>
+                    </button>
+                    <button type="button" class="btn btn-default" aria-label="Отмена" ng-click="close()">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true">Отмена</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /форма редактирования расстояний -->
     <div id="page-main-container" class="container">
         <div class="row" ng-controller="searchPanelController">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -72,21 +91,6 @@
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="main-contents-panel">
                     <div class="table-responsive">
-                        <!-- форма редактирования расстояний -->
-                        <div id="page-distance-editor-controller" class="route-editor" ng-show="editorVisible" ng-controller="distanceEditController">
-                            <div class="edit-value-control-container">
-                                <input type="number" min="-1" max="30000" ng-model="editValue" />
-                            </div>
-                            <div class="edit-value-buttons-container">
-                                <button type="button" class="btn btn-default btn-xs" aria-label="Сохранить" ng-click="save()">
-                                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-                                </button>
-                                <button type="button" class="btn btn-default btn-xs" aria-label="Отмена" ng-click="close()">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- /форма редактирования расстояний -->
                         <table id="routes-table" class="table">
                             <thead>
                                 <tr>

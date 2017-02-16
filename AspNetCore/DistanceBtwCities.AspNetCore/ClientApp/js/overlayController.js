@@ -8,14 +8,14 @@
 
         var layoutOverlay = function ()
         {
-            var layoutRect = contentLayoutService.getLayoutRect();
+            var layoutRect = contentLayoutService.getOverlayRect();
             var overlayContainerElement = domHelperService.getDomElement("#page-overlay-container");
             contentLayoutService.setElementLayout(overlayContainerElement, layoutRect);
         }
 
         windowResizeWatchService.subscribeOnWindowResize(function ()
         {
-            if ($scope.overlayVisible == false)
+            if ($scope.overlayVisible === false)
                 return;
 
             // обновляем layout контроллера
