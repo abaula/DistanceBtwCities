@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Data;
 
 namespace UnitOfWork.Abstractions
 {
     public interface IUnitOfWorkScopeTransactionManager
     {
-        void RegisterAndBeginTransaction(Type scopeWorkerType);
+        void CheckAndRegisterConnectionContext(Type scopeWorkerType, IsolationLevel isolationLevel);
         void DoCommit();
     }
 }

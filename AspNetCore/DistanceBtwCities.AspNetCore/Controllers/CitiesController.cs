@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using DistanceBtwCities.Common.Abstractions.Domain;
-using DistanceBtwCities.Common.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DistanceBtwCities.AspNetCore.Controllers
@@ -17,9 +15,10 @@ namespace DistanceBtwCities.AspNetCore.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CityInfo>> SearchCity(string query)
+        public async Task<IActionResult> SearchCity(string query)
         {
-            return await _citiesService.SearchCity(query);
+            var data = await _citiesService.SearchCity(query);
+            return Json(data);
         }
     }
 }

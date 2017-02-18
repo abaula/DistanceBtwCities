@@ -5,9 +5,17 @@
         "windowResizeWatchService",
         function ($scope, appConstants, distanceEditService, domHelperService, contentLayoutService, windowResizeWatchService)
     {
-        var _editRouteItem = undefined;
-        $scope.editValue = undefined;
-        $scope.editorVisible = false;
+        var editRouteItem;
+
+        var setValuesDefault = function ()
+        {
+            editRouteItem = undefined;
+            $scope.editValue = undefined;
+            $scope.editorVisible = false;
+            $scope.city1Name = "";
+            $scope.city2Name = "";
+            $scope.currentDistance = 0;
+        }
 
         var setLayout = function()
         {
@@ -27,25 +35,35 @@
 
         distanceEditService.subscribeOnShowEditor(function (routeItem)
         {
-            _editRouteItem = routeItem;
+            editRouteItem = routeItem;
 
             // Размещаем слой формы редактирования.
             setLayout();
 
-            $scope.editValue = _editRouteItem.distance;
+            $scope.city1Name = editRouteItem.city1.name;
+            $scope.city2Name = editRouteItem.city2.name;
+            $scope.currentDistance = editRouteItem.distance;
+            $scope.editValue = editRouteItem.distance;
             $scope.editorVisible = true;
+        });
+
+        distanceEditService.subscribeOnDistanceUpdated(function (routeId, distance)
+        {
+            setValuesDefault();
+            $scope.editorVisible = false;
         });
 
         $scope.save = function ()
         {
-
+            distanceEditService.updateDistance(editRouteItem.id, $scope.editValue);
         }
 
         $scope.close = function ()
         {
-            _editRouteItem = undefined;
-            $scope.editValue = undefined;
+            setValuesDefault();
             $scope.editorVisible = false;
         }
+
+        setValuesDefault();
     }]);
 })(angular, angular.module("distanceBtwCities"));

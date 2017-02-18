@@ -12,10 +12,6 @@
             $scope.paginationData = null;
         }
 
-        $scope.dataRowIdPrefix = appConstants.dataRowIdPrefix;
-        $scope.distanceTdClassName = appConstants.distanceTdClassName;
-        $scope.buttonsTdClassName = appConstants.buttonsTdClassName;
-
         $scope.edit = function(routeItem)
         {
             distanceEditService.showEditor(routeItem);
@@ -58,6 +54,20 @@
             $scope.routes = data.routes;
             $scope.allRoutesCount = data.allFoundRoutesCount;
             setPagesInfo(searchService.getQuery());
+        });
+
+        distanceEditService.subscribeOnDistanceUpdated(function(routeId, distance)
+        {
+            for (var i = 0; i < $scope.routes.length; i++)
+            {
+                var route = $scope.routes[i];
+
+                if(route.id !== routeId)
+                    continue;
+
+                route.distance = distance;
+                break;
+            }            
         });
 
         setDefaults();        

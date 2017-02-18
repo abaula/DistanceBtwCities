@@ -27,22 +27,6 @@
             return query;
         };
 
-        var loadPage = function (pageNum)
-        {
-            createQuery(pageNum);
-
-            $http.get("api/routes",
-            {
-                params: getQuery()
-            }).then(function (response)
-            {
-                ng.forEach(pageLoadedHandlers, function (handler)
-                {
-                    handler(response.data);
-                });
-            });
-        }
-
         var createQuery = function (pageNum)
         {
             query = {
@@ -52,6 +36,22 @@
                 offset: pageNum * appConstants.rowCount,
                 rows: appConstants.rowCount
             };
+        }
+
+        var loadPage = function (pageNum)
+        {
+            createQuery(pageNum);
+
+            $http.get(appConstants.url.getRoutesUrl,
+            {
+                params: getQuery()
+            }).then(function (response)
+            {
+                ng.forEach(pageLoadedHandlers, function (handler)
+                {
+                    handler(response.data);
+                });
+            });
         }
 
         return {

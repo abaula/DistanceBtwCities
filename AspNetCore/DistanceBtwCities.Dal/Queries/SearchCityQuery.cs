@@ -11,8 +11,8 @@ namespace DistanceBtwCities.Dal.Queries
 {
     public class SearchCityQuery : DaoBase, IQuery<string, CityInfo[]>
     {
-        public SearchCityQuery(IDistanceBtwCitiesConnection connection) 
-            : base(connection)
+        public SearchCityQuery(IDistanceBtwCitiesContext context) 
+            : base(context)
         {
         }
 

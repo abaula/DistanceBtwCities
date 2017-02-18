@@ -3,9 +3,9 @@ using DistanceBtwCities.Common.Connections.Abstractions;
 
 namespace DistanceBtwCities.Common.Connections.Implementation
 {
-    public class DistanceBtwCitiesConnection : AppConnectionBase, IDistanceBtwCitiesConnection
+    public class DistanceBtwCitiesContext : ConnectionContext, IDistanceBtwCitiesContext
     {
-        public DistanceBtwCitiesConnection(string connectionString)
+        public DistanceBtwCitiesContext(string connectionString)
             : base(new SqlConnection(connectionString))
         {
         }

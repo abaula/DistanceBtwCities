@@ -1,9 +1,10 @@
-﻿
+﻿using System.Data;
+
 namespace UnitOfWork.Abstractions
 {
     public interface IUnitOfWorkFactory
     {
-        IUnitOfWorkTransactionScope CreateTransactionScope(bool useRepeatableRead = false);
+        IUnitOfWorkTransactionScope CreateTransactionScope(IsolationLevel isolationLevel);
         IUnitOfWorkScope CreateScope();
     }
 }

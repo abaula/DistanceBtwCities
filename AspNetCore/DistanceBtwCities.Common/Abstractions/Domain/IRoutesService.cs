@@ -17,6 +17,6 @@ namespace DistanceBtwCities.Common.Abstractions.Domain
         /// <summary>
         /// Изменение значения дистанции маршрута.
         /// </summary>
-        Task<RouteInfo> UpdateRouteDistance(RouteInfo request);
+        Task UpdateRouteDistance(RouteUpdateInfo request);
     }
 }

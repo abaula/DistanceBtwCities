@@ -1,33 +1,33 @@
 ﻿using System;
+using System.Data;
 using UnitOfWork.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace UnitOfWork.Implementation
 {
-    public class UnitOfWorkTransactionScope : IUnitOfWorkTransactionScope, IRepeatableReadSupport
+    public class UnitOfWorkTransactionScope : IUnitOfWorkTransactionScope
     {
         private readonly IServiceScope _serviceScope;
         private readonly IUnitOfWorkScopeTransactionManager _transactionManager;
-        private bool _registerRepeatableReadSupport;
+        private IsolationLevel _isolationLevel;
 
         public UnitOfWorkTransactionScope(IServiceProvider serviceProvider)
         {
+            _isolationLevel = IsolationLevel.Unspecified;
             var scope = serviceProvider.GetService<IServiceScopeFactory>();
             _serviceScope = scope.CreateScope();
             _transactionManager = _serviceScope.ServiceProvider.GetRequiredService<IUnitOfWorkScopeTransactionManager>();
-            _registerRepeatableReadSupport = true;
         }
 
-        public bool UseRepeatableRead { get; set; }
+        public void SetIsolationLevel(IsolationLevel isolationlevel)
+        {
+            _isolationLevel = isolationlevel;
+        }
 
         public T Get<T>()
         {
-            // Worker-ы создаются из отдельного scope, что гарантирует наличие одного экземляра MyConnection:IDbConnection
-            // во всех worker-ах созданных в scope.
-            // Время жизни IDbConnection равно времени жизни scope.
             var worker = _serviceScope.ServiceProvider.GetRequiredService<T>();
-            RegiterRepeatableReadSupport();
-            _transactionManager.RegisterAndBeginTransaction(worker.GetType());
+            _transactionManager.CheckAndRegisterConnectionContext(worker.GetType(), _isolationLevel);
 
             return worker;
         }
@@ -40,19 +40,6 @@ namespace UnitOfWork.Implementation
         public void Dispose()
         {
             _serviceScope.Dispose();
-        }
-
-        private void RegiterRepeatableReadSupport()
-        {
-            if (!_registerRepeatableReadSupport)
-                return;
-
-            var repeatableReadSupport = _transactionManager as IRepeatableReadSupport;
-
-            if (repeatableReadSupport != null)
-                repeatableReadSupport.UseRepeatableRead = UseRepeatableRead;
-
-            _registerRepeatableReadSupport = false;
         }
     }
 }

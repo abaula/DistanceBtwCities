@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using UnitOfWork.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,14 +14,10 @@ namespace UnitOfWork.Implementation
             _serviceProvider = serviceProvider;
         }
 
-        public IUnitOfWorkTransactionScope CreateTransactionScope(bool useRepeatableRead = false)
+        public IUnitOfWorkTransactionScope CreateTransactionScope(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
             var scope = _serviceProvider.GetRequiredService<IUnitOfWorkTransactionScope>();
-            var repeatableReadSupport = scope as IRepeatableReadSupport;
-
-            if (repeatableReadSupport != null)
-                repeatableReadSupport.UseRepeatableRead = useRepeatableRead;
-
+            scope.SetIsolationLevel(isolationLevel);
             return scope;
         }
 

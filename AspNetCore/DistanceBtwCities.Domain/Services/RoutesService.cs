@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Data;
+using System.Threading.Tasks;
 using DistanceBtwCities.Common.Abstractions.Dal;
 using DistanceBtwCities.Common.Abstractions.Domain;
 using DistanceBtwCities.Common.Dtos;
@@ -31,16 +32,14 @@ namespace DistanceBtwCities.Domain.Services
             }
         }
 
-        public async Task<RouteInfo> UpdateRouteDistance(RouteInfo request)
+        public async Task UpdateRouteDistance(RouteUpdateInfo request)
         {
-            using (var scope = _unitOfWorkFactory.CreateTransactionScope())
+            using (var scope = _unitOfWorkFactory.CreateTransactionScope(IsolationLevel.ReadCommitted))
             {
-                await scope.Get<ICommand<RouteInfo>>()
+                await scope.Get<ICommand<RouteUpdateInfo>>()
                     .Execute(request);
 
                 scope.Commit();
-
-                return request;
             }
         }
     }

@@ -6,14 +6,14 @@ using DistanceBtwCities.Dal.Common;
 
 namespace DistanceBtwCities.Dal.Commands
 {
-    public class UpdateRouteCmd : DaoBase, ICommand<RouteInfo>
+    public class UpdateRouteCmd : DaoBase, ICommand<RouteUpdateInfo>
     {
-        public UpdateRouteCmd(IDistanceBtwCitiesConnection connection) 
-            : base(connection)
+        public UpdateRouteCmd(IDistanceBtwCitiesContext context) 
+            : base(context)
         {
         }
 
-        public async Task Execute(RouteInfo cmd)
+        public async Task Execute(RouteUpdateInfo cmd)
         {
             var parameters = CreateDynamicParameters();
             parameters.Add("@routeId", cmd.Id);

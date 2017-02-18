@@ -18,16 +18,8 @@ namespace UnitOfWork.Implementation
 
         public T Get<T>()
         {
-            /*
-            Worker-ы создаются из отдельного scope, что гарантирует наличие одного экземляра MyConnection:IDbConnection
-            во всех worker-ах созданных в одном scope.
-            -------------------------------------------------
-            ВАЖНО!
-            При регистрации MyConnection:IDbConnection в контейнере, время жизни необходимо задать равным времени жизни scope.
-            Например, для Autofac - ...InstancePerLifetimeScope()
-            */
             var worker = _serviceScope.ServiceProvider.GetRequiredService<T>();
-            _connectionManager.RegisterConnection(worker.GetType());
+            _connectionManager.CheckAndRegisterConnectionContext(worker.GetType());
             return worker;
         }
 

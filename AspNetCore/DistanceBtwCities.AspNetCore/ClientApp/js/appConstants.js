@@ -5,8 +5,11 @@
         maxDistanse: 100000,
         rowCount: 10,
         paginationSize: 10,
-        dataRowIdPrefix: "data-row-id-",
-        distanceTdClassName: "route-distance",
-        buttonsTdClassName: "route-buttons"
+        url:
+        {
+            getCitiesUrl: "api/cities",
+            getRoutesUrl: "api/routes",
+            updateRouteUrl: "api/routes"
+        }        
     });
 })(angular.module("distanceBtwCities"));

@@ -1,10 +1,18 @@
 ﻿(function (ng, app)
 {
     "use strict";
-    app.controller("searchPanelController", ["$scope", "$http", "searchService", "overlayService", function ($scope, $http, searchService, overlayService)
+    app.controller("searchPanelController", ["$scope", "$http", "searchService", "overlayService", "appConstants", function ($scope, $http, searchService, overlayService, appConstants)
     {
         $scope.canSearch = false;
         $scope.formData = {};
+
+        var createFilter = function (cityId, cityName)
+        {
+            return {
+                cityId: cityId,
+                cityName: cityName
+            };
+        }
 
         $scope.onSelect = function($item, $model, $label)
         {
@@ -14,7 +22,7 @@
 
         $scope.findCities = function(query)
         {
-            return $http.get("api/cities",
+            return $http.get(appConstants.url.getCitiesUrl,
             {
                 params: { query: query }
             }).then(function (response)
@@ -42,14 +50,5 @@
             searchService.setFilter(createFilter(null, $scope.formData.cityNameQuery));
             searchService.loadPage(0);
         }
-
-        var createFilter = function(cityId, cityName)
-        {
-            return {
-                cityId: cityId,
-                cityName: cityName
-            };
-        }
-
     }]);
 })(angular, angular.module("distanceBtwCities"));
