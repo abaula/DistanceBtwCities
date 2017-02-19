@@ -57,14 +57,18 @@ namespace DistanceBtwCities.Dal.Common
                 .ConfigureAwait(false);
         }
 
-        protected async Task<T> ReadMultiple<T>(string spName, DynamicParameters parameters, Func<Task<SqlMapper.GridReader>, Task<T>> func)
+        protected async Task<T> ReadMultiple<T>(string spName, DynamicParameters parameters, Func<SqlMapper.GridReader, Task<T>> func)
         {
-            var contextData = await _connectionContext.GetContextData().ConfigureAwait(false);
+            var contextData = await _connectionContext.GetContextData()
+                .ConfigureAwait(false);
 
-            return await func(contextData.Connection.QueryMultipleAsync(spName, 
-                parameters, 
+            var reader = await contextData.Connection.QueryMultipleAsync(spName,
+                parameters,
                 commandType: CommandType.StoredProcedure,
-                transaction: contextData.Transaction))
+                transaction: contextData.Transaction)
+                .ConfigureAwait(false);
+
+            return await func(reader)
                 .ConfigureAwait(false);
         }
     }
