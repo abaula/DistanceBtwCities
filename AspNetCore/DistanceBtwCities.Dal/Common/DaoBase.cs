@@ -23,42 +23,49 @@ namespace DistanceBtwCities.Dal.Common
 
         protected async Task<IEnumerable<T>> Get<T>(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData();
+            var contextData = await _connectionContext.GetContextData()
+                .ConfigureAwait(false);
 
             return await contextData.Connection.QueryAsync<T>(spName, 
                 parameters, 
                 commandType: CommandType.StoredProcedure, 
-                transaction: contextData.Transaction);
+                transaction: contextData.Transaction)
+                .ConfigureAwait(false);
         }
 
         protected async Task<int> Execute(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData();
+            var contextData = await _connectionContext.GetContextData()
+                .ConfigureAwait(false);
 
             return await contextData.Connection.ExecuteAsync(spName, 
                 parameters, 
                 commandType: CommandType.StoredProcedure, 
-                transaction: contextData.Transaction);
+                transaction: contextData.Transaction)
+                .ConfigureAwait(false);
         }
 
         protected async Task<T> ExecuteScalar<T>(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData();
+            var contextData = await _connectionContext.GetContextData()
+                .ConfigureAwait(false);
 
             return await contextData.Connection.ExecuteScalarAsync<T>(spName, 
                 parameters, 
                 commandType: CommandType.StoredProcedure,
-                transaction: contextData.Transaction);
+                transaction: contextData.Transaction)
+                .ConfigureAwait(false);
         }
 
         protected async Task<T> ReadMultiple<T>(string spName, DynamicParameters parameters, Func<Task<SqlMapper.GridReader>, Task<T>> func)
         {
-            var contextData = await _connectionContext.GetContextData();
+            var contextData = await _connectionContext.GetContextData().ConfigureAwait(false);
 
             return await func(contextData.Connection.QueryMultipleAsync(spName, 
                 parameters, 
                 commandType: CommandType.StoredProcedure,
-                transaction: contextData.Transaction));
+                transaction: contextData.Transaction))
+                .ConfigureAwait(false);
         }
     }
 }

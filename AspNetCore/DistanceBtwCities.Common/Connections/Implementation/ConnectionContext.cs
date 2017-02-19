@@ -19,7 +19,8 @@ namespace DistanceBtwCities.Common.Connections.Implementation
 
         public async Task<IConnectionContextData> GetContextData()
         {
-            await TryOpenConnection();
+            await TryOpenConnection()
+                .ConfigureAwait(false);
             return new ConnectionContextData(_connection, _transaction);
         }
 
@@ -43,7 +44,8 @@ namespace DistanceBtwCities.Common.Connections.Implementation
             if (_connection.State != ConnectionState.Closed)
                 return;
 
-            await _connection.OpenAsync();
+            await _connection.OpenAsync()
+                .ConfigureAwait(false);
 
             if (_transactionIsolationLevel == IsolationLevel.Unspecified)
                 return;

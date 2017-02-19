@@ -24,11 +24,13 @@ namespace DistanceBtwCities.Domain.Services
                 if (request.CityId != null)
                 {
                     return await scope.Get<IQuery<RouteSearchRequestCityDto, RoutesInfoPackage>>()
-                        .Ask(request);
+                        .Ask(request)
+                        .ConfigureAwait(false);
                 }
 
                 return await scope.Get<IQuery<RouteSearchRequestDto, RoutesInfoPackage>>()
-                    .Ask(request);
+                    .Ask(request)
+                    .ConfigureAwait(false);
             }
         }
 
@@ -37,7 +39,8 @@ namespace DistanceBtwCities.Domain.Services
             using (var scope = _unitOfWorkFactory.CreateTransactionScope(IsolationLevel.ReadCommitted))
             {
                 await scope.Get<ICommand<RouteUpdateInfo>>()
-                    .Execute(request);
+                    .Execute(request)
+                    .ConfigureAwait(false);
 
                 scope.Commit();
             }

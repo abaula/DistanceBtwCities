@@ -27,7 +27,8 @@ namespace DistanceBtwCities.Dal.Queries
             parameters.Add("@offset", request.Offset);
             parameters.Add("@rows", request.Rows);
 
-            var data = await Get<RouteInfoDo>("dbo.api_GetDistancePageForQuery", parameters);
+            var data = await Get<RouteInfoDo>("dbo.api_GetDistancePageForQuery", parameters)
+                .ConfigureAwait(false);
             var routesInfos = data.Select(r => r.ToRouteInfo())
                 .ToArray();
 

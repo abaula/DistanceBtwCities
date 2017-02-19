@@ -18,7 +18,8 @@ namespace DistanceBtwCities.Dal.Commands
             var parameters = CreateDynamicParameters();
             parameters.Add("@routeId", cmd.Id);
             parameters.Add("@distance", cmd.Distance);
-            await Execute("dbo.api_UpdateRouteDistance", parameters);
+            await Execute("dbo.api_UpdateRouteDistance", parameters)
+                .ConfigureAwait(false);
         }
     }
 }

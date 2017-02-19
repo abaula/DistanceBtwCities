@@ -21,7 +21,8 @@ namespace DistanceBtwCities.Dal.Queries
             var parameters = CreateDynamicParameters();
             parameters.Add("@query", request);
 
-            var data = await Get<CityInfoDo>("dbo.api_SearchCity", parameters);
+            var data = await Get<CityInfoDo>("dbo.api_SearchCity", parameters)
+                .ConfigureAwait(false);
 
             return data
                 .Select(d => d.ToCityInfo())

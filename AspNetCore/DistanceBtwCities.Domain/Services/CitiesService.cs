@@ -21,7 +21,8 @@ namespace DistanceBtwCities.Domain.Services
             using (var scope = _unitOfWorkFactory.CreateScope())
             {
                 return await scope.Get<IQuery<string, CityInfo[]>>()
-                    .Ask(query);
+                    .Ask(query)
+                    .ConfigureAwait(false);
             }
         }
     }
