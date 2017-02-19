@@ -13,12 +13,12 @@ namespace DistanceBtwCities.Dal.Commands
         {
         }
 
-        public async Task Execute(RouteUpdateInfo cmd)
+        public async Task ExecuteAsync(RouteUpdateInfo cmd)
         {
             var parameters = CreateDynamicParameters();
             parameters.Add("@routeId", cmd.Id);
             parameters.Add("@distance", cmd.Distance);
-            await Execute("dbo.api_UpdateRouteDistance", parameters)
+            await ExecuteAsync("dbo.api_UpdateRouteDistance", parameters)
                 .ConfigureAwait(false);
         }
     }

@@ -17,7 +17,7 @@ namespace DistanceBtwCities.AspNetCore.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchCity(string query)
         {
-            var data = await _citiesService.SearchCity(query);
+            var data = await _citiesService.SearchCityAsync(query);
             return Json(data);
         }
     }

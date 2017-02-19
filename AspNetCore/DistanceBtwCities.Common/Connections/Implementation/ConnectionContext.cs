@@ -17,9 +17,9 @@ namespace DistanceBtwCities.Common.Connections.Implementation
             _transactionIsolationLevel = IsolationLevel.Unspecified;
         }
 
-        public async Task<IConnectionContextData> GetContextData()
+        public async Task<IConnectionContextData> GetContextDataAsync()
         {
-            await TryOpenConnection()
+            await TryOpenConnectionAsync()
                 .ConfigureAwait(false);
             return new ConnectionContextData(_connection, _transaction);
         }
@@ -39,7 +39,7 @@ namespace DistanceBtwCities.Common.Connections.Implementation
             _transactionIsolationLevel = level;
         }
 
-        private async Task TryOpenConnection()
+        private async Task TryOpenConnectionAsync()
         {
             if (_connection.State != ConnectionState.Closed)
                 return;

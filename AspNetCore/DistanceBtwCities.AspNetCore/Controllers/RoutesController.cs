@@ -20,14 +20,14 @@ namespace DistanceBtwCities.AspNetCore.Controllers
         [HttpGet]
         public async Task<IActionResult> SearchRouteForQuery([FromQuery]RouteSearchRequestDto request)
         {
-            var data = await _routesService.SearchRoute(request);
+            var data = await _routesService.SearchRouteAsync(request);
             return Json(data);
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateRouteDistance([FromBody]RouteUpdateInfo request)
         {
-            await _routesService.UpdateRouteDistance(request);
+            await _routesService.UpdateRouteDistanceAsync(request);
             return Json(EmptyObjectHelper.Empty);
         }
     }

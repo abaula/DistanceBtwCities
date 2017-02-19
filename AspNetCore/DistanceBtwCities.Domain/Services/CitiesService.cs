@@ -16,12 +16,12 @@ namespace DistanceBtwCities.Domain.Services
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public async Task<IEnumerable<CityInfo>> SearchCity(string query)
+        public async Task<IEnumerable<CityInfo>> SearchCityAsync(string query)
         {
             using (var scope = _unitOfWorkFactory.CreateScope())
             {
                 return await scope.Get<IQuery<string, CityInfo[]>>()
-                    .Ask(query)
+                    .AskAsync(query)
                     .ConfigureAwait(false);
             }
         }

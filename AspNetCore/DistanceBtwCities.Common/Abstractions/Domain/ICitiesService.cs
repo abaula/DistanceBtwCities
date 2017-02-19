@@ -16,6 +16,6 @@ namespace DistanceBtwCities.Common.Abstractions.Domain
         /// </summary>
         /// <param name="query">Поисковый запрос.</param>
         /// <returns>Список найденных городов.</returns>
-        Task<IEnumerable<CityInfo>> SearchCity(string query);
+        Task<IEnumerable<CityInfo>> SearchCityAsync(string query);
     }
 }

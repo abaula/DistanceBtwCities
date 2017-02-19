@@ -16,12 +16,12 @@ namespace DistanceBtwCities.Dal.Queries
         {
         }
 
-        public async Task<CityInfo[]> Ask(string request)
+        public async Task<CityInfo[]> AskAsync(string request)
         {
             var parameters = CreateDynamicParameters();
             parameters.Add("@query", request);
 
-            var data = await Get<CityInfoDo>("dbo.api_SearchCity", parameters)
+            var data = await GetAsync<CityInfoDo>("dbo.api_SearchCity", parameters)
                 .ConfigureAwait(false);
 
             return data

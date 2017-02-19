@@ -21,9 +21,9 @@ namespace DistanceBtwCities.Dal.Common
             return new DynamicParameters();
         }
 
-        protected async Task<IEnumerable<T>> Get<T>(string spName, DynamicParameters parameters = null)
+        protected async Task<IEnumerable<T>> GetAsync<T>(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData()
+            var contextData = await _connectionContext.GetContextDataAsync()
                 .ConfigureAwait(false);
 
             return await contextData.Connection.QueryAsync<T>(spName, 
@@ -33,9 +33,9 @@ namespace DistanceBtwCities.Dal.Common
                 .ConfigureAwait(false);
         }
 
-        protected async Task<int> Execute(string spName, DynamicParameters parameters = null)
+        protected async Task<int> ExecuteAsync(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData()
+            var contextData = await _connectionContext.GetContextDataAsync()
                 .ConfigureAwait(false);
 
             return await contextData.Connection.ExecuteAsync(spName, 
@@ -45,9 +45,9 @@ namespace DistanceBtwCities.Dal.Common
                 .ConfigureAwait(false);
         }
 
-        protected async Task<T> ExecuteScalar<T>(string spName, DynamicParameters parameters = null)
+        protected async Task<T> ExecuteScalarAsync<T>(string spName, DynamicParameters parameters = null)
         {
-            var contextData = await _connectionContext.GetContextData()
+            var contextData = await _connectionContext.GetContextDataAsync()
                 .ConfigureAwait(false);
 
             return await contextData.Connection.ExecuteScalarAsync<T>(spName, 
@@ -57,9 +57,9 @@ namespace DistanceBtwCities.Dal.Common
                 .ConfigureAwait(false);
         }
 
-        protected async Task<T> ReadMultiple<T>(string spName, DynamicParameters parameters, Func<SqlMapper.GridReader, Task<T>> func)
+        protected async Task<T> ReadMultipleAsync<T>(string spName, DynamicParameters parameters, Func<SqlMapper.GridReader, Task<T>> funcAsync)
         {
-            var contextData = await _connectionContext.GetContextData()
+            var contextData = await _connectionContext.GetContextDataAsync()
                 .ConfigureAwait(false);
 
             var reader = await contextData.Connection.QueryMultipleAsync(spName,
@@ -68,7 +68,7 @@ namespace DistanceBtwCities.Dal.Common
                 transaction: contextData.Transaction)
                 .ConfigureAwait(false);
 
-            return await func(reader)
+            return await funcAsync(reader)
                 .ConfigureAwait(false);
         }
     }

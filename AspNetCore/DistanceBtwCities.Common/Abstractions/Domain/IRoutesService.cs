@@ -12,11 +12,11 @@ namespace DistanceBtwCities.Common.Abstractions.Domain
         /// <summary>
         /// Поиск маршрута по поисковому запросу.
         /// </summary>
-        Task<RoutesInfoPackage> SearchRoute(RouteSearchRequestDto request);
+        Task<RoutesInfoPackage> SearchRouteAsync(RouteSearchRequestDto request);
 
         /// <summary>
         /// Изменение значения дистанции маршрута.
         /// </summary>
-        Task UpdateRouteDistance(RouteUpdateInfo request);
+        Task UpdateRouteDistanceAsync(RouteUpdateInfo request);
     }
 }

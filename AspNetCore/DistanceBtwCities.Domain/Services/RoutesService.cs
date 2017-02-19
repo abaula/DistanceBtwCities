@@ -17,29 +17,29 @@ namespace DistanceBtwCities.Domain.Services
             _unitOfWorkFactory = unitOfWorkFactory;
         }
 
-        public async Task<RoutesInfoPackage> SearchRoute(RouteSearchRequestDto request)
+        public async Task<RoutesInfoPackage> SearchRouteAsync(RouteSearchRequestDto request)
         {
             using (var scope = _unitOfWorkFactory.CreateScope())
             {
                 if (request.CityId != null)
                 {
                     return await scope.Get<IQuery<RouteSearchRequestCityDto, RoutesInfoPackage>>()
-                        .Ask(request)
+                        .AskAsync(request)
                         .ConfigureAwait(false);
                 }
 
                 return await scope.Get<IQuery<RouteSearchRequestDto, RoutesInfoPackage>>()
-                    .Ask(request)
+                    .AskAsync(request)
                     .ConfigureAwait(false);
             }
         }
 
-        public async Task UpdateRouteDistance(RouteUpdateInfo request)
+        public async Task UpdateRouteDistanceAsync(RouteUpdateInfo request)
         {
             using (var scope = _unitOfWorkFactory.CreateTransactionScope(IsolationLevel.ReadCommitted))
             {
                 await scope.Get<ICommand<RouteUpdateInfo>>()
-                    .Execute(request)
+                    .ExecuteAsync(request)
                     .ConfigureAwait(false);
 
                 scope.Commit();

@@ -5,7 +5,7 @@ namespace DistanceBtwCities.Common.Connections.Abstractions
 {
     public interface IConnectionContext : IDisposable
     {
-        Task<IConnectionContextData> GetContextData();
+        Task<IConnectionContextData> GetContextDataAsync();
         void CommitTransaction();
         void RollbackTransaction();
     }

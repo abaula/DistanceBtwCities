@@ -18,7 +18,7 @@ namespace DistanceBtwCities.Dal.Queries
         {
         }
 
-        public async Task<RoutesInfoPackage> Ask(RouteSearchRequestCityDto request)
+        public async Task<RoutesInfoPackage> AskAsync(RouteSearchRequestCityDto request)
         {
             var parameters = CreateDynamicParameters();
             parameters.Add("@returnValue", dbType: DbType.Int32, direction: ParameterDirection.ReturnValue);
@@ -27,7 +27,7 @@ namespace DistanceBtwCities.Dal.Queries
             parameters.Add("@offset", request.Offset);
             parameters.Add("@rows", request.Rows);
 
-            var data = await Get<RouteInfoDo>("dbo.api_GetDistancePageForCity", parameters)
+            var data = await GetAsync<RouteInfoDo>("dbo.api_GetDistancePageForCity", parameters)
                 .ConfigureAwait(false);
             var routesInfos = data.Select(r => r.ToRouteInfo())
                 .ToArray();
