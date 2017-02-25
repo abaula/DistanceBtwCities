@@ -7,13 +7,12 @@ namespace DistanceBtwCities.Common.Connections.Implementation
 {
     public abstract class ConnectionContext : IConnectionContext, IConnectionContextSettings
     {
-        private readonly DbConnection _connection;
-        private DbTransaction _transaction;
+        private readonly ConnectionContextData _connectionContextData;
         private IsolationLevel _transactionIsolationLevel;
 
         protected ConnectionContext(DbConnection connection)
         {
-            _connection = connection;
+            _connectionContextData = new ConnectionContextData(connection);
             _transactionIsolationLevel = IsolationLevel.Unspecified;
         }
 
@@ -21,17 +20,18 @@ namespace DistanceBtwCities.Common.Connections.Implementation
         {
             await TryOpenConnectionAsync()
                 .ConfigureAwait(false);
-            return new ConnectionContextData(_connection, _transaction);
+
+            return _connectionContextData;
         }
 
         public void CommitTransaction()
         {
-            _transaction?.Commit();
+            _connectionContextData.Transaction?.Commit();
         }
 
         public void RollbackTransaction()
         {
-            _transaction?.Rollback();
+            _connectionContextData.Transaction?.Rollback();
         }
 
         public void SetTransactionIsolationLevel(IsolationLevel level)
@@ -41,21 +41,21 @@ namespace DistanceBtwCities.Common.Connections.Implementation
 
         private async Task TryOpenConnectionAsync()
         {
-            if (_connection.State != ConnectionState.Closed)
+            if (_connectionContextData.Connection.State != ConnectionState.Closed)
                 return;
 
-            await _connection.OpenAsync()
+            await _connectionContextData.Connection.OpenAsync()
                 .ConfigureAwait(false);
 
             if (_transactionIsolationLevel == IsolationLevel.Unspecified)
                 return;
 
-            _transaction = _connection.BeginTransaction(_transactionIsolationLevel);
+            _connectionContextData.Transaction = _connectionContextData.Connection.BeginTransaction(_transactionIsolationLevel);
         }
 
         public void Dispose()
         {
-            _connection.Dispose();
+            _connectionContextData.Connection.Dispose();
         }
     }
 }
