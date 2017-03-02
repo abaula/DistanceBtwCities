@@ -16,14 +16,23 @@ namespace UnitOfWork.Implementation
 
         public IUnitOfWorkTransactionScope CreateTransactionScope(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            var scope = _serviceProvider.GetRequiredService<IUnitOfWorkTransactionScope>();
+            var scope = _serviceProvider
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope()
+                .ServiceProvider
+                .GetRequiredService<IUnitOfWorkTransactionScope>();
+
             scope.SetIsolationLevel(isolationLevel);
             return scope;
         }
 
         public IUnitOfWorkScope CreateScope()
         {
-            return _serviceProvider.GetRequiredService<IUnitOfWorkScope>();
+            return _serviceProvider
+                .GetRequiredService<IServiceScopeFactory>()
+                .CreateScope()
+                .ServiceProvider
+                .GetRequiredService<IUnitOfWorkScope>();
         }
     }
 }
